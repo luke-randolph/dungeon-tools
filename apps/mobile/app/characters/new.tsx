@@ -1,0 +1,279 @@
+import {
+  CLASSES,
+  CLASS_LABELS,
+  RACES,
+  RACE_LABELS,
+  type CharacterClass,
+  type CharacterRace,
+} from '@dungeon-tools/shared';
+import { useRouter } from 'expo-router';
+import { useState } from 'react';
+import {
+  Alert,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  View,
+} from 'react-native';
+
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useCharacters } from '@/stores/characters';
+
+const MIN_LEVEL = 1;
+const MAX_LEVEL = 20;
+
+export default function NewCharacterScreen() {
+  const router = useRouter();
+  const addCharacter = useCharacters((s) => s.addCharacter);
+  const scheme = useColorScheme();
+  const isDark = scheme === 'dark';
+
+  const [name, setName] = useState('');
+  const [race, setRace] = useState<CharacterRace | null>(null);
+  const [characterClass, setCharacterClass] = useState<CharacterClass | null>(null);
+  const [level, setLevel] = useState(1);
+  const [saving, setSaving] = useState(false);
+
+  async function save() {
+    const trimmed = name.trim();
+    if (!trimmed) {
+      Alert.alert('Name required', 'Give your character a name.');
+      return;
+    }
+    if (!race) {
+      Alert.alert('Pick a race');
+      return;
+    }
+    if (!characterClass) {
+      Alert.alert('Pick a class');
+      return;
+    }
+
+    setSaving(true);
+    try {
+      await addCharacter({
+        name: trimmed,
+        race,
+        class: characterClass,
+        level,
+      });
+      router.back();
+    } catch (err) {
+      Alert.alert('Failed to save', err instanceof Error ? err.message : String(err));
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <ThemedView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+        <ThemedText type="subtitle" style={styles.fieldLabel}>
+          Name
+        </ThemedText>
+        <TextInput
+          value={name}
+          onChangeText={setName}
+          placeholder="Character name"
+          placeholderTextColor={Colors.light.placeholder}
+          style={[styles.input, { color: Colors.light.text, borderColor: Colors.light.border }]}
+          autoCapitalize="words"
+          returnKeyType="done"
+        />
+
+        <ThemedText type="subtitle" style={styles.fieldLabel}>
+          Race
+        </ThemedText>
+        <Pills
+          options={RACES}
+          labels={RACE_LABELS}
+          selected={race}
+          onSelect={setRace}
+          isDark={isDark}
+        />
+
+        <ThemedText type="subtitle" style={styles.fieldLabel}>
+          Class
+        </ThemedText>
+        <Pills
+          options={CLASSES}
+          labels={CLASS_LABELS}
+          selected={characterClass}
+          onSelect={setCharacterClass}
+          isDark={isDark}
+        />
+
+        <ThemedText type="subtitle" style={styles.fieldLabel}>
+          Level
+        </ThemedText>
+        <View style={styles.stepper}>
+          <Pressable
+            onPress={() => setLevel((l) => Math.max(MIN_LEVEL, l - 1))}
+            style={[styles.stepButton, { borderColor: Colors.light.border }]}
+            accessibilityRole="button"
+            accessibilityLabel="Decrease level"
+          >
+            <ThemedText style={styles.stepLabel}>−</ThemedText>
+          </Pressable>
+          <ThemedText style={styles.levelValue}>{level}</ThemedText>
+          <Pressable
+            onPress={() => setLevel((l) => Math.min(MAX_LEVEL, l + 1))}
+            style={[styles.stepButton, { borderColor: Colors.light.border }]}
+            accessibilityRole="button"
+            accessibilityLabel="Increase level"
+          >
+            <ThemedText style={styles.stepLabel}>+</ThemedText>
+          </Pressable>
+        </View>
+
+        <View style={styles.actions}>
+          <Pressable
+            onPress={() => router.back()}
+            style={[styles.button, styles.cancelButton]}
+          >
+            <ThemedText style={styles.onDarkLabel}>Cancel</ThemedText>
+          </Pressable>
+          <Pressable
+            onPress={save}
+            disabled={saving}
+            style={[styles.button, styles.saveButton, saving && styles.saveButtonDisabled]}
+          >
+            <ThemedText style={styles.onDarkLabel}>{saving ? 'Saving…' : 'Create'}</ThemedText>
+          </Pressable>
+        </View>
+      </ScrollView>
+    </ThemedView>
+  );
+}
+
+function Pills<T extends string>({
+  options,
+  labels,
+  selected,
+  onSelect,
+  isDark,
+}: {
+  options: readonly T[];
+  labels: Record<T, string>;
+  selected: T | null;
+  onSelect: (val: T) => void;
+  isDark: boolean;
+}) {
+  const inactiveBorder = Colors.light.border;
+  return (
+    <View style={styles.pills}>
+      {options.map((opt) => {
+        const active = selected === opt;
+        return (
+          <Pressable
+            key={opt}
+            onPress={() => onSelect(opt)}
+            style={[
+              styles.pill,
+              { borderColor: active ? Colors.light.tint : inactiveBorder },
+              active && styles.pillActive,
+            ]}
+            accessibilityRole="button"
+            accessibilityState={{ selected: active }}
+          >
+            <ThemedText style={[styles.pillLabel, active && styles.pillLabelActive]}>
+              {labels[opt]}
+            </ThemedText>
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  content: {
+    padding: 16,
+    gap: 8,
+    paddingBottom: 32,
+  },
+  fieldLabel: {
+    marginTop: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 16,
+  },
+  pills: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  pill: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  pillActive: {
+    backgroundColor: Colors.light.tint,
+  },
+  pillLabel: {
+    fontSize: 14,
+  },
+  pillLabelActive: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+  stepper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+  },
+  stepButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  stepLabel: {
+    fontSize: 20,
+    fontWeight: '600',
+  },
+  levelValue: {
+    fontSize: 20,
+    fontWeight: '600',
+    minWidth: 28,
+    textAlign: 'center',
+  },
+  actions: {
+    flexDirection: 'row',
+    gap: 12,
+    marginTop: 32,
+  },
+  button: {
+    flex: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  cancelButton: {
+    backgroundColor: Colors.light.secondary,
+  },
+  saveButton: {
+    backgroundColor: Colors.light.tint,
+  },
+  saveButtonDisabled: {
+    opacity: 0.6,
+  },
+  onDarkLabel: {
+    color: '#fff',
+    fontWeight: '600',
+  },
+});

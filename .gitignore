@@ -1,13 +1,16 @@
 # Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
 
 # dependencies
-node_modules/
+**/node_modules/
 
 # Expo
-.expo/
-dist/
-web-build/
-expo-env.d.ts
+**/.expo/
+**/dist/
+**/web-build/
+**/expo-env.d.ts
+
+# Turborepo
+**/.turbo/
 
 # Native
 .kotlin/
@@ -25,6 +28,7 @@ expo-env.d.ts
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+pnpm-debug.*
 
 # macOS
 .DS_Store
@@ -39,5 +43,5 @@ yarn-error.*
 app-example
 
 # generated native folders
-/ios
-/android
+**/ios
+**/android
