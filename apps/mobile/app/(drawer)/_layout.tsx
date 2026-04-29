@@ -6,6 +6,7 @@ import {
 } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import { Pressable, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CharacterChip } from '@/components/CharacterChip';
 import { ThemedText } from '@/components/themed-text';
@@ -15,13 +16,14 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 function DrawerContent(props: DrawerContentComponentProps) {
   const scheme = useColorScheme();
   const iconColor = Colors[scheme === 'dark' ? 'dark' : 'light'].text;
+  const insets = useSafeAreaInsets();
 
   return (
     <DrawerContentScrollView
       {...props}
       contentContainerStyle={styles.drawerContent}
     >
-      <View style={styles.drawerHeader}>
+      <View style={[styles.drawerHeader, { paddingTop: 16 + insets.top }]}>
         <ThemedText type="defaultSemiBold">Dungeon Tools</ThemedText>
         <Pressable
           onPress={() => props.navigation.closeDrawer()}

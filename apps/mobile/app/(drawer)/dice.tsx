@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
-import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
-  withTiming,
-} from 'react-native-reanimated';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Animated,
+  Easing,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { Image } from 'expo-image';
 import { Asset } from 'expo-asset';
+
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
-const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const DICE = {
   d4: {
@@ -137,19 +140,53 @@ type DieTileProps = {
 };
 
 function DieTile({ die, value, onRoll, tint, background, border }: DieTileProps) {
-  const opacity = useSharedValue(1);
-  const animatedStyle = useAnimatedStyle(() => ({ opacity: opacity.value }));
+  const opacity = useRef(new Animated.Value(1)).current;
+  const rotation = useRef(new Animated.Value(0)).current;
+  const rotationValue = useRef(0);
   const source = DICE[die][value as keyof (typeof DICE)[typeof die]];
 
   const handlePress = () => {
-    opacity.value = 0;
-    opacity.value = withTiming(1, { duration: 220 });
+    Animated.sequence([
+      Animated.timing(opacity, {
+        toValue: 0,
+        duration: 80,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacity, {
+        toValue: 1,
+        duration: 220,
+        easing: Easing.out(Easing.quad),
+        useNativeDriver: true,
+      }),
+    ]).start();
+
+    rotationValue.current += 360;
+    Animated.timing(rotation, {
+      toValue: rotationValue.current,
+      duration: 300,
+      easing: Easing.out(Easing.cubic),
+      useNativeDriver: true,
+    }).start();
+
     onRoll(die);
   };
 
+  const rotateInterpolation = rotation.interpolate({
+    inputRange: [0, 360],
+    outputRange: ['0deg', '360deg'],
+  });
+
   return (
     <View style={[styles.tile, { borderColor: border }]}>
-      <AnimatedImage source={source} style={[styles.image, animatedStyle]} contentFit="contain" />
+      <AnimatedImage
+        source={source}
+        style={[
+          styles.image,
+          { opacity, transform: [{ rotate: rotateInterpolation }] },
+        ]}
+        contentFit="contain"
+      />
       <Pressable
         onPress={handlePress}
         style={({ pressed }) => [
@@ -196,6 +233,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
+    userSelect: 'none',
   },
   buttonText: {
     textAlign: 'center',

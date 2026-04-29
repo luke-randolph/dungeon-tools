@@ -1,9 +1,9 @@
 import { spellWarnings, type Spell } from '@dungeon-tools/shared';
 import { useRouter } from 'expo-router';
-import { Alert } from 'react-native';
 
 import { useCharacters } from '@/stores/characters';
 import { useSpellList } from '@/stores/spellList';
+import { showConfirm } from '@/utils/dialogs';
 
 export function useToggleSpell() {
   const router = useRouter();
@@ -14,13 +14,13 @@ export function useToggleSpell() {
 
   return function toggle(spell: Spell) {
     if (!character) {
-      Alert.alert(
+      showConfirm(
         'Create a character first',
         "Spells are added to a specific character's list.",
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Create one', onPress: () => router.push('/characters/new') },
-        ],
+        {
+          confirmLabel: 'Create one',
+          onConfirm: () => router.push('/characters/new'),
+        },
       );
       return;
     }
@@ -32,13 +32,13 @@ export function useToggleSpell() {
 
     const warnings = spellWarnings(character, spell);
     if (warnings.length > 0) {
-      Alert.alert(
+      showConfirm(
         `Add ${spell.name}?`,
         warnings.map((w) => w.message).join('\n\n'),
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Add anyway', onPress: () => addSpell(character.id, spell.key) },
-        ],
+        {
+          confirmLabel: 'Add anyway',
+          onConfirm: () => addSpell(character.id, spell.key),
+        },
       );
     } else {
       addSpell(character.id, spell.key);

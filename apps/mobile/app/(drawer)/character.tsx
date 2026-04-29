@@ -9,7 +9,6 @@ import {
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -22,6 +21,7 @@ import { ThemedView } from "@/components/themed-view";
 import { Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useCharacters } from "@/stores/characters";
+import { showAlert, showConfirm } from "@/utils/dialogs";
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
@@ -92,11 +92,11 @@ export default function CharacterScreen() {
   async function saveEdit() {
     const trimmed = name.trim();
     if (!trimmed) {
-      Alert.alert("Name required");
+      showAlert("Name required");
       return;
     }
     if (!race || !characterClass) {
-      Alert.alert("Pick a race and class");
+      showAlert("Pick a race and class");
       return;
     }
     setSaving(true);
@@ -109,7 +109,7 @@ export default function CharacterScreen() {
       });
       setEditing(false);
     } catch (err) {
-      Alert.alert(
+      showAlert(
         "Failed to save",
         err instanceof Error ? err.message : String(err),
       );
@@ -119,19 +119,16 @@ export default function CharacterScreen() {
   }
 
   function confirmDelete() {
-    Alert.alert(
+    showConfirm(
       `Delete ${character!.name}?`,
       "Their spell list will be deleted too. This cannot be undone.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: async () => {
-            await removeCharacter(character!.id);
-          },
+      {
+        confirmLabel: "Delete",
+        destructive: true,
+        onConfirm: async () => {
+          await removeCharacter(character!.id);
         },
-      ],
+      },
     );
   }
 

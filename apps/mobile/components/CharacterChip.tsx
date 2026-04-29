@@ -1,8 +1,9 @@
 import { CLASS_LABELS } from '@dungeon-tools/shared';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import {
+  Dimensions,
   Modal,
   Pressable,
   StyleSheet,
@@ -14,17 +15,39 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
 
+const MENU_MIN_WIDTH = 220;
+const VIEWPORT_MARGIN = 8;
+
 export function CharacterChip() {
   const router = useRouter();
   const character = useCharacters((s) => s.character);
   const characters = useCharacters((s) => s.characters);
   const setActive = useCharacters((s) => s.setActive);
   const [open, setOpen] = useState(false);
+  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
+  const triggerRef = useRef<View>(null);
   const scheme = useColorScheme();
   const isDark = scheme === 'dark';
 
   function close() {
     setOpen(false);
+  }
+
+  function openMenu() {
+    const node = triggerRef.current;
+    if (!node) {
+      setOpen(true);
+      return;
+    }
+    node.measureInWindow((x, y, _w, h) => {
+      const viewportWidth = Dimensions.get('window').width;
+      const clampedLeft = Math.max(
+        VIEWPORT_MARGIN,
+        Math.min(x, viewportWidth - MENU_MIN_WIDTH - VIEWPORT_MARGIN),
+      );
+      setPosition({ top: y + h + 4, left: clampedLeft });
+      setOpen(true);
+    });
   }
 
   async function pick(id: number) {
@@ -45,7 +68,8 @@ export function CharacterChip() {
   return (
     <>
       <Pressable
-        onPress={() => setOpen(true)}
+        ref={triggerRef}
+        onPress={openMenu}
         style={styles.chip}
         accessibilityRole="button"
         accessibilityLabel={
@@ -78,7 +102,11 @@ export function CharacterChip() {
           <View
             style={[
               styles.menu,
-              { backgroundColor: isDark ? '#1c1c1e' : '#fff' },
+              {
+                backgroundColor: isDark ? '#1c1c1e' : '#fff',
+                top: position?.top ?? 60,
+                left: position?.left ?? 12,
+              },
             ]}
             onStartShouldSetResponder={() => true}
           >
@@ -157,15 +185,13 @@ const styles = StyleSheet.create({
   backdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.25)',
-    paddingTop: 60,
-    paddingHorizontal: 12,
   },
   menu: {
+    position: 'absolute',
     borderRadius: 12,
     paddingVertical: 6,
-    minWidth: 220,
+    minWidth: MENU_MIN_WIDTH,
     maxWidth: 320,
-    alignSelf: 'flex-start',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,

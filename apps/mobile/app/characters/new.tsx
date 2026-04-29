@@ -9,7 +9,6 @@ import {
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
-  Alert,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -22,6 +21,7 @@ import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
+import { showAlert } from '@/utils/dialogs';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
@@ -41,15 +41,15 @@ export default function NewCharacterScreen() {
   async function save() {
     const trimmed = name.trim();
     if (!trimmed) {
-      Alert.alert('Name required', 'Give your character a name.');
+      showAlert('Name required', 'Give your character a name.');
       return;
     }
     if (!race) {
-      Alert.alert('Pick a race');
+      showAlert('Pick a race');
       return;
     }
     if (!characterClass) {
-      Alert.alert('Pick a class');
+      showAlert('Pick a class');
       return;
     }
 
@@ -63,7 +63,7 @@ export default function NewCharacterScreen() {
       });
       router.back();
     } catch (err) {
-      Alert.alert('Failed to save', err instanceof Error ? err.message : String(err));
+      showAlert('Failed to save', err instanceof Error ? err.message : String(err));
     } finally {
       setSaving(false);
     }

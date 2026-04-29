@@ -1,4 +1,4 @@
-import { Alert, Pressable, ScrollView, StyleSheet } from 'react-native';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 
 import { ExternalLink } from '@/components/external-link';
 import { ThemedText } from '@/components/themed-text';
@@ -6,25 +6,23 @@ import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { resetDatabase } from '@/db';
 import { useCharacters } from '@/stores/characters';
+import { showConfirm } from '@/utils/dialogs';
 
 export default function SettingsScreen() {
   const refresh = useCharacters((s) => s.refresh);
 
   function confirmReset() {
-    Alert.alert(
+    showConfirm(
       'Reset database?',
       'This deletes all characters and spell lists on this device.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Reset',
-          style: 'destructive',
-          onPress: async () => {
-            await resetDatabase();
-            await refresh();
-          },
+      {
+        confirmLabel: 'Reset',
+        destructive: true,
+        onConfirm: async () => {
+          await resetDatabase();
+          await refresh();
         },
-      ],
+      },
     );
   }
 

@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 import { SCHEMA_SQL } from './schema';
+import { seedIfEmpty } from './seed';
 
 let dbPromise: Promise<SQLite.SQLiteDatabase> | null = null;
 
@@ -13,6 +14,7 @@ export function getDb(): Promise<SQLite.SQLiteDatabase> {
 export async function runMigrations(): Promise<void> {
   const db = await getDb();
   await db.execAsync(SCHEMA_SQL);
+  await seedIfEmpty(db);
 }
 
 export async function resetDatabase(): Promise<void> {
@@ -23,4 +25,5 @@ export async function resetDatabase(): Promise<void> {
     DROP TABLE IF EXISTS meta;
   `);
   await db.execAsync(SCHEMA_SQL);
+  await seedIfEmpty(db);
 }
