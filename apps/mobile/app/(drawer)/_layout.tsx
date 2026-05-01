@@ -9,7 +9,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CharacterChip } from '@/components/CharacterChip';
-import { ThemedText } from '@/components/themed-text';
+import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 
@@ -48,6 +48,8 @@ export default function DrawerLayout() {
         drawerPosition: 'right',
         headerLeft: () => <CharacterChip />,
         headerTitle: () => null,
+        headerLeftContainerStyle: { paddingTop: 8 },
+        headerRightContainerStyle: { paddingTop: 8, paddingRight: 4 },
       }}
     >
       <Drawer.Screen

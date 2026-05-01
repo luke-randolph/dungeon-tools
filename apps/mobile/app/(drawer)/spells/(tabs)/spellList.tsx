@@ -4,8 +4,8 @@ import { useEffect, useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
 import { SpellRow } from '@/components/SpellRow';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { ALL_SPELLS } from '@/data/spells';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
 import { useCharacters } from '@/stores/characters';

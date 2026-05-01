@@ -12,8 +12,8 @@ import { Asset } from 'expo-asset';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
 
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
 
@@ -111,7 +111,7 @@ export default function DiceScreen() {
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <ThemedText type="title">Dice</ThemedText>
+        <ThemedText type="title" style={styles.title}>Dice</ThemedText>
         <View style={styles.grid}>
           {DICE_ORDER.map((die) => (
             <DieTile
@@ -210,6 +210,9 @@ const styles = StyleSheet.create({
   scroll: {
     padding: 16,
     gap: 16,
+  },
+  title: {
+    textAlign: 'center',
   },
   grid: {
     flexDirection: 'row',

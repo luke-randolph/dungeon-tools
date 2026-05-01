@@ -11,6 +11,7 @@ export default function Root({ children }: PropsWithChildren) {
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <title>Dungeon Tools</title>
         <ScrollViewStyleReset />
         <style dangerouslySetInnerHTML={{ __html: previewStyles }} />
       </head>

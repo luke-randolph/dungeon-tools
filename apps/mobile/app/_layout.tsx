@@ -1,4 +1,5 @@
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
@@ -34,6 +35,9 @@ const lightNavTheme = {
 export default function RootLayout() {
   const [ready, setReady] = useState(false);
   const refreshActive = useCharacters((s) => s.refresh);
+  const [fontsLoaded] = useFonts({
+    AncientMedium: require('@/assets/fonts/Ancient Medium.ttf'),
+  });
 
   useEffect(() => {
     (async () => {
@@ -42,12 +46,17 @@ export default function RootLayout() {
         await refreshActive();
       } finally {
         setReady(true);
-        await SplashScreen.hideAsync().catch(() => {});
       }
     })();
   }, [refreshActive]);
 
-  if (!ready) return null;
+  useEffect(() => {
+    if (ready && fontsLoaded) {
+      SplashScreen.hideAsync().catch(() => {});
+    }
+  }, [ready, fontsLoaded]);
+
+  if (!ready || !fontsLoaded) return null;
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
