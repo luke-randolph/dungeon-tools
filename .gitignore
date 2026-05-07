@@ -36,6 +36,8 @@ pnpm-debug.*
 
 # local env files
 .env*.local
+**/.dev.vars
+**/.wrangler/
 
 # typescript
 *.tsbuildinfo

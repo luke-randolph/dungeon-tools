@@ -21,7 +21,7 @@ export function DialogHost() {
   const palette = isDark ? Colors.dark : Colors.light;
 
   const cardBg = isDark ? '#1c1c1e' : palette.background;
-  const confirmBg = destructive ? palette.destructive : palette.tint;
+  const confirmBg = destructive ? palette.destructive : palette.primary;
 
   return (
     <Modal

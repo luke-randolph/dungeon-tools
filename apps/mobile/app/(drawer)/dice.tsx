@@ -92,8 +92,7 @@ export default function DiceScreen() {
     d20: 20,
   });
 
-  const tint = useThemeColor({}, 'tint');
-  const background = useThemeColor({}, 'background');
+  const primary = useThemeColor({}, 'primary');
   const border = useThemeColor({}, 'border');
 
   useEffect(() => {
@@ -119,8 +118,7 @@ export default function DiceScreen() {
               die={die}
               value={values[die]}
               onRoll={roll}
-              tint={tint}
-              background={background}
+              primary={primary}
               border={border}
             />
           ))}
@@ -134,33 +132,16 @@ type DieTileProps = {
   die: DieKey;
   value: number;
   onRoll: (die: DieKey) => void;
-  tint: string;
-  background: string;
+  primary: string;
   border: string;
 };
 
-function DieTile({ die, value, onRoll, tint, background, border }: DieTileProps) {
-  const opacity = useRef(new Animated.Value(1)).current;
+function DieTile({ die, value, onRoll, primary, border }: DieTileProps) {
   const rotation = useRef(new Animated.Value(0)).current;
   const rotationValue = useRef(0);
   const source = DICE[die][value as keyof (typeof DICE)[typeof die]];
 
   const handlePress = () => {
-    Animated.sequence([
-      Animated.timing(opacity, {
-        toValue: 0,
-        duration: 80,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }),
-      Animated.timing(opacity, {
-        toValue: 1,
-        duration: 220,
-        easing: Easing.out(Easing.quad),
-        useNativeDriver: true,
-      }),
-    ]).start();
-
     rotationValue.current += 360;
     Animated.timing(rotation, {
       toValue: rotationValue.current,
@@ -183,7 +164,7 @@ function DieTile({ die, value, onRoll, tint, background, border }: DieTileProps)
         source={source}
         style={[
           styles.image,
-          { opacity, transform: [{ rotate: rotateInterpolation }] },
+          { transform: [{ rotate: rotateInterpolation }] },
         ]}
         contentFit="contain"
       />
@@ -191,11 +172,9 @@ function DieTile({ die, value, onRoll, tint, background, border }: DieTileProps)
         onPress={handlePress}
         style={({ pressed }) => [
           styles.button,
-          { backgroundColor: tint, opacity: pressed ? 0.75 : 1 },
+          { backgroundColor: primary, opacity: pressed ? 0.75 : 1 },
         ]}>
-        <ThemedText
-          type="defaultSemiBold"
-          style={[styles.buttonText, { color: background }]}>
+        <ThemedText type="defaultSemiBold" style={styles.buttonText}>
           Roll D{SIDES[die]}
         </ThemedText>
       </Pressable>
@@ -240,5 +219,6 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     textAlign: 'center',
+    color: '#fff',
   },
 });

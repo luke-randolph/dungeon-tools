@@ -22,4 +22,26 @@ CREATE TABLE IF NOT EXISTS spell_list (
   added_at     INTEGER NOT NULL,
   PRIMARY KEY (character_id, spell_key)
 );
+
+CREATE TABLE IF NOT EXISTS chat_conversations (
+  id            INTEGER PRIMARY KEY AUTOINCREMENT,
+  character_id  INTEGER REFERENCES characters(id) ON DELETE SET NULL,
+  title         TEXT,
+  created_at    INTEGER NOT NULL,
+  updated_at    INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id              TEXT PRIMARY KEY,
+  conversation_id INTEGER NOT NULL REFERENCES chat_conversations(id) ON DELETE CASCADE,
+  role            TEXT NOT NULL CHECK (role IN ('user','assistant','tool','system')),
+  content         TEXT NOT NULL DEFAULT '',
+  tool_calls      TEXT,
+  tool_call_id    TEXT,
+  tool_name       TEXT,
+  created_at      INTEGER NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_chat_messages_conv
+  ON chat_messages(conversation_id, created_at);
 `;

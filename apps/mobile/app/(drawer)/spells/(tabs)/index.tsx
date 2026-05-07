@@ -1,28 +1,22 @@
-import { useRouter } from 'expo-router';
-import { useEffect, useMemo, useState } from 'react';
-import {
-  FlatList,
-  Pressable,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { useRouter } from "expo-router";
+import { useEffect, useMemo, useState } from "react";
+import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
 
-import { SpellRow } from '@/components/SpellRow';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
-import { searchSpells } from '@/data/spells';
-import { useToggleSpell } from '@/hooks/useToggleSpell';
-import { useCharacters } from '@/stores/characters';
-import { useSpellList } from '@/stores/spellList';
+import { SpellRow } from "@/components/SpellRow";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import { Colors } from "@/constants/theme";
+import { searchSpells } from "@/data/spells";
+import { useColorScheme } from "@/hooks/use-color-scheme";
+import { useToggleSpell } from "@/hooks/useToggleSpell";
+import { useCharacters } from "@/stores/characters";
+import { useSpellList } from "@/stores/spellList";
 
 const LEVELS: (number | null)[] = [null, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 function levelButtonLabel(level: number | null): string {
-  if (level == null) return 'All';
-  if (level === 0) return 'Cant';
+  if (level == null) return "All";
+  if (level === 0) return "Cant";
   return String(level);
 }
 
@@ -33,11 +27,11 @@ export default function AllSpellsScreen() {
   const loadFor = useSpellList((s) => s.loadFor);
   const toggle = useToggleSpell();
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [levelFilter, setLevelFilter] = useState<number | null>(null);
 
   const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
+  const isDark = scheme === "dark";
 
   useEffect(() => {
     if (character) loadFor(character.id);
@@ -59,7 +53,7 @@ export default function AllSpellsScreen() {
           style={[
             styles.search,
             {
-              color: isDark ? '#fff' : '#000',
+              color: isDark ? "#fff" : "#000",
               borderColor: Colors.light.border,
             },
           ]}
@@ -82,8 +76,12 @@ export default function AllSpellsScreen() {
                 style={[
                   styles.levelPill,
                   {
-                    borderColor: active ? Colors.light.tint : Colors.light.border,
-                    backgroundColor: active ? Colors.light.tint : 'transparent',
+                    borderColor: active
+                      ? Colors.light.primary
+                      : Colors.light.border,
+                    backgroundColor: active
+                      ? Colors.light.primary
+                      : "transparent",
                   },
                 ]}
               >
@@ -135,8 +133,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingTop: 12,
+    paddingBottom: 8,
     fontSize: 15,
+    backgroundColor: "#fff",
   },
   levelRow: {
     gap: 6,
@@ -148,17 +148,17 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1,
     minWidth: 40,
-    alignItems: 'center',
+    alignItems: "center",
   },
   levelLabel: {
     fontSize: 13,
   },
   levelLabelActive: {
-    color: '#fff',
-    fontWeight: '600',
+    color: "#fff",
+    fontWeight: "600",
   },
   empty: {
     padding: 32,
-    alignItems: 'center',
+    alignItems: "center",
   },
 });

@@ -278,7 +278,7 @@ function Pills<T extends string>({
             onPress={() => onSelect(opt)}
             style={[
               styles.pill,
-              { borderColor: active ? Colors.light.tint : inactiveBorder },
+              { borderColor: active ? Colors.light.primary : inactiveBorder },
               active && styles.pillActive,
             ]}
           >
@@ -316,7 +316,7 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     borderWidth: 1,
   },
-  pillActive: { backgroundColor: Colors.light.tint },
+  pillActive: { backgroundColor: Colors.light.primary },
   pillLabel: { fontSize: 14 },
   pillLabelActive: { color: "#fff", fontWeight: "600" },
   stepper: { flexDirection: "row", alignItems: "center", gap: 16 },
@@ -343,14 +343,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   secondaryButton: { flex: 1, backgroundColor: Colors.light.secondary },
-  primaryButton: { flex: 1, backgroundColor: Colors.light.tint },
+  primaryButton: { flex: 1, backgroundColor: Colors.light.primary },
   onDarkLabel: { color: "#fff", fontWeight: "600" },
   standaloneButton: {
     marginTop: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.light.primary,
     alignSelf: "flex-start",
   },
   emptyState: {

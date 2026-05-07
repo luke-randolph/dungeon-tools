@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dungeon-tools-api",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-05-06",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  // Per-IP rate limit. Each user message can produce up to MAX_STEPS (5) POSTs
+  // because of the client-side tool loop, so 25/min ≈ 5 full user-turns/min.
+  "ratelimits": [
+    {
+      "name": "CHAT_RATE_LIMIT",
+      "namespace_id": "1001",
+      "simple": { "limit": 25, "period": 60 }
+    }
+  ],
+  "routes": [
+    {
+      "pattern": "dungeon-tools-api.luke-randolph.com",
+      "custom_domain": true
+    }
+  ]
+  // GEMINI_API_KEY is provisioned via `wrangler secret put GEMINI_API_KEY`.
+}

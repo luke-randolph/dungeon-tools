@@ -20,6 +20,8 @@ export async function runMigrations(): Promise<void> {
 export async function resetDatabase(): Promise<void> {
   const db = await getDb();
   await db.execAsync(`
+    DROP TABLE IF EXISTS chat_messages;
+    DROP TABLE IF EXISTS chat_conversations;
     DROP TABLE IF EXISTS spell_list;
     DROP TABLE IF EXISTS characters;
     DROP TABLE IF EXISTS meta;

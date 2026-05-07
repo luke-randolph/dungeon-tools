@@ -8,6 +8,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 
+import { ChatPanel } from '@/components/chat/ChatPanel';
+import { GoblinFab } from '@/components/chat/GoblinFab';
 import { DialogHost } from '@/components/DialogHost';
 import { Colors } from '@/constants/theme';
 import { runMigrations } from '@/db';
@@ -23,10 +25,10 @@ const lightNavTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: Colors.light.background,
+    background: Colors.light.surface,
     card: Colors.light.background,
     text: Colors.light.text,
-    primary: Colors.light.tint,
+    primary: Colors.light.primary,
     border: '#d4c4a0',
     notification: Colors.light.destructive,
   },
@@ -70,6 +72,8 @@ export default function RootLayout() {
             />
           </Stack>
           <DialogHost />
+          <ChatPanel />
+          <GoblinFab />
           <StatusBar style="auto" />
         </ThemeProvider>
       </SafeAreaProvider>

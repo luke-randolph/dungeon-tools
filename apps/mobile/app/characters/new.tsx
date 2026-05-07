@@ -174,7 +174,7 @@ function Pills<T extends string>({
             onPress={() => onSelect(opt)}
             style={[
               styles.pill,
-              { borderColor: active ? Colors.light.tint : inactiveBorder },
+              { borderColor: active ? Colors.light.primary : inactiveBorder },
               active && styles.pillActive,
             ]}
             accessibilityRole="button"
@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   pillActive: {
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.light.primary,
   },
   pillLabel: {
     fontSize: 14,
@@ -267,7 +267,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.secondary,
   },
   saveButton: {
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.light.primary,
   },
   saveButtonDisabled: {
     opacity: 0.6,

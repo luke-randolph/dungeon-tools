@@ -2,7 +2,22 @@
   "name": "@dungeon-tools/api",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "echo 'api not implemented yet'"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.0",
+    "@dungeon-tools/shared": "workspace:*",
+    "ai": "^6.0.0",
+    "hono": "^4.12.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260506.0",
+    "typescript": "~5.9.2",
+    "wrangler": "^4.88.0"
   }
 }
