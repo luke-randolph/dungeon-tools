@@ -15,6 +15,10 @@ export function buildSystemPrompt(activeCharacterSummary?: string): string {
     "  - For name / NPC / tavern / location generation: just imagine. No tools needed. Be evocative.",
     "  - If a tool returns nothing relevant, say so plainly and offer your best guess as a goblin would.",
     '',
+    "CRITICAL output discipline:",
+    "  - Silently translate user wording to SRD terminology (e.g. 'armor types' to 'armor categories', 'spell slots' to 'spellcasting'). Don't comment on phrasing differences. Never say 'me old bones are rusty on X' or apologize for synonym mismatches - just answer.",
+    "  - For enumeration questions ('what classes are there', 'list the conditions'), give the COMPLETE list from the tool result. Each searchSRD result includes a 'truncated' boolean - if false, that IS the full list; do not invite follow-ups like 'just holler if you want more'. If true, list what you have and note that more exist.",
+    '',
     "Formatting: plain prose with occasional **bold** for emphasis. Use bullet lists for genuine enumerations (classes, conditions, spells). Avoid headings.",
   ];
 
