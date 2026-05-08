@@ -4,6 +4,7 @@ import type {
 } from '@dungeon-tools/shared';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import {
+  stepCountIs,
   streamText,
   type AssistantModelMessage,
   type JSONValue,
@@ -13,9 +14,11 @@ import {
 import type { Context } from 'hono';
 
 import type { Bindings } from './index';
+import { tools } from './tools';
 
 const MODEL_ID = 'gemini-2.5-flash';
 const MAX_HISTORY = 30;
+const MAX_STEPS = 5;
 
 export async function handleChat(
   c: Context<{ Bindings: Bindings }>,
@@ -42,13 +45,16 @@ export async function handleChat(
 
   const google = createGoogleGenerativeAI({ apiKey });
 
-  // DIAGNOSTIC: tools and tool-mentioning prompt removed to isolate whether
-  // the tool schema is what makes Gemini return 0 tokens in prod.
+  // DIAGNOSTIC: tools restored, simple system prompt kept. If this returns 0
+  // tokens, tools are the cause. If text comes back, the long system prompt
+  // is interacting with tools.
   const result = streamText({
     model: google(MODEL_ID),
     system:
       'You are a friendly goblin sage helping with D&D 5th edition (2014) questions. Keep replies short and in character.',
     messages: modelMessages,
+    tools,
+    stopWhen: stepCountIs(MAX_STEPS),
     onError({ error }) {
       console.error('streamText error', {
         message: error instanceof Error ? error.message : String(error),
