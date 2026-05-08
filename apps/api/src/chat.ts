@@ -14,6 +14,7 @@ import {
 import type { Context } from 'hono';
 
 import type { Bindings } from './index';
+import { buildSystemPrompt } from './system-prompt';
 import { tools } from './tools';
 
 const MODEL_ID = 'gemini-2.5-flash';
@@ -45,15 +46,16 @@ export async function handleChat(
 
   const google = createGoogleGenerativeAI({ apiKey });
 
-  // DIAGNOSTIC: tools restored, simple system prompt kept. If this returns 0
-  // tokens, tools are the cause. If text comes back, the long system prompt
-  // is interacting with tools.
+  const hasCharacter = (body.activeCharacterSummary ?? '').trim().length > 0;
+  const activeTools = hasCharacter
+    ? tools
+    : { searchSpells: tools.searchSpells, searchSRD: tools.searchSRD };
+
   const result = streamText({
     model: google(MODEL_ID),
-    system:
-      'You are a friendly goblin sage helping with D&D 5th edition (2014) questions. Keep replies short and in character.',
+    system: buildSystemPrompt(body.activeCharacterSummary),
     messages: modelMessages,
-    tools,
+    tools: activeTools,
     stopWhen: stepCountIs(MAX_STEPS),
     onError({ error }) {
       console.error('streamText error', {
