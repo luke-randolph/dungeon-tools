@@ -4,7 +4,6 @@ import type {
 } from '@dungeon-tools/shared';
 import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import {
-  stepCountIs,
   streamText,
   type AssistantModelMessage,
   type JSONValue,
@@ -14,12 +13,9 @@ import {
 import type { Context } from 'hono';
 
 import type { Bindings } from './index';
-import { buildSystemPrompt } from './system-prompt';
-import { tools } from './tools';
 
 const MODEL_ID = 'gemini-2.5-flash';
 const MAX_HISTORY = 30;
-const MAX_STEPS = 5;
 
 export async function handleChat(
   c: Context<{ Bindings: Bindings }>,
@@ -46,17 +42,13 @@ export async function handleChat(
 
   const google = createGoogleGenerativeAI({ apiKey });
 
-  const hasCharacter = (body.activeCharacterSummary ?? '').trim().length > 0;
-  const activeTools = hasCharacter
-    ? tools
-    : { searchSpells: tools.searchSpells, searchSRD: tools.searchSRD };
-
+  // DIAGNOSTIC: tools and tool-mentioning prompt removed to isolate whether
+  // the tool schema is what makes Gemini return 0 tokens in prod.
   const result = streamText({
     model: google(MODEL_ID),
-    system: buildSystemPrompt(body.activeCharacterSummary),
+    system:
+      'You are a friendly goblin sage helping with D&D 5th edition (2014) questions. Keep replies short and in character.',
     messages: modelMessages,
-    tools: activeTools,
-    stopWhen: stepCountIs(MAX_STEPS),
     onError({ error }) {
       console.error('streamText error', {
         message: error instanceof Error ? error.message : String(error),
