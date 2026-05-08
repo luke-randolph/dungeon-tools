@@ -69,8 +69,8 @@ export default function DrawerLayout() {
         headerTitle: () => null,
         headerStyle: {
           backgroundColor: palette.surface,
-          borderWidth: 2,
-          borderColor: "#000",
+          borderBottomWidth: 2,
+          borderBottomColor: "#000",
         },
         headerTintColor: palette.surfaceText,
         headerLeftContainerStyle: { paddingTop: 8 },

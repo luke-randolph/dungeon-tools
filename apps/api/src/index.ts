@@ -37,10 +37,7 @@ app.post('/chat', async (c) => {
     'unknown';
   const { success } = await c.env.CHAT_RATE_LIMIT.limit({ key: ip });
   if (!success) {
-    return c.json(
-      { error: 'rate limit exceeded — slow down a bit, traveller' },
-      429,
-    );
+    return c.json({ error: 'rate limit exceeded' }, 429);
   }
   return handleChat(c);
 });

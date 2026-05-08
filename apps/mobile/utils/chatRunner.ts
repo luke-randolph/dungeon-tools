@@ -31,8 +31,7 @@ export async function runChatStep(signal: AbortSignal): Promise<boolean> {
   });
 
   if (!response.ok) {
-    const text = await response.text().catch(() => '');
-    throw new Error(`chat request failed (${response.status}): ${text}`);
+    throw new Error(await goblinErrorMessage(response));
   }
   if (!response.body) {
     throw new Error('chat response has no body');
@@ -116,6 +115,30 @@ export async function runChatStep(signal: AbortSignal): Promise<boolean> {
   }
 
   return true;
+}
+
+async function goblinErrorMessage(response: Response): Promise<string> {
+  const detail = await response
+    .json()
+    .then((j: { error?: unknown }) =>
+      typeof j?.error === 'string' ? j.error : '',
+    )
+    .catch(() => '');
+  switch (response.status) {
+    case 429:
+      return 'slow down a bit, traveller';
+    case 400:
+      if (detail === 'message too long') {
+        return 'that scroll is too long for me to read, friend';
+      }
+      return 'something about that message confused me';
+    case 500:
+    case 502:
+    case 503:
+      return 'i tripped on a rock — try me again in a moment';
+    default:
+      return `i am unwell, friend (${response.status})`;
+  }
 }
 
 export function appendChatMessage(message: ChatMessage): void {

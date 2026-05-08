@@ -20,6 +20,9 @@ import { tools } from './tools';
 const MODEL_ID = 'gemini-2.5-flash';
 const MAX_HISTORY = 30;
 const MAX_STEPS = 5;
+const MAX_OUTPUT_TOKENS = 2048;
+const MAX_MESSAGE_CHARS = 4096;
+const MAX_CHARACTER_SUMMARY_CHARS = 2048;
 
 export async function handleChat(
   c: Context<{ Bindings: Bindings }>,
@@ -42,21 +45,39 @@ export async function handleChat(
   }
 
   const trimmed = messages.slice(-MAX_HISTORY);
+  for (const m of trimmed) {
+    if (
+      m.role === 'user' &&
+      typeof m.content === 'string' &&
+      m.content.length > MAX_MESSAGE_CHARS
+    ) {
+      return c.json({ error: 'message too long' }, 400);
+    }
+  }
+
+  // Drop silently if oversized — legit clients build a tiny string.
+  const summary =
+    typeof body.activeCharacterSummary === 'string' &&
+    body.activeCharacterSummary.length <= MAX_CHARACTER_SUMMARY_CHARS
+      ? body.activeCharacterSummary
+      : undefined;
+
   const modelMessages = toModelMessages(trimmed);
 
   const google = createGoogleGenerativeAI({ apiKey });
 
-  const hasCharacter = (body.activeCharacterSummary ?? '').trim().length > 0;
+  const hasCharacter = (summary ?? '').trim().length > 0;
   const activeTools = hasCharacter
     ? tools
     : { searchSpells: tools.searchSpells, searchSRD: tools.searchSRD };
 
   const result = streamText({
     model: google(MODEL_ID),
-    system: buildSystemPrompt(body.activeCharacterSummary),
+    system: buildSystemPrompt(summary),
     messages: modelMessages,
     tools: activeTools,
     stopWhen: stepCountIs(MAX_STEPS),
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
     onError({ error }) {
       console.error('streamText error', {
         message: error instanceof Error ? error.message : String(error),
