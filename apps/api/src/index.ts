@@ -30,6 +30,28 @@ app.use(
 
 app.get('/', (c) => c.text('dungeon-tools api ok'));
 
+app.get('/chat-debug', async (c) => {
+  const apiKey = c.env.GEMINI_API_KEY;
+  if (!apiKey) return c.json({ error: 'no key' }, 500);
+
+  const url =
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=' +
+    apiKey;
+  const reqBody = {
+    contents: [{ role: 'user', parts: [{ text: 'Say hello in one short sentence.' }] }],
+  };
+
+  const r = await fetch(url, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify(reqBody),
+  });
+  const status = r.status;
+  const raw = await r.text();
+  console.log('chat-debug', JSON.stringify({ status, raw }, null, 2));
+  return c.json({ status, raw });
+});
+
 app.post('/chat', async (c) => {
   const ip =
     c.req.header('cf-connecting-ip') ??
