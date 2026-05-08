@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
   tail: {
     position: 'absolute',
     bottom: -8,
-    left: 18,
+    left: 24,
     width: 0,
     height: 0,
     borderLeftWidth: 6,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   tailBorder: {
     bottom: -10,
-    left: 17,
+    left: 23,
     borderLeftWidth: 7,
     borderRightWidth: 7,
     borderTopWidth: 9,
