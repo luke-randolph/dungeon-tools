@@ -10,6 +10,13 @@ on:
       - '.github/workflows/deploy-api.yml'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-api-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -24,6 +31,8 @@ jobs:
           cache: pnpm
 
       - run: pnpm install --frozen-lockfile
+
+      - run: pnpm --filter @dungeon-tools/api exec tsc --noEmit
 
       - run: pnpm exec wrangler deploy
         working-directory: apps/api

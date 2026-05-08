@@ -19,7 +19,8 @@
   "routes": [
     {
       "pattern": "dungeon-tools-api.luke-randolph.com",
-      "custom_domain": true
+      "custom_domain": true,
+      "zone_name": "luke-randolph.com"
     }
   ]
   // GEMINI_API_KEY is provisioned via `wrangler secret put GEMINI_API_KEY`.
