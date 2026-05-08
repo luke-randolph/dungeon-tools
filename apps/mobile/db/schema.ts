@@ -23,6 +23,13 @@ CREATE TABLE IF NOT EXISTS spell_list (
   PRIMARY KEY (character_id, spell_key)
 );
 
+CREATE TABLE IF NOT EXISTS class_features (
+  character_id INTEGER NOT NULL REFERENCES characters(id) ON DELETE CASCADE,
+  feature_key  TEXT    NOT NULL,
+  added_at     INTEGER NOT NULL,
+  PRIMARY KEY (character_id, feature_key)
+);
+
 CREATE TABLE IF NOT EXISTS chat_conversations (
   id            INTEGER PRIMARY KEY AUTOINCREMENT,
   character_id  INTEGER REFERENCES characters(id) ON DELETE SET NULL,

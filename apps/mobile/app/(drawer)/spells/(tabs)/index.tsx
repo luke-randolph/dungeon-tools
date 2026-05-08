@@ -111,6 +111,7 @@ export default function AllSpellsScreen() {
           />
         )}
         keyboardShouldPersistTaps="handled"
+        contentContainerStyle={styles.listContent}
         ListEmptyComponent={
           <View style={styles.empty}>
             <ThemedText>No spells match.</ThemedText>
@@ -156,6 +157,10 @@ const styles = StyleSheet.create({
   levelLabelActive: {
     color: "#fff",
     fontWeight: "600",
+  },
+  // Clears the goblin FAB at the bottom-right.
+  listContent: {
+    paddingBottom: 120,
   },
   empty: {
     padding: 32,

@@ -104,6 +104,26 @@ export default function DrawerLayout() {
         }}
       />
       <Drawer.Screen
+        name="features"
+        options={{
+          title: "Class Features",
+          drawerLabel: "Class Features",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="ribbon-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="traits"
+        options={{
+          title: "Traits",
+          drawerLabel: "Traits",
+          drawerIcon: ({ color, size }) => (
+            <Ionicons name="leaf-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Drawer.Screen
         name="dice"
         options={{
           title: "Dice",

@@ -149,7 +149,8 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    paddingBottom: 40,
+    // Bottom padding clears the goblin FAB.
+    paddingBottom: 120,
     gap: 8,
   },
   subtitle: {

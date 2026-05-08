@@ -6,6 +6,7 @@ import {
   type CharacterClass,
   type CharacterRace,
 } from "@dungeon-tools/shared";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import {
@@ -19,6 +20,7 @@ import {
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { Colors } from "@/constants/theme";
+import { getClassDetail } from "@/data/classes";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useCharacters } from "@/stores/characters";
 import { showAlert, showConfirm } from "@/utils/dialogs";
@@ -232,6 +234,29 @@ export default function CharacterScreen() {
           <Field label="Level" value={String(character.level)} />
         </View>
 
+        {(() => {
+          const detail = getClassDetail(character.class);
+          if (!detail) return null;
+          return (
+            <View style={styles.classBody}>
+              <ThemedText style={styles.classBodyText}>{detail.body}</ThemedText>
+            </View>
+          );
+        })()}
+
+        <View style={styles.links}>
+          <LinkRow
+            icon="ribbon-outline"
+            label="Class Features"
+            onPress={() => router.push("/features")}
+          />
+          <LinkRow
+            icon="leaf-outline"
+            label="Traits"
+            onPress={() => router.push("/traits")}
+          />
+        </View>
+
         <View style={styles.actions}>
           <Pressable
             onPress={startEdit}
@@ -251,6 +276,33 @@ export default function CharacterScreen() {
         <ThemedText style={styles.onDarkLabel}>Delete character</ThemedText>
       </Pressable>
     </ThemedView>
+  );
+}
+
+function LinkRow({
+  icon,
+  label,
+  onPress,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+      accessibilityRole="button"
+      accessibilityLabel={label}
+    >
+      <Ionicons name={icon} size={20} color={Colors.light.text} />
+      <ThemedText style={styles.linkLabel}>{label}</ThemedText>
+      <Ionicons
+        name="chevron-forward"
+        size={18}
+        color={Colors.light.placeholder}
+      />
+    </Pressable>
   );
 }
 
@@ -301,6 +353,33 @@ const styles = StyleSheet.create({
   field: { flexDirection: "row", alignItems: "baseline", gap: 12 },
   fieldLabel: { width: 64, opacity: 0.6 },
   fieldValue: { flex: 1, fontWeight: "600" },
+  classBody: {
+    marginTop: 16,
+  },
+  classBodyText: {
+    lineHeight: 20,
+    opacity: 0.85,
+  },
+  links: {
+    marginTop: 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: Colors.light.border,
+  },
+  linkRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 14,
+    gap: 12,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.light.border,
+  },
+  linkRowPressed: {
+    opacity: 0.5,
+  },
+  linkLabel: {
+    flex: 1,
+    fontSize: 16,
+  },
   editLabel: { marginTop: 16 },
   input: {
     borderWidth: 1,

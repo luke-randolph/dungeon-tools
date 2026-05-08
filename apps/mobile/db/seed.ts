@@ -18,6 +18,14 @@ const SEED_SPELL_KEYS = [
   'fireball',
 ];
 
+// Wizard features that a level-5 wizard would have unlocked.
+const SEED_FEATURE_KEYS = [
+  'spellcasting-wizard',
+  'arcane-recovery',
+  'arcane-tradition',
+  'wizard-ability-score-improvement-1',
+];
+
 export async function seedIfEmpty(db: SQLiteDatabase): Promise<void> {
   const row = await db.getFirstAsync<{ count: number }>(
     'SELECT COUNT(*) as count FROM characters',
@@ -40,6 +48,15 @@ export async function seedIfEmpty(db: SQLiteDatabase): Promise<void> {
   for (const key of SEED_SPELL_KEYS) {
     await db.runAsync(
       'INSERT OR IGNORE INTO spell_list (character_id, spell_key, added_at) VALUES (?, ?, ?)',
+      characterId,
+      key,
+      now,
+    );
+  }
+
+  for (const key of SEED_FEATURE_KEYS) {
+    await db.runAsync(
+      'INSERT OR IGNORE INTO class_features (character_id, feature_key, added_at) VALUES (?, ?, ?)',
       characterId,
       key,
       now,

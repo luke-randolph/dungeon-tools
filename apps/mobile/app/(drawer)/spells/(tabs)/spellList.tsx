@@ -67,6 +67,7 @@ export default function SpellListScreen() {
             onToggleStar={() => toggle(item)}
           />
         )}
+        contentContainerStyle={styles.listContent}
       />
     </ThemedView>
   );
@@ -74,6 +75,10 @@ export default function SpellListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  // Clears the goblin FAB at the bottom-right.
+  listContent: {
+    paddingBottom: 120,
+  },
   empty: {
     padding: 32,
     alignItems: 'center',

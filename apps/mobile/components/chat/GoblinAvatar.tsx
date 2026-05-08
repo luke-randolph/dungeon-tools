@@ -4,17 +4,17 @@ import { useEffect, useState } from 'react';
 import { type ImageStyle, type StyleProp } from 'react-native';
 
 const FRAMES = {
-  default: require('@/assets/goblin/goblin-default.png'),
-  speakClosed: require('@/assets/goblin/goblin-speak-closed.png'),
-  speakOpen1: require('@/assets/goblin/goblin-speak-open-1.png'),
-  speakOpen2: require('@/assets/goblin/goblin-speak-open-2.png'),
-  winkWave: require('@/assets/goblin/goblin-wink-wave.png'),
-  thinking1: require('@/assets/goblin/goblin-thinking-1.png'),
-  thinking2: require('@/assets/goblin/goblin-thinking-2.png'),
-  thinking3: require('@/assets/goblin/goblin-thinking-3.png'),
-  reading1: require('@/assets/goblin/goblin-reading-1.png'),
-  reading2: require('@/assets/goblin/goblin-reading-2.png'),
-  reading3: require('@/assets/goblin/goblin-reading-3.png'),
+  default: require('@/assets/goblin/portrait/goblin-default.png'),
+  speakClosed: require('@/assets/goblin/portrait/goblin-speak-closed.png'),
+  speakOpen1: require('@/assets/goblin/portrait/goblin-speak-open-1.png'),
+  speakOpen2: require('@/assets/goblin/portrait/goblin-speak-open-2.png'),
+  winkWave: require('@/assets/goblin/portrait/goblin-wink-wave.png'),
+  thinking1: require('@/assets/goblin/portrait/goblin-thinking-1.png'),
+  thinking2: require('@/assets/goblin/portrait/goblin-thinking-2.png'),
+  thinking3: require('@/assets/goblin/portrait/goblin-thinking-3.png'),
+  reading1: require('@/assets/goblin/portrait/goblin-reading-1.png'),
+  reading2: require('@/assets/goblin/portrait/goblin-reading-2.png'),
+  reading3: require('@/assets/goblin/portrait/goblin-reading-3.png'),
 } as const;
 
 const SPEAK_CYCLE = [
