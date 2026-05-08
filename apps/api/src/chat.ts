@@ -58,14 +58,25 @@ export async function handleChat(
     tools: activeTools,
     stopWhen: stepCountIs(MAX_STEPS),
     onError({ error }) {
-      console.error('streamText error:', error);
+      console.error('streamText error', {
+        message: error instanceof Error ? error.message : String(error),
+        name: error instanceof Error ? error.name : undefined,
+        cause: error instanceof Error ? error.cause : undefined,
+        stack: error instanceof Error ? error.stack : undefined,
+      });
     },
-    onFinish({ usage, finishReason }) {
-      console.log('chat usage', {
+    onFinish({ usage, finishReason, text, toolCalls, warnings, providerMetadata }) {
+      console.log('chat finish', {
+        finishReason,
+        textLength: text?.length ?? 0,
+        textPreview: text?.slice(0, 120) ?? '',
+        toolCallCount: toolCalls?.length ?? 0,
+        toolCallNames: toolCalls?.map((tc) => tc.toolName) ?? [],
+        warnings: warnings ?? [],
+        providerMetadata: providerMetadata ?? null,
         inputTokens: usage.inputTokens,
         outputTokens: usage.outputTokens,
         totalTokens: usage.totalTokens,
-        finishReason,
       });
     },
   });
