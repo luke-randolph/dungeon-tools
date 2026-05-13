@@ -43,7 +43,10 @@ interface ChatStore {
 
 export function newMessageId(): string {
   // crypto.randomUUID is available in modern Hermes (RN 0.74+) and all browsers.
-  if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+  if (
+    typeof crypto !== 'undefined' &&
+    typeof crypto.randomUUID === 'function'
+  ) {
     return crypto.randomUUID();
   }
   // Fallback for older runtimes — not collision-proof, but vastly better than nothing.

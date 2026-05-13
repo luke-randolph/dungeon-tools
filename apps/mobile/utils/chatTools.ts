@@ -69,9 +69,13 @@ export async function runTool(
       const matches = pool
         .map((e) => ({ entry: e, rank: rankSRD(e, q) }))
         .filter((r) => Number.isFinite(r.rank))
-        .sort((a, b) => a.rank - b.rank || a.entry.name.localeCompare(b.entry.name));
+        .sort(
+          (a, b) => a.rank - b.rank || a.entry.name.localeCompare(b.entry.name),
+        );
       const totalMatches = matches.length;
-      const entries = matches.slice(0, SRD_RESULT_LIMIT).map(({ entry }) => entry);
+      const entries = matches
+        .slice(0, SRD_RESULT_LIMIT)
+        .map(({ entry }) => entry);
       return {
         count: totalMatches,
         returned: entries.length,

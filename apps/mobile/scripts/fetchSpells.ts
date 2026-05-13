@@ -49,7 +49,13 @@ function normalize(raw: RawSpell): Spell {
 
 async function main() {
   const here = dirname(fileURLToPath(import.meta.url));
-  const outPath = resolve(here, '..', 'assets', 'spells', 'srd-5.1-spells.json');
+  const outPath = resolve(
+    here,
+    '..',
+    'assets',
+    'spells',
+    'srd-5.1-spells.json',
+  );
 
   console.log(`Fetching ${SOURCE_URL} ...`);
   const res = await fetch(SOURCE_URL);

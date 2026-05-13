@@ -1,6 +1,8 @@
 import type { CharacterClass } from './character';
 
-export function spellListLabel(charClass: CharacterClass | null | undefined): string {
+export function spellListLabel(
+  charClass: CharacterClass | null | undefined,
+): string {
   if (!charClass) return 'Spell List';
   switch (charClass) {
     case 'wizard':

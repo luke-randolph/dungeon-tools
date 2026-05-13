@@ -86,7 +86,14 @@ export async function handleChat(
         stack: error instanceof Error ? error.stack : undefined,
       });
     },
-    onFinish({ usage, finishReason, text, toolCalls, warnings, providerMetadata }) {
+    onFinish({
+      usage,
+      finishReason,
+      text,
+      toolCalls,
+      warnings,
+      providerMetadata,
+    }) {
       console.log(
         'chat finish',
         JSON.stringify(

@@ -1,4 +1,8 @@
-import type { ChatRole, ChatToolCall, ChatToolName } from '@dungeon-tools/shared';
+import type {
+  ChatRole,
+  ChatToolCall,
+  ChatToolName,
+} from '@dungeon-tools/shared';
 import { getDb } from '../index';
 
 export interface ChatConversation {
@@ -114,7 +118,9 @@ export interface AppendMessageInput {
   createdAt?: number;
 }
 
-export async function appendMessage(input: AppendMessageInput): Promise<ChatMessageRow> {
+export async function appendMessage(
+  input: AppendMessageInput,
+): Promise<ChatMessageRow> {
   const db = await getDb();
   const createdAt = input.createdAt ?? Date.now();
   await db.runAsync(
@@ -147,7 +153,9 @@ export async function appendMessage(input: AppendMessageInput): Promise<ChatMess
   };
 }
 
-export async function listMessages(conversationId: number): Promise<ChatMessageRow[]> {
+export async function listMessages(
+  conversationId: number,
+): Promise<ChatMessageRow[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<ChatMessageDbRow>(
     'SELECT * FROM chat_messages WHERE conversation_id = ? ORDER BY created_at ASC, id ASC',

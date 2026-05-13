@@ -52,7 +52,9 @@ export async function getCharacter(id: number): Promise<Character | null> {
   return row ? rowToCharacter(row) : null;
 }
 
-export async function createCharacter(input: CharacterInput): Promise<Character> {
+export async function createCharacter(
+  input: CharacterInput,
+): Promise<Character> {
   const db = await getDb();
   const now = Date.now();
   const result = await db.runAsync(

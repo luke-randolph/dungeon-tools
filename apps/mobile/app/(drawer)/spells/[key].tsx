@@ -1,12 +1,7 @@
 import { CLASS_LABELS } from '@dungeon-tools/shared';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -79,7 +74,9 @@ export default function SpellDetailScreen() {
           hitSlop={12}
           style={styles.starButton}
           accessibilityRole="button"
-          accessibilityLabel={inList ? 'Remove from spell list' : 'Add to spell list'}
+          accessibilityLabel={
+            inList ? 'Remove from spell list' : 'Add to spell list'
+          }
         >
           <Ionicons
             name={inList ? 'star' : 'star-outline'}
@@ -96,7 +93,9 @@ export default function SpellDetailScreen() {
         </ThemedText>
 
         <View style={styles.tags}>
-          {spell.concentration ? <Tag color="#a855f7">Concentration</Tag> : null}
+          {spell.concentration ? (
+            <Tag color="#a855f7">Concentration</Tag>
+          ) : null}
           {spell.ritual ? <Tag color="#0ea5e9">Ritual</Tag> : null}
         </View>
 

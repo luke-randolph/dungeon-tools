@@ -13,7 +13,10 @@ interface ChatMessageBubbleProps {
   isLast?: boolean;
 }
 
-export function ChatMessageBubble({ message, isLast = false }: ChatMessageBubbleProps) {
+export function ChatMessageBubble({
+  message,
+  isLast = false,
+}: ChatMessageBubbleProps) {
   const scheme = useColorScheme();
   const palette = scheme === 'dark' ? Colors.dark : Colors.light;
 
@@ -50,9 +53,7 @@ export function ChatMessageBubble({ message, isLast = false }: ChatMessageBubble
               ]}
             />
             {/* Fill layer */}
-            <View
-              style={[styles.tail, { borderTopColor: bubbleBg }]}
-            />
+            <View style={[styles.tail, { borderTopColor: bubbleBg }]} />
           </>
         ) : null}
       </View>
@@ -107,7 +108,8 @@ const styles = StyleSheet.create({
 });
 
 function markdownStyles(textColor: string, borderColor: string) {
-  const codeBg = textColor === '#fff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
+  const codeBg =
+    textColor === '#fff' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.06)';
   return {
     body: { color: textColor, fontSize: 15, lineHeight: 22, gap: 10 },
     paragraph: { marginTop: 0, marginBottom: 0, color: textColor },
@@ -118,9 +120,27 @@ function markdownStyles(textColor: string, borderColor: string) {
     list_item: { marginVertical: 2, color: textColor },
     bullet_list_icon: { color: textColor },
     ordered_list_icon: { color: textColor },
-    heading1: { fontSize: 18, fontWeight: '700' as const, color: textColor, marginTop: 4, marginBottom: 4 },
-    heading2: { fontSize: 17, fontWeight: '700' as const, color: textColor, marginTop: 4, marginBottom: 4 },
-    heading3: { fontSize: 16, fontWeight: '700' as const, color: textColor, marginTop: 4, marginBottom: 4 },
+    heading1: {
+      fontSize: 18,
+      fontWeight: '700' as const,
+      color: textColor,
+      marginTop: 4,
+      marginBottom: 4,
+    },
+    heading2: {
+      fontSize: 17,
+      fontWeight: '700' as const,
+      color: textColor,
+      marginTop: 4,
+      marginBottom: 4,
+    },
+    heading3: {
+      fontSize: 16,
+      fontWeight: '700' as const,
+      color: textColor,
+      marginTop: 4,
+      marginBottom: 4,
+    },
     code_inline: {
       fontFamily: 'monospace',
       fontSize: 14,

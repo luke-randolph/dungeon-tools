@@ -1,13 +1,13 @@
-import { CLASS_LABELS } from "@dungeon-tools/shared";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { useRef, useState } from "react";
-import { Dimensions, Modal, Pressable, StyleSheet, View } from "react-native";
+import { CLASS_LABELS } from '@dungeon-tools/shared';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useRef, useState } from 'react';
+import { Dimensions, Modal, Pressable, StyleSheet, View } from 'react-native';
 
-import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useCharacters } from "@/stores/characters";
+import { ThemedText } from '@/components/ThemedText';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useCharacters } from '@/stores/characters';
 
 const MENU_MIN_WIDTH = 220;
 const VIEWPORT_MARGIN = 8;
@@ -24,8 +24,8 @@ export function CharacterChip() {
   } | null>(null);
   const triggerRef = useRef<View>(null);
   const scheme = useColorScheme();
-  const isDark = scheme === "dark";
-  const palette = Colors[isDark ? "dark" : "light"];
+  const isDark = scheme === 'dark';
+  const palette = Colors[isDark ? 'dark' : 'light'];
 
   function close() {
     setOpen(false);
@@ -38,7 +38,7 @@ export function CharacterChip() {
       return;
     }
     node.measureInWindow((x, y, _w, h) => {
-      const viewportWidth = Dimensions.get("window").width;
+      const viewportWidth = Dimensions.get('window').width;
       const clampedLeft = Math.max(
         VIEWPORT_MARGIN,
         Math.min(x, viewportWidth - MENU_MIN_WIDTH - VIEWPORT_MARGIN),
@@ -57,10 +57,10 @@ export function CharacterChip() {
 
   function addNew() {
     close();
-    router.push("/characters/new");
+    router.push('/characters/new');
   }
 
-  const triggerLabel = character ? character.name : "New character";
+  const triggerLabel = character ? character.name : 'New character';
   const triggerSub = character
     ? `${CLASS_LABELS[character.class]} ${character.level}`
     : null;
@@ -75,7 +75,7 @@ export function CharacterChip() {
         accessibilityLabel={
           character
             ? `Active character: ${character.name}. Tap to switch.`
-            : "No character. Tap to create one."
+            : 'No character. Tap to create one.'
         }
       >
         {!character && (
@@ -98,7 +98,7 @@ export function CharacterChip() {
           ) : null}
         </View>
         <Ionicons
-          name={open ? "chevron-up" : "chevron-down"}
+          name={open ? 'chevron-up' : 'chevron-down'}
           size={14}
           color={palette.surfaceText}
         />
@@ -198,8 +198,8 @@ export function CharacterChip() {
 
 const styles = StyleSheet.create({
   chip: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 6,
     paddingHorizontal: 12,
     paddingVertical: 4,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: "600",
+    fontWeight: '600',
     lineHeight: 14,
   },
   sub: {
@@ -220,23 +220,23 @@ const styles = StyleSheet.create({
   },
   backdrop: {
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.25)",
+    backgroundColor: 'rgba(0,0,0,0.25)',
   },
   menu: {
-    position: "absolute",
+    position: 'absolute',
     borderRadius: 12,
     paddingVertical: 6,
     minWidth: MENU_MIN_WIDTH,
     maxWidth: 320,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 12,
     elevation: 8,
   },
   menuItem: {
-    flexDirection: "row",
-    alignItems: "flex-start",
+    flexDirection: 'row',
+    alignItems: 'flex-start',
     gap: 8,
     paddingHorizontal: 14,
     paddingVertical: 10,
@@ -249,15 +249,15 @@ const styles = StyleSheet.create({
   },
   menuItemTitle: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: '500',
     lineHeight: 15,
   },
   newCharacterButton: {
-    alignItems: "center",
+    alignItems: 'center',
   },
   newCharacterTitle: {
     fontSize: 15,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   menuItemSub: {
     fontSize: 12,
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
   divider: {
     height: 1,
     marginVertical: 4,
-    backgroundColor: "rgba(255,255,255,0.12)",
+    backgroundColor: 'rgba(255,255,255,0.12)',
   },
   emptyHint: {
     paddingHorizontal: 14,

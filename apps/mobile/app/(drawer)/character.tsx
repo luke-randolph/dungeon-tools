@@ -5,25 +5,25 @@ import {
   RACE_LABELS,
   type CharacterClass,
   type CharacterRace,
-} from "@dungeon-tools/shared";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+} from '@dungeon-tools/shared';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import {
   Pressable,
   ScrollView,
   StyleSheet,
   TextInput,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { Colors } from "@/constants/theme";
-import { getClassDetail } from "@/data/classes";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useCharacters } from "@/stores/characters";
-import { showAlert, showConfirm } from "@/utils/dialogs";
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { Colors } from '@/constants/theme';
+import { getClassDetail } from '@/data/classes';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useCharacters } from '@/stores/characters';
+import { showAlert, showConfirm } from '@/utils/dialogs';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
@@ -43,10 +43,10 @@ export default function CharacterScreen() {
   const updateCharacter = useCharacters((s) => s.updateCharacter);
   const removeCharacter = useCharacters((s) => s.removeCharacter);
   const scheme = useColorScheme();
-  const isDark = scheme === "dark";
+  const isDark = scheme === 'dark';
 
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState("");
+  const [name, setName] = useState('');
   const [race, setRace] = useState<CharacterRace | null>(null);
   const [characterClass, setCharacterClass] = useState<CharacterClass | null>(
     null,
@@ -72,7 +72,7 @@ export default function CharacterScreen() {
             Tap the chip in the header, or the button below, to create one.
           </ThemedText>
           <Pressable
-            onPress={() => router.push("/characters/new")}
+            onPress={() => router.push('/characters/new')}
             style={styles.standaloneButton}
             accessibilityRole="button"
           >
@@ -94,11 +94,11 @@ export default function CharacterScreen() {
   async function saveEdit() {
     const trimmed = name.trim();
     if (!trimmed) {
-      showAlert("Name required");
+      showAlert('Name required');
       return;
     }
     if (!race || !characterClass) {
-      showAlert("Pick a race and class");
+      showAlert('Pick a race and class');
       return;
     }
     setSaving(true);
@@ -112,7 +112,7 @@ export default function CharacterScreen() {
       setEditing(false);
     } catch (err) {
       showAlert(
-        "Failed to save",
+        'Failed to save',
         err instanceof Error ? err.message : String(err),
       );
     } finally {
@@ -123,9 +123,9 @@ export default function CharacterScreen() {
   function confirmDelete() {
     showConfirm(
       `Delete ${character!.name}?`,
-      "Their spell list will be deleted too. This cannot be undone.",
+      'Their spell list will be deleted too. This cannot be undone.',
       {
-        confirmLabel: "Delete",
+        confirmLabel: 'Delete',
         destructive: true,
         onConfirm: async () => {
           await removeCharacter(character!.id);
@@ -215,7 +215,7 @@ export default function CharacterScreen() {
               ]}
             >
               <ThemedText style={styles.onDarkLabel}>
-                {saving ? "Saving…" : "Save"}
+                {saving ? 'Saving…' : 'Save'}
               </ThemedText>
             </Pressable>
           </View>
@@ -239,7 +239,9 @@ export default function CharacterScreen() {
           if (!detail) return null;
           return (
             <View style={styles.classBody}>
-              <ThemedText style={styles.classBodyText}>{detail.body}</ThemedText>
+              <ThemedText style={styles.classBodyText}>
+                {detail.body}
+              </ThemedText>
             </View>
           );
         })()}
@@ -248,12 +250,12 @@ export default function CharacterScreen() {
           <LinkRow
             icon="ribbon-outline"
             label="Class Features"
-            onPress={() => router.push("/features")}
+            onPress={() => router.push('/features')}
           />
           <LinkRow
             icon="leaf-outline"
             label="Traits"
-            onPress={() => router.push("/traits")}
+            onPress={() => router.push('/traits')}
           />
         </View>
 
@@ -291,7 +293,10 @@ function LinkRow({
   return (
     <Pressable
       onPress={onPress}
-      style={({ pressed }) => [styles.linkRow, pressed && styles.linkRowPressed]}
+      style={({ pressed }) => [
+        styles.linkRow,
+        pressed && styles.linkRowPressed,
+      ]}
       accessibilityRole="button"
       accessibilityLabel={label}
     >
@@ -350,9 +355,9 @@ const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 16, gap: 12, paddingBottom: 40 },
   fields: { gap: 10, marginTop: 8 },
-  field: { flexDirection: "row", alignItems: "baseline", gap: 12 },
+  field: { flexDirection: 'row', alignItems: 'baseline', gap: 12 },
   fieldLabel: { width: 64, opacity: 0.6 },
-  fieldValue: { flex: 1, fontWeight: "600" },
+  fieldValue: { flex: 1, fontWeight: '600' },
   classBody: {
     marginTop: 16,
   },
@@ -366,8 +371,8 @@ const styles = StyleSheet.create({
     borderTopColor: Colors.light.border,
   },
   linkRow: {
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingVertical: 14,
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
@@ -388,7 +393,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 16,
   },
-  pills: { flexDirection: "row", flexWrap: "wrap", gap: 8 },
+  pills: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
   pill: {
     paddingHorizontal: 12,
     paddingVertical: 8,
@@ -397,46 +402,46 @@ const styles = StyleSheet.create({
   },
   pillActive: { backgroundColor: Colors.light.primary },
   pillLabel: { fontSize: 14 },
-  pillLabelActive: { color: "#fff", fontWeight: "600" },
-  stepper: { flexDirection: "row", alignItems: "center", gap: 16 },
+  pillLabelActive: { color: '#fff', fontWeight: '600' },
+  stepper: { flexDirection: 'row', alignItems: 'center', gap: 16 },
   stepButton: {
     width: 44,
     height: 44,
     borderRadius: 22,
     borderWidth: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  stepLabel: { fontSize: 20, fontWeight: "600" },
+  stepLabel: { fontSize: 20, fontWeight: '600' },
   levelValue: {
     fontSize: 20,
-    fontWeight: "600",
+    fontWeight: '600',
     minWidth: 28,
-    textAlign: "center",
+    textAlign: 'center',
   },
-  actions: { flexDirection: "row", gap: 12, marginTop: 24 },
+  actions: { flexDirection: 'row', gap: 12, marginTop: 24 },
   button: {
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderRadius: 8,
-    alignItems: "center",
+    alignItems: 'center',
   },
   secondaryButton: { flex: 1, backgroundColor: Colors.light.secondary },
   primaryButton: { flex: 1, backgroundColor: Colors.light.primary },
-  onDarkLabel: { color: "#fff", fontWeight: "600" },
+  onDarkLabel: { color: '#fff', fontWeight: '600' },
   standaloneButton: {
     marginTop: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
     backgroundColor: Colors.light.primary,
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
   },
   emptyState: {
     flex: 1,
     padding: 16,
     gap: 12,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
   emptyHint: {
     opacity: 0.7,
@@ -444,7 +449,7 @@ const styles = StyleSheet.create({
   },
   disabled: { opacity: 0.6 },
   deleteButton: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 32,
     left: 16,
     paddingVertical: 12,

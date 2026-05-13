@@ -47,10 +47,10 @@ export default function SettingsScreen() {
         </ThemedText>
         <ThemedText style={styles.body}>
           This app includes material from the System Reference Document 5.1 by
-          Wizards of the Coast LLC, used under the Creative Commons
-          Attribution 4.0 International License. Spell data has been
-          reformatted (the source JSON structure was normalized for use in
-          this app); rules text is unmodified.
+          Wizards of the Coast LLC, used under the Creative Commons Attribution
+          4.0 International License. Spell data has been reformatted (the source
+          JSON structure was normalized for use in this app); rules text is
+          unmodified.
         </ThemedText>
         <ThemedText style={styles.body}>
           Source:{' '}
@@ -66,8 +66,8 @@ export default function SettingsScreen() {
         </ThemedText>
         <ThemedText style={styles.disclaimer}>
           Dungeon Tools 5e is an unofficial fan utility and is not affiliated
-          with, endorsed, sponsored, or specifically approved by Wizards of
-          the Coast LLC.
+          with, endorsed, sponsored, or specifically approved by Wizards of the
+          Coast LLC.
         </ThemedText>
 
         {__DEV__ ? (

@@ -1,7 +1,8 @@
 import type { CharacterClass, ClassFeature } from '@dungeon-tools/shared';
 import raw from '@/assets/srd/class-features.json';
 
-export const ALL_CLASS_FEATURES: readonly ClassFeature[] = raw as ClassFeature[];
+export const ALL_CLASS_FEATURES: readonly ClassFeature[] =
+  raw as ClassFeature[];
 
 const BY_KEY = new Map(ALL_CLASS_FEATURES.map((f) => [f.key, f]));
 
@@ -14,7 +15,9 @@ export interface ClassFeatureQuery {
   charClass?: CharacterClass | null;
 }
 
-export function searchClassFeatures(opts: ClassFeatureQuery = {}): ClassFeature[] {
+export function searchClassFeatures(
+  opts: ClassFeatureQuery = {},
+): ClassFeature[] {
   const q = opts.query?.toLowerCase().trim();
   return ALL_CLASS_FEATURES.filter((f) => {
     if (q && !f.name.toLowerCase().includes(q)) return false;

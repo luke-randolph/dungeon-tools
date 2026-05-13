@@ -226,7 +226,11 @@ describe('runTool > listCharacterSpells', () => {
       loadedForCharacterId: wizard.id,
     });
     vi.mocked(getSpell).mockImplementation((k) =>
-      k === 'fireball' ? FIREBALL : k === 'magic-missile' ? MAGIC_MISSILE : undefined,
+      k === 'fireball'
+        ? FIREBALL
+        : k === 'magic-missile'
+          ? MAGIC_MISSILE
+          : undefined,
     );
 
     const result = (await runTool('listCharacterSpells', {})) as {

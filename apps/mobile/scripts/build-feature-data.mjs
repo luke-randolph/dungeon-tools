@@ -14,41 +14,41 @@
 // Re-run when any input changes:
 //   node apps/mobile/scripts/build-feature-data.mjs
 
-import { readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const SRD_PATH = join(__dirname, "../assets/srd/srd-5.1.json");
-const OUT_FEATURES = join(__dirname, "../assets/srd/class-features.json");
-const OUT_TRAITS = join(__dirname, "../assets/srd/racial-traits.json");
-const LEVELS_PATH = join(__dirname, "feature-levels.json");
+const SRD_PATH = join(__dirname, '../assets/srd/srd-5.1.json');
+const OUT_FEATURES = join(__dirname, '../assets/srd/class-features.json');
+const OUT_TRAITS = join(__dirname, '../assets/srd/racial-traits.json');
+const LEVELS_PATH = join(__dirname, 'feature-levels.json');
 
 const ALL_CLASSES = new Set([
-  "barbarian",
-  "bard",
-  "cleric",
-  "druid",
-  "fighter",
-  "monk",
-  "paladin",
-  "ranger",
-  "rogue",
-  "sorcerer",
-  "warlock",
-  "wizard",
+  'barbarian',
+  'bard',
+  'cleric',
+  'druid',
+  'fighter',
+  'monk',
+  'paladin',
+  'ranger',
+  'rogue',
+  'sorcerer',
+  'warlock',
+  'wizard',
 ]);
 
 const ALL_RACES = new Set([
-  "dragonborn",
-  "dwarf",
-  "elf",
-  "gnome",
-  "half-elf",
-  "half-orc",
-  "halfling",
-  "human",
-  "tiefling",
+  'dragonborn',
+  'dwarf',
+  'elf',
+  'gnome',
+  'half-elf',
+  'half-orc',
+  'halfling',
+  'human',
+  'tiefling',
 ]);
 
 function pickClass(tags) {
@@ -69,14 +69,14 @@ function pickRace(tags) {
 }
 
 function main() {
-  const raw = JSON.parse(readFileSync(SRD_PATH, "utf8"));
-  const levels = JSON.parse(readFileSync(LEVELS_PATH, "utf8"));
+  const raw = JSON.parse(readFileSync(SRD_PATH, 'utf8'));
+  const levels = JSON.parse(readFileSync(LEVELS_PATH, 'utf8'));
   const features = [];
   const traits = [];
   const skipped = { noClass: 0, noRace: 0, noLevel: 0 };
 
   for (const e of raw) {
-    if (e.category === "class-feature") {
+    if (e.category === 'class-feature') {
       const cls = pickClass(e.tags || []);
       if (!cls) {
         skipped.noClass++;
@@ -94,7 +94,7 @@ function main() {
         class: cls,
         level,
       });
-    } else if (e.category === "racial-trait") {
+    } else if (e.category === 'racial-trait') {
       const race = pickRace(e.tags || []);
       if (!race) {
         skipped.noRace++;
@@ -127,7 +127,7 @@ function main() {
   for (const t of traits) byRace[t.race] = (byRace[t.race] || 0) + 1;
   for (const [r, n] of Object.entries(byRace).sort())
     console.log(`  ${r.padEnd(10)} ${n}`);
-  console.log("skipped:", skipped);
+  console.log('skipped:', skipped);
 }
 
 main();
