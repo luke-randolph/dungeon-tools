@@ -145,7 +145,10 @@ export function appendChatMessage(message: ChatMessage): void {
   useChat.setState((s) => ({ messages: [...s.messages, message] }));
 }
 
-export function patchChatMessage(id: string, patch: Partial<ChatMessage>): void {
+export function patchChatMessage(
+  id: string,
+  patch: Partial<ChatMessage>,
+): void {
   useChat.setState((s) => ({
     messages: s.messages.map((m) => (m.id === id ? { ...m, ...patch } : m)),
   }));

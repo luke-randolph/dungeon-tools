@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { Modal, Platform, Pressable, StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useEffect, useState } from 'react';
+import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { ThemedText } from "@/components/ThemedText";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "@/hooks/use-color-scheme";
-import { useCharacters } from "@/stores/characters";
-import { useChat } from "@/stores/chat";
+import { ThemedText } from '@/components/ThemedText';
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useCharacters } from '@/stores/characters';
+import { useChat } from '@/stores/chat';
 
-import { ChatInput } from "./ChatInput";
-import { ChatMessageList } from "./ChatMessageList";
-import { GoblinAvatar } from "./GoblinAvatar";
+import { ChatInput } from './ChatInput';
+import { ChatMessageList } from './ChatMessageList';
+import { GoblinAvatar } from './GoblinAvatar';
 
 const GREETING_MS = 1500;
 const AVATAR_SIZE = 128;
@@ -29,7 +29,7 @@ export function ChatPanel() {
   const character = useCharacters((s) => s.character);
   const insets = useSafeAreaInsets();
   const scheme = useColorScheme();
-  const palette = scheme === "dark" ? Colors.dark : Colors.light;
+  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
 
   // Initialize the conversation the first time the panel opens.
   useEffect(() => {
@@ -52,16 +52,16 @@ export function ChatPanel() {
   const lastMessage = messages[messageCount - 1];
   const isStreamingContent =
     streaming &&
-    lastMessage?.role === "assistant" &&
+    lastMessage?.role === 'assistant' &&
     lastMessage.content.length > 0;
 
   const avatarMode = isStreamingContent
-    ? "streaming"
+    ? 'streaming'
     : streaming
-      ? "thinking"
+      ? 'thinking'
       : showingGreeting
-        ? "greeting"
-        : "idle";
+        ? 'greeting'
+        : 'idle';
 
   const panel = (
     <View
@@ -141,7 +141,7 @@ export function ChatPanel() {
   // frame wrapper your dev environment uses. So on web we render an absolutely-
   // positioned overlay View that stays inside the React tree. Native still
   // gets a real Modal for proper system-back / focus handling.
-  if (Platform.OS === "web") {
+  if (Platform.OS === 'web') {
     if (!open) return null;
     return (
       <View
@@ -183,9 +183,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-end",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderBottomWidth: 1,
@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   headerActions: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 12,
   },
   headerButton: {
@@ -204,14 +204,14 @@ const styles = StyleSheet.create({
   },
   headerButtonText: {
     fontSize: 14,
-    fontWeight: "500",
+    fontWeight: '500',
   },
   errorBanner: {
     paddingHorizontal: 14,
     paddingVertical: 8,
   },
   errorText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 13,
   },
   body: {
@@ -220,6 +220,6 @@ const styles = StyleSheet.create({
   avatarRow: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    alignItems: "flex-start",
+    alignItems: 'flex-start',
   },
 });

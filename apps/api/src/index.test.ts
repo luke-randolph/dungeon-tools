@@ -22,7 +22,9 @@ vi.mock('@ai-sdk/google', () => ({
 
 type Bindings = {
   GEMINI_API_KEY: string;
-  CHAT_RATE_LIMIT: { limit: (args: { key: string }) => Promise<{ success: boolean }> };
+  CHAT_RATE_LIMIT: {
+    limit: (args: { key: string }) => Promise<{ success: boolean }>;
+  };
 };
 
 function makeEnv(over: Partial<Bindings> = {}): Bindings {

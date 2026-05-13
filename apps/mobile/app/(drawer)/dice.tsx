@@ -16,7 +16,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useThemeColor } from '@/hooks/use-theme-color';
 
-
 const DICE = {
   d4: {
     1: require('@/assets/dice/d4/d4-1.png'),
@@ -110,7 +109,9 @@ export default function DiceScreen() {
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
-        <ThemedText type="title" style={styles.title}>Dice</ThemedText>
+        <ThemedText type="title" style={styles.title}>
+          Dice
+        </ThemedText>
         <View style={styles.grid}>
           {DICE_ORDER.map((die) => (
             <DieTile
@@ -162,10 +163,7 @@ function DieTile({ die, value, onRoll, primary, border }: DieTileProps) {
     <View style={[styles.tile, { borderColor: border }]}>
       <AnimatedImage
         source={source}
-        style={[
-          styles.image,
-          { transform: [{ rotate: rotateInterpolation }] },
-        ]}
+        style={[styles.image, { transform: [{ rotate: rotateInterpolation }] }]}
         contentFit="contain"
       />
       <Pressable
@@ -173,7 +171,8 @@ function DieTile({ die, value, onRoll, primary, border }: DieTileProps) {
         style={({ pressed }) => [
           styles.button,
           { backgroundColor: primary, opacity: pressed ? 0.75 : 1 },
-        ]}>
+        ]}
+      >
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>
           Roll D{SIDES[die]}
         </ThemedText>

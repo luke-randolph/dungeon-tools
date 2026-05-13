@@ -33,7 +33,10 @@ export function DialogHost() {
     >
       <Pressable style={styles.backdrop} onPress={cancel}>
         <View
-          style={[styles.card, { backgroundColor: cardBg, borderColor: palette.border }]}
+          style={[
+            styles.card,
+            { backgroundColor: cardBg, borderColor: palette.border },
+          ]}
           onStartShouldSetResponder={() => true}
           accessibilityRole="alert"
           accessibilityLiveRegion="assertive"
@@ -48,18 +51,30 @@ export function DialogHost() {
             {showCancel ? (
               <Pressable
                 onPress={cancel}
-                style={[styles.button, styles.cancelButton, { borderColor: palette.border }]}
+                style={[
+                  styles.button,
+                  styles.cancelButton,
+                  { borderColor: palette.border },
+                ]}
                 accessibilityRole="button"
               >
-                <ThemedText style={styles.cancelLabel}>{cancelLabel}</ThemedText>
+                <ThemedText style={styles.cancelLabel}>
+                  {cancelLabel}
+                </ThemedText>
               </Pressable>
             ) : null}
             <Pressable
               onPress={confirm}
-              style={[styles.button, styles.confirmButton, { backgroundColor: confirmBg }]}
+              style={[
+                styles.button,
+                styles.confirmButton,
+                { backgroundColor: confirmBg },
+              ]}
               accessibilityRole="button"
             >
-              <ThemedText style={styles.confirmLabel}>{confirmLabel}</ThemedText>
+              <ThemedText style={styles.confirmLabel}>
+                {confirmLabel}
+              </ThemedText>
             </Pressable>
           </View>
         </View>

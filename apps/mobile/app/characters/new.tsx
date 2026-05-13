@@ -34,7 +34,9 @@ export default function NewCharacterScreen() {
 
   const [name, setName] = useState('');
   const [race, setRace] = useState<CharacterRace | null>(null);
-  const [characterClass, setCharacterClass] = useState<CharacterClass | null>(null);
+  const [characterClass, setCharacterClass] = useState<CharacterClass | null>(
+    null,
+  );
   const [level, setLevel] = useState(1);
   const [saving, setSaving] = useState(false);
 
@@ -63,7 +65,10 @@ export default function NewCharacterScreen() {
       });
       router.back();
     } catch (err) {
-      showAlert('Failed to save', err instanceof Error ? err.message : String(err));
+      showAlert(
+        'Failed to save',
+        err instanceof Error ? err.message : String(err),
+      );
     } finally {
       setSaving(false);
     }
@@ -71,7 +76,10 @@ export default function NewCharacterScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
+      <ScrollView
+        contentContainerStyle={styles.content}
+        keyboardShouldPersistTaps="handled"
+      >
         <ThemedText type="subtitle" style={styles.fieldLabel}>
           Name
         </ThemedText>
@@ -80,7 +88,10 @@ export default function NewCharacterScreen() {
           onChangeText={setName}
           placeholder="Character name"
           placeholderTextColor={Colors.light.placeholder}
-          style={[styles.input, { color: Colors.light.text, borderColor: Colors.light.border }]}
+          style={[
+            styles.input,
+            { color: Colors.light.text, borderColor: Colors.light.border },
+          ]}
           autoCapitalize="words"
           returnKeyType="done"
         />
@@ -140,9 +151,15 @@ export default function NewCharacterScreen() {
           <Pressable
             onPress={save}
             disabled={saving}
-            style={[styles.button, styles.saveButton, saving && styles.saveButtonDisabled]}
+            style={[
+              styles.button,
+              styles.saveButton,
+              saving && styles.saveButtonDisabled,
+            ]}
           >
-            <ThemedText style={styles.onDarkLabel}>{saving ? 'Saving…' : 'Create'}</ThemedText>
+            <ThemedText style={styles.onDarkLabel}>
+              {saving ? 'Saving…' : 'Create'}
+            </ThemedText>
           </Pressable>
         </View>
       </ScrollView>
@@ -180,7 +197,9 @@ function Pills<T extends string>({
             accessibilityRole="button"
             accessibilityState={{ selected: active }}
           >
-            <ThemedText style={[styles.pillLabel, active && styles.pillLabelActive]}>
+            <ThemedText
+              style={[styles.pillLabel, active && styles.pillLabelActive]}
+            >
               {labels[opt]}
             </ThemedText>
           </Pressable>

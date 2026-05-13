@@ -44,7 +44,7 @@ export const tools = {
         .enum([...SRD_CATEGORIES] as [string, ...string[]])
         .optional()
         .describe(
-          "Optional category to narrow the search. Omit to search across all categories.",
+          'Optional category to narrow the search. Omit to search across all categories.',
         ),
     }),
   }),

@@ -3,7 +3,10 @@ import type {
   MaterialTopTabNavigationEventMap,
   MaterialTopTabNavigationOptions,
 } from '@react-navigation/material-top-tabs';
-import type { ParamListBase, TabNavigationState } from '@react-navigation/native';
+import type {
+  ParamListBase,
+  TabNavigationState,
+} from '@react-navigation/native';
 import { spellListLabel } from '@dungeon-tools/shared';
 import { withLayoutContext } from 'expo-router';
 

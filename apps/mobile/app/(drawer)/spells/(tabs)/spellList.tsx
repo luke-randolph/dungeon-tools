@@ -33,7 +33,8 @@ export default function SpellListScreen() {
         <View style={styles.empty}>
           <ThemedText>No character yet.</ThemedText>
           <ThemedText style={styles.hint}>
-            Create a character from the chip in the header to start a spell list.
+            Create a character from the chip in the header to start a spell
+            list.
           </ThemedText>
         </View>
       </ThemedView>

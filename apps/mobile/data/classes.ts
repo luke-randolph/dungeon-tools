@@ -29,6 +29,8 @@ for (const e of raw as SrdEntry[]) {
   });
 }
 
-export function getClassDetail(charClass: CharacterClass): ClassDetail | undefined {
+export function getClassDetail(
+  charClass: CharacterClass,
+): ClassDetail | undefined {
   return BY_KEY.get(charClass);
 }

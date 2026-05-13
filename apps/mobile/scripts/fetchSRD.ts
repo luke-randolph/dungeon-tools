@@ -3,7 +3,8 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { SRDCategory, SRDEntry } from '@dungeon-tools/shared';
 
-const BASE = 'https://raw.githubusercontent.com/5e-bits/5e-database/main/src/2014/en';
+const BASE =
+  'https://raw.githubusercontent.com/5e-bits/5e-database/main/src/2014/en';
 
 interface RawNamed {
   index: string;
@@ -58,8 +59,14 @@ async function fetchJson<T>(file: string): Promise<T> {
 function trim(text: string, maxChars: number): string {
   if (text.length <= maxChars) return text;
   const slice = text.slice(0, maxChars);
-  const lastBreak = Math.max(slice.lastIndexOf('\n\n'), slice.lastIndexOf('. '));
-  return (lastBreak > maxChars * 0.6 ? slice.slice(0, lastBreak) : slice).trimEnd() + '…';
+  const lastBreak = Math.max(
+    slice.lastIndexOf('\n\n'),
+    slice.lastIndexOf('. '),
+  );
+  return (
+    (lastBreak > maxChars * 0.6 ? slice.slice(0, lastBreak) : slice).trimEnd() +
+    '…'
+  );
 }
 
 function joinDesc(desc: string[] | undefined): string {
@@ -113,13 +120,21 @@ async function main() {
 
   // Rule sections — keep generously sized; these are reference text.
   for (const s of ruleSections) {
-    out.push(entry('rule-section', s.index, s.name, trim(s.desc, 2400), [s.name, 'rule']));
+    out.push(
+      entry('rule-section', s.index, s.name, trim(s.desc, 2400), [
+        s.name,
+        'rule',
+      ]),
+    );
   }
 
   // Conditions — short and quoted often.
   for (const c of conditions) {
     out.push(
-      entry('condition', c.index, c.name, trim(joinDesc(c.desc), 1200), [c.name, 'condition']),
+      entry('condition', c.index, c.name, trim(joinDesc(c.desc), 1200), [
+        c.name,
+        'condition',
+      ]),
     );
   }
 
@@ -139,7 +154,13 @@ async function main() {
     const cls = f.class?.name ?? f.subclass?.name ?? '';
     const tags = [f.name, cls, 'class feature'];
     out.push(
-      entry('class-feature', f.index, f.name, trim(joinDesc(f.desc), 1500), tags),
+      entry(
+        'class-feature',
+        f.index,
+        f.name,
+        trim(joinDesc(f.desc), 1500),
+        tags,
+      ),
     );
   }
 
@@ -205,7 +226,9 @@ async function main() {
   const bytes = JSON.stringify(out).length;
   const counts: Record<string, number> = {};
   for (const e of out) counts[e.category] = (counts[e.category] ?? 0) + 1;
-  console.log(`Wrote ${out.length} entries (${(bytes / 1024).toFixed(1)} KB) to ${outPath}`);
+  console.log(
+    `Wrote ${out.length} entries (${(bytes / 1024).toFixed(1)} KB) to ${outPath}`,
+  );
   console.log('Per-category:', counts);
 }
 

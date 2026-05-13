@@ -31,7 +31,8 @@ export const useCharacters = create<CharactersStore>((set, get) => ({
   async refresh() {
     const all = await listCharacters();
     const storedId = await getActiveCharacterId();
-    let active = storedId != null ? all.find((c) => c.id === storedId) ?? null : null;
+    let active =
+      storedId != null ? (all.find((c) => c.id === storedId) ?? null) : null;
 
     if (!active && all.length > 0) {
       active = all[0];
@@ -67,7 +68,9 @@ export const useCharacters = create<CharactersStore>((set, get) => ({
     await dbUpdateCharacter(id, input);
     const updated = await getCharacter(id);
     set((state) => ({
-      characters: state.characters.map((c) => (c.id === id ? (updated ?? c) : c)),
+      characters: state.characters.map((c) =>
+        c.id === id ? (updated ?? c) : c,
+      ),
       character: state.character?.id === id ? updated : state.character,
     }));
   },

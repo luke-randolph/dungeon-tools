@@ -56,7 +56,9 @@ export function ClassFeatureRow({
         onPress={onToggleStar}
         hitSlop={8}
         accessibilityRole="button"
-        accessibilityLabel={inList ? `Remove ${feature.name}` : `Add ${feature.name}`}
+        accessibilityLabel={
+          inList ? `Remove ${feature.name}` : `Add ${feature.name}`
+        }
       >
         <Ionicons
           name={inList ? 'star' : 'star-outline'}

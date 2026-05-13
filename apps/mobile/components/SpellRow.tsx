@@ -21,7 +21,12 @@ function levelLabel(level: number): string {
   return `${level}th level`;
 }
 
-export function SpellRow({ spell, inList, onPressRow, onToggleStar }: SpellRowProps) {
+export function SpellRow({
+  spell,
+  inList,
+  onPressRow,
+  onToggleStar,
+}: SpellRowProps) {
   const scheme = useColorScheme();
   const isDark = scheme === 'dark';
   const borderColor = isDark ? '#222' : '#eee';
@@ -46,7 +51,11 @@ export function SpellRow({ spell, inList, onPressRow, onToggleStar }: SpellRowPr
         onPress={onToggleStar}
         hitSlop={8}
         accessibilityRole="button"
-        accessibilityLabel={inList ? `Remove ${spell.name} from list` : `Add ${spell.name} to list`}
+        accessibilityLabel={
+          inList
+            ? `Remove ${spell.name} from list`
+            : `Add ${spell.name} to list`
+        }
       >
         <Ionicons
           name={inList ? 'star' : 'star-outline'}

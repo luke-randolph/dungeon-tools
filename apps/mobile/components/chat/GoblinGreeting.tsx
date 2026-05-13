@@ -18,7 +18,9 @@ export function GoblinGreeting() {
           { backgroundColor: '#fff', borderColor: palette.border },
         ]}
       >
-        <ThemedText style={[styles.text, { color: '#000' }]}>{GREETING}</ThemedText>
+        <ThemedText style={[styles.text, { color: '#000' }]}>
+          {GREETING}
+        </ThemedText>
       </View>
     </View>
   );

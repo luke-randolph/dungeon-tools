@@ -1,6 +1,8 @@
 import { getDb } from '../index';
 
-export async function listClassFeatureKeys(characterId: number): Promise<string[]> {
+export async function listClassFeatureKeys(
+  characterId: number,
+): Promise<string[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<{ feature_key: string }>(
     'SELECT feature_key FROM class_features WHERE character_id = ? ORDER BY added_at ASC',

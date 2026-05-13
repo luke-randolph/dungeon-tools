@@ -43,7 +43,8 @@ export default function AllFeaturesScreen() {
         <View style={styles.empty}>
           <ThemedText>No character yet.</ThemedText>
           <ThemedText style={styles.hint}>
-            Create a character from the chip in the header to see class features.
+            Create a character from the chip in the header to see class
+            features.
           </ThemedText>
         </View>
       </ThemedView>

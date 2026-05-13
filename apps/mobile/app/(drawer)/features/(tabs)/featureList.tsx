@@ -1,14 +1,14 @@
-import { useRouter } from "expo-router";
-import { useEffect, useMemo } from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { useRouter } from 'expo-router';
+import { useEffect, useMemo } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
 
-import { ClassFeatureRow } from "@/components/ClassFeatureRow";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { ALL_CLASS_FEATURES } from "@/data/classFeatures";
-import { useToggleClassFeature } from "@/hooks/useToggleClassFeature";
-import { useCharacters } from "@/stores/characters";
-import { useClassFeatureList } from "@/stores/classFeatureList";
+import { ClassFeatureRow } from '@/components/ClassFeatureRow';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { ALL_CLASS_FEATURES } from '@/data/classFeatures';
+import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
+import { useCharacters } from '@/stores/characters';
+import { useClassFeatureList } from '@/stores/classFeatureList';
 
 export default function FeatureListScreen() {
   const router = useRouter();
@@ -80,11 +80,11 @@ const styles = StyleSheet.create({
   },
   empty: {
     padding: 32,
-    alignItems: "center",
+    alignItems: 'center',
     gap: 8,
   },
   hint: {
     opacity: 0.7,
-    textAlign: "center",
+    textAlign: 'center',
   },
 });

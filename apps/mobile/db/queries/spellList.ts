@@ -1,6 +1,8 @@
 import { getDb } from '../index';
 
-export async function listSpellListKeys(characterId: number): Promise<string[]> {
+export async function listSpellListKeys(
+  characterId: number,
+): Promise<string[]> {
   const db = await getDb();
   const rows = await db.getAllAsync<{ spell_key: string }>(
     'SELECT spell_key FROM spell_list WHERE character_id = ? ORDER BY added_at ASC',
