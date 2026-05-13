@@ -65,7 +65,7 @@ export default function SettingsScreen() {
           </ExternalLink>
         </ThemedText>
         <ThemedText style={styles.disclaimer}>
-          Dungeon Tools is an unofficial fan utility and is not affiliated
+          Dungeon Tools 5e is an unofficial fan utility and is not affiliated
           with, endorsed, sponsored, or specifically approved by Wizards of
           the Coast LLC.
         </ThemedText>

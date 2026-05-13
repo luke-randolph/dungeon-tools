@@ -1,50 +1,80 @@
-# Welcome to your Expo app 👋
+# Dungeon Tools 5e
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Companion app for Dungeons & Dragons 5th Edition players: track a character,
+keep a personal spell list and class-feature list, roll dice, and chat with
+an in-app goblin assistant that knows the SRD.
 
-## Get started
+Scope is intentionally 5e-only — the SRD 5.1 spell catalog, racial traits,
+and class features are bundled into the app and the assistant is grounded in
+that same content.
 
-1. Install dependencies
+> Unofficial fan utility. Not affiliated with, endorsed, sponsored, or
+> approved by Wizards of the Coast.
 
-   ```bash
-   npm install
-   ```
+## Layout
 
-2. Start the app
+This is a pnpm + Turborepo monorepo.
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+apps/
+  mobile/   Expo (React Native + web) — the user-facing app
+  api/      Cloudflare Worker (Hono + ai-sdk + Gemini) — chat endpoint
+packages/
+  shared/   Types + helpers shared between mobile and api
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+The mobile app stores characters and lists locally in SQLite (`expo-sqlite`).
+The only thing the API does is proxy chat requests so the LLM key never lives
+on a user's device.
 
-## Learn more
+## Develop
 
-To learn more about developing your project with Expo, look at the following resources:
+Prereqs: Node 24, pnpm 10, and the Expo tooling for whichever target you want
+to run.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+pnpm install
+pnpm dev            # runs `turbo run dev` across all apps
+```
 
-## Join the community
+Or run a single app:
 
-Join our community of developers creating universal apps.
+```bash
+pnpm --filter @dungeon-tools/mobile dev
+pnpm --filter @dungeon-tools/api dev
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The mobile app reads `EXPO_PUBLIC_API_BASE_URL` to find the chat endpoint
+(defaults to `http://localhost:8787`, which is wrangler's default).
+
+## Type-check / lint
+
+```bash
+pnpm typecheck
+pnpm lint
+```
+
+## SRD data
+
+Spell, class-feature, and racial-trait data is pre-generated from
+[5e-bits/5e-database](https://github.com/5e-bits/5e-database) and checked
+into `apps/mobile/assets`. To refresh:
+
+```bash
+pnpm --filter @dungeon-tools/mobile fetch-spells
+pnpm --filter @dungeon-tools/mobile fetch-srd
+node apps/mobile/scripts/build-feature-data.mjs
+```
+
+## Deploy
+
+The API auto-deploys to Cloudflare Workers on pushes to `main` that touch
+`apps/api/**` or `packages/shared/**` (see
+`.github/workflows/deploy-api.yml`). The mobile web build is currently a
+static export under `apps/mobile/dist`.
+
+## Attribution
+
+Includes material from the System Reference Document 5.1 by Wizards of the
+Coast LLC, used under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+Spell data has been reformatted; rules text is unmodified.

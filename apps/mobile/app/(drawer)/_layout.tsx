@@ -39,7 +39,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
     >
       <View style={[styles.drawerHeader, { paddingTop: 16 + insets.top }]}>
         <ThemedText type="defaultSemiBold" style={{ color: palette.accent }}>
-          Dungeon Tools
+          Dungeon Tools 5e
         </ThemedText>
         <Pressable
           onPress={() => props.navigation.closeDrawer()}
