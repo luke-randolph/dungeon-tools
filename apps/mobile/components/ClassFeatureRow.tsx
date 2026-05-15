@@ -46,11 +46,7 @@ export function ClassFeatureRow({
           inList ? `Remove ${feature.name}` : `Add ${feature.name}`
         }
       >
-        <StarIcon
-          filled={inList}
-          size={22}
-          unfilledColor={unfilledStarColor}
-        />
+        <StarIcon filled={inList} size={22} unfilledColor={unfilledStarColor} />
       </Pressable>
     </View>
   );
