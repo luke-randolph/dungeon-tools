@@ -1,5 +1,5 @@
-import { Image } from 'expo-image';
 import { Asset } from 'expo-asset';
+import { Image } from 'expo-image';
 import { useEffect, useState } from 'react';
 import { type ImageStyle, type StyleProp } from 'react-native';
 
@@ -33,10 +33,10 @@ const READING_SEQUENCE = [
   FRAMES.reading3,
 ] as const;
 
-const SPEAK_FRAME_MS = 140;
+const SPEAK_FRAME_MS = 200;
 const THINKING_FRAME_MS = 500;
-const T3_PROBABILITY = 0.25;
-const READING_PROBABILITY = 0.1;
+const READING_FRAME_MS = 700;
+const READING_PROBABILITY = 0.33;
 
 type Mode = 'idle' | 'streaming' | 'greeting' | 'thinking';
 
@@ -71,32 +71,35 @@ export function GoblinAvatar({ mode, size = 96, style }: GoblinAvatarProps) {
 
     // Local state for the thinking state machine.
     let readingQueue: number[] = [];
-    // 0 = next base frame is T1 (or sometimes T3); 1 = next is T2.
+    // 0 = next base frame is T1; 1 = next is T2.
     let baseStep: 0 | 1 = 0;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
+    // Each frame declares how long it stays up, so the reading sequence can
+    // run slower than the base T1/T2 rhythm.
     const tick = () => {
+      let frameMs: number;
       if (readingQueue.length > 0) {
         const next = readingQueue.shift();
         if (next !== undefined) setThinkingFrame(next);
-        return;
-      }
-      if (baseStep === 0) {
-        setThinkingFrame(
-          Math.random() < T3_PROBABILITY ? FRAMES.thinking3 : FRAMES.thinking1,
-        );
+        frameMs = READING_FRAME_MS;
+      } else if (baseStep === 0) {
+        setThinkingFrame(FRAMES.thinking1);
         baseStep = 1;
+        frameMs = THINKING_FRAME_MS;
       } else {
         setThinkingFrame(FRAMES.thinking2);
         baseStep = 0;
         if (Math.random() < READING_PROBABILITY) {
           readingQueue = [...READING_SEQUENCE];
         }
+        frameMs = THINKING_FRAME_MS;
       }
+      timeoutId = setTimeout(tick, frameMs);
     };
 
     tick();
-    const id = setInterval(tick, THINKING_FRAME_MS);
-    return () => clearInterval(id);
+    return () => clearTimeout(timeoutId);
   }, [mode]);
 
   const source =

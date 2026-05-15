@@ -17,6 +17,18 @@ export async function runMigrations(): Promise<void> {
   await seedIfEmpty(db);
 }
 
+/**
+ * On web the database lives in OPFS, whose sync access handles are exclusive
+ * to a single tab. A second tab fails to open the same file with this error.
+ */
+export function isMultiTabError(err: unknown): boolean {
+  if (!(err instanceof Error)) return false;
+  return (
+    err.name === 'NoModificationAllowedError' ||
+    /access handle|createSyncAccessHandle/i.test(err.message)
+  );
+}
+
 export async function resetDatabase(): Promise<void> {
   const db = await getDb();
   await db.execAsync(`

@@ -1,11 +1,13 @@
 import { useRouter } from 'expo-router';
-import { useEffect, useMemo } from 'react';
-import { FlatList, StyleSheet, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 
 import { ClassFeatureRow } from '@/components/ClassFeatureRow';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Colors } from '@/constants/theme';
 import { ALL_CLASS_FEATURES } from '@/data/classFeatures';
+import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
@@ -17,14 +19,25 @@ export default function FeatureListScreen() {
   const loadFor = useClassFeatureList((s) => s.loadFor);
   const toggle = useToggleClassFeature();
 
+  const [search, setSearch] = useState('');
+
+  const scheme = useColorScheme();
+  const isDark = scheme === 'dark';
+
   useEffect(() => {
     if (character) loadFor(character.id);
   }, [character?.id, loadFor, character]);
 
-  const features = useMemo(
+  const listed = useMemo(
     () => ALL_CLASS_FEATURES.filter((f) => keys.has(f.key)),
     [keys],
   );
+
+  const features = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    if (!q) return listed;
+    return listed.filter((f) => f.name.toLowerCase().includes(q));
+  }, [listed, search]);
 
   if (!character) {
     return (
@@ -40,7 +53,7 @@ export default function FeatureListScreen() {
     );
   }
 
-  if (features.length === 0) {
+  if (listed.length === 0) {
     return (
       <ThemedView style={styles.container}>
         <View style={styles.empty}>
@@ -54,6 +67,26 @@ export default function FeatureListScreen() {
 
   return (
     <ThemedView style={styles.container}>
+      <View style={styles.toolbar}>
+        <TextInput
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Search features…"
+          placeholderTextColor={Colors.light.placeholder}
+          style={[
+            styles.search,
+            {
+              color: isDark ? '#fff' : '#000',
+              borderColor: Colors.light.border,
+            },
+          ]}
+          autoCorrect={false}
+          autoCapitalize="none"
+          returnKeyType="search"
+          clearButtonMode="while-editing"
+        />
+      </View>
+
       <FlatList
         data={features}
         keyExtractor={(f) => f.key}
@@ -66,7 +99,13 @@ export default function FeatureListScreen() {
             onToggleStar={() => toggle(item)}
           />
         )}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
+        ListEmptyComponent={
+          <View style={styles.empty}>
+            <ThemedText>No features match.</ThemedText>
+          </View>
+        }
       />
     </ThemedView>
   );
@@ -74,6 +113,21 @@ export default function FeatureListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
+  toolbar: {
+    paddingHorizontal: 12,
+    paddingTop: 8,
+    paddingBottom: 4,
+    gap: 8,
+  },
+  search: {
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingTop: 12,
+    paddingBottom: 8,
+    fontSize: 15,
+    backgroundColor: '#fff',
+  },
   // Clears the goblin FAB at the bottom-right.
   listContent: {
     paddingBottom: 120,

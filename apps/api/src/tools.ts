@@ -15,7 +15,9 @@ export const tools = {
       query: z
         .string()
         .optional()
-        .describe('Case-insensitive substring to match against spell names.'),
+        .describe(
+          'Case-insensitive words matched against spell names; order is ignored and words need not be adjacent.',
+        ),
       level: z
         .number()
         .int()
