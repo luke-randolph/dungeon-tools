@@ -13,8 +13,20 @@ const { SPELL_FIXTURE } = vi.hoisted(() => {
     description: '...',
   };
   const fixture: Spell[] = [
-    { ...base, key: 'fireball', name: 'Fireball', level: 3, classes: ['wizard', 'sorcerer'] },
-    { ...base, key: 'fire-bolt', name: 'Fire Bolt', level: 0, classes: ['wizard'] },
+    {
+      ...base,
+      key: 'fireball',
+      name: 'Fireball',
+      level: 3,
+      classes: ['wizard', 'sorcerer'],
+    },
+    {
+      ...base,
+      key: 'fire-bolt',
+      name: 'Fire Bolt',
+      level: 0,
+      classes: ['wizard'],
+    },
     {
       ...base,
       key: 'delayed-blast-fireball',
@@ -22,23 +34,35 @@ const { SPELL_FIXTURE } = vi.hoisted(() => {
       level: 7,
       classes: ['wizard'],
     },
-    { ...base, key: 'magic-missile', name: 'Magic Missile', level: 1, classes: ['wizard'] },
+    {
+      ...base,
+      key: 'magic-missile',
+      name: 'Magic Missile',
+      level: 1,
+      classes: ['wizard'],
+    },
   ];
   return { SPELL_FIXTURE: fixture };
 });
 
-vi.mock('@/assets/spells/srd-5.1-spells.json', () => ({ default: SPELL_FIXTURE }));
+vi.mock('@/assets/spells/srd-5.1-spells.json', () => ({
+  default: SPELL_FIXTURE,
+}));
 
 import { searchSpells } from './spells';
 
 describe('searchSpells', () => {
   it('finds a spell when the query omits an inner word', () => {
-    const names = searchSpells({ query: 'delayed fireball' }).map((s) => s.name);
+    const names = searchSpells({ query: 'delayed fireball' }).map(
+      (s) => s.name,
+    );
     expect(names).toEqual(['Delayed Blast Fireball']);
   });
 
   it('ignores word order', () => {
-    const names = searchSpells({ query: 'fireball delayed' }).map((s) => s.name);
+    const names = searchSpells({ query: 'fireball delayed' }).map(
+      (s) => s.name,
+    );
     expect(names).toEqual(['Delayed Blast Fireball']);
   });
 
@@ -50,7 +74,11 @@ describe('searchSpells', () => {
   it('still matches a single-word query as a substring', () => {
     const names = searchSpells({ query: 'fire' }).map((s) => s.name);
     expect(names).toEqual(
-      expect.arrayContaining(['Fireball', 'Fire Bolt', 'Delayed Blast Fireball']),
+      expect.arrayContaining([
+        'Fireball',
+        'Fire Bolt',
+        'Delayed Blast Fireball',
+      ]),
     );
   });
 
@@ -59,12 +87,12 @@ describe('searchSpells', () => {
   });
 
   it('applies level and class filters alongside the query', () => {
-    expect(searchSpells({ query: 'fire', level: 3 }).map((s) => s.name)).toEqual([
-      'Fireball',
-    ]);
-    expect(searchSpells({ query: 'fire', charClass: 'sorcerer' }).map((s) => s.name)).toEqual(
-      ['Fireball'],
-    );
+    expect(
+      searchSpells({ query: 'fire', level: 3 }).map((s) => s.name),
+    ).toEqual(['Fireball']);
+    expect(
+      searchSpells({ query: 'fire', charClass: 'sorcerer' }).map((s) => s.name),
+    ).toEqual(['Fireball']);
   });
 
   it('returns every spell for an empty query', () => {

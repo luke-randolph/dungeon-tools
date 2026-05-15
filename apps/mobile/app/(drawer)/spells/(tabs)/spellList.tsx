@@ -8,7 +8,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
 import { ALL_SPELLS } from '@/data/spells';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
 import { useCharacters } from '@/stores/characters';
 import { useSpellList } from '@/stores/spellList';
@@ -21,9 +20,6 @@ export default function SpellListScreen() {
   const toggle = useToggleSpell();
 
   const [search, setSearch] = useState('');
-
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
 
   useEffect(() => {
     if (character) loadFor(character.id);
@@ -75,14 +71,9 @@ export default function SpellListScreen() {
           value={search}
           onChangeText={setSearch}
           placeholder="Search spells…"
-          placeholderTextColor={Colors.light.placeholder}
-          style={[
-            styles.search,
-            {
-              color: isDark ? '#fff' : '#000',
-              borderColor: Colors.light.border,
-            },
-          ]}
+          placeholderTextColor={Colors.mutedText}
+          accessibilityLabel="Search spells"
+          style={[styles.search, { color: '#000', borderColor: Colors.border }]}
           autoCorrect={false}
           autoCapitalize="none"
           returnKeyType="search"

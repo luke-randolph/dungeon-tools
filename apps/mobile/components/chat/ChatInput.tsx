@@ -11,7 +11,6 @@ import {
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useChat } from '@/stores/chat';
 
 const INPUT_HEIGHT = 40;
@@ -20,9 +19,6 @@ export function ChatInput() {
   const [text, setText] = useState('');
   const streaming = useChat((s) => s.streaming);
   const send = useChat((s) => s.send);
-
-  const scheme = useColorScheme();
-  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
 
   const trimmed = text.trim();
   const canSend = !streaming && trimmed.length > 0;
@@ -51,14 +47,16 @@ export function ChatInput() {
     <View
       style={[
         styles.container,
-        { backgroundColor: palette.background, borderTopColor: palette.border },
+        { backgroundColor: Colors.background, borderTopColor: Colors.border },
       ]}
     >
       <TextInput
         value={text}
         onChangeText={setText}
         placeholder="Ask the goblin…"
-        placeholderTextColor={palette.placeholder}
+        placeholderTextColor={Colors.mutedText}
+        accessibilityLabel="Message the goblin"
+        autoFocus
         multiline
         editable={!streaming}
         onKeyPress={onKeyPress}
@@ -67,9 +65,9 @@ export function ChatInput() {
         style={[
           styles.input,
           {
-            color: palette.text,
-            backgroundColor: scheme === 'dark' ? '#1c1c1e' : '#fff',
-            borderColor: palette.border,
+            color: Colors.text,
+            backgroundColor: '#fff',
+            borderColor: Colors.border,
           },
         ]}
       />
@@ -81,7 +79,7 @@ export function ChatInput() {
         style={({ pressed }) => [
           styles.button,
           {
-            backgroundColor: palette.goblinGreen,
+            backgroundColor: Colors.goblinGreen,
             opacity: pressed && canSend ? 0.85 : !canSend ? 0.5 : 1,
           },
         ]}

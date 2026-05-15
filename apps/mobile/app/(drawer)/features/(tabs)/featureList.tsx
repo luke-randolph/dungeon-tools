@@ -7,7 +7,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
 import { ALL_CLASS_FEATURES } from '@/data/classFeatures';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
@@ -20,9 +19,6 @@ export default function FeatureListScreen() {
   const toggle = useToggleClassFeature();
 
   const [search, setSearch] = useState('');
-
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
 
   useEffect(() => {
     if (character) loadFor(character.id);
@@ -72,14 +68,9 @@ export default function FeatureListScreen() {
           value={search}
           onChangeText={setSearch}
           placeholder="Search features…"
-          placeholderTextColor={Colors.light.placeholder}
-          style={[
-            styles.search,
-            {
-              color: isDark ? '#fff' : '#000',
-              borderColor: Colors.light.border,
-            },
-          ]}
+          placeholderTextColor={Colors.mutedText}
+          accessibilityLabel="Search features"
+          style={[styles.search, { color: '#000', borderColor: Colors.border }]}
           autoCorrect={false}
           autoCapitalize="none"
           returnKeyType="search"

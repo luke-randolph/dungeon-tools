@@ -1,10 +1,10 @@
 import type { ClassFeature } from '@dungeon-tools/shared';
-import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, View } from 'react-native';
 
+import { StarIcon } from '@/components/StarIcon';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { levelLabel } from '@/utils/levelLabel';
 
 export interface ClassFeatureRowProps {
   feature: ClassFeature;
@@ -15,13 +15,6 @@ export interface ClassFeatureRowProps {
   onToggleStar: () => void;
 }
 
-function levelLabel(level: number): string {
-  if (level === 1) return '1st level';
-  if (level === 2) return '2nd level';
-  if (level === 3) return '3rd level';
-  return `${level}th level`;
-}
-
 export function ClassFeatureRow({
   feature,
   inList,
@@ -29,41 +22,34 @@ export function ClassFeatureRow({
   onPressRow,
   onToggleStar,
 }: ClassFeatureRowProps) {
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const borderColor = isDark ? '#222' : '#eee';
-  const starColor = inList
-    ? '#fbbf24'
-    : unlocked
-      ? Colors.light.placeholder
-      : isDark
-        ? '#333'
-        : '#d4d4d4';
+  const level = levelLabel(feature.level);
+  const unfilledStarColor = unlocked ? Colors.mutedText : '#d4d4d4';
 
   return (
-    <View style={[styles.row, { borderBottomColor: borderColor }]}>
+    <View style={styles.row}>
       <Pressable
         style={[styles.body, !unlocked && !inList && styles.locked]}
         onPress={onPressRow}
         accessibilityRole="button"
-        accessibilityLabel={`${feature.name}, ${levelLabel(feature.level)}`}
+        accessibilityLabel={`${feature.name}, ${level}`}
       >
         <ThemedText style={styles.name}>{feature.name}</ThemedText>
-        <ThemedText style={styles.meta}>{levelLabel(feature.level)}</ThemedText>
+        <ThemedText style={styles.meta}>{level}</ThemedText>
       </Pressable>
       <Pressable
         style={styles.starButton}
         onPress={onToggleStar}
         hitSlop={8}
         accessibilityRole="button"
+        accessibilityState={{ selected: inList }}
         accessibilityLabel={
           inList ? `Remove ${feature.name}` : `Add ${feature.name}`
         }
       >
-        <Ionicons
-          name={inList ? 'star' : 'star-outline'}
+        <StarIcon
+          filled={inList}
           size={22}
-          color={starColor}
+          unfilledColor={unfilledStarColor}
         />
       </Pressable>
     </View>
@@ -75,6 +61,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: '#eee',
   },
   body: {
     flex: 1,

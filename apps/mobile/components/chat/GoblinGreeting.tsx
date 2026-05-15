@@ -2,20 +2,16 @@ import { StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 
 const GREETING = 'Greetings, traveller! What spell-lore can I dig up for ye?';
 
 export function GoblinGreeting() {
-  const scheme = useColorScheme();
-  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
-
   return (
     <View style={styles.container}>
       <View
         style={[
           styles.bubble,
-          { backgroundColor: '#fff', borderColor: palette.border },
+          { backgroundColor: '#fff', borderColor: Colors.border },
         ]}
       >
         <ThemedText style={[styles.text, { color: '#000' }]}>

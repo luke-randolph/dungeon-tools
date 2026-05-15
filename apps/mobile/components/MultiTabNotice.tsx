@@ -2,8 +2,6 @@ import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { Colors } from '@/constants/theme';
 
-const palette = Colors.light;
-
 export function MultiTabNotice() {
   const canReload = Platform.OS === 'web' && typeof window !== 'undefined';
 
@@ -33,7 +31,7 @@ export function MultiTabNotice() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: palette.background,
+    backgroundColor: Colors.background,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 32,
@@ -44,12 +42,12 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   title: {
-    color: palette.text,
+    color: Colors.text,
     fontSize: 20,
     fontWeight: '600',
   },
   body: {
-    color: palette.text,
+    color: Colors.text,
     fontSize: 15,
     lineHeight: 22,
     textAlign: 'center',
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
-    backgroundColor: palette.primary,
+    backgroundColor: Colors.primary,
   },
   pressed: {
     opacity: 0.7,
