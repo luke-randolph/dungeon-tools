@@ -11,8 +11,9 @@ import 'react-native-reanimated';
 import { ChatPanel } from '@/components/chat/ChatPanel';
 import { GoblinFab } from '@/components/chat/GoblinFab';
 import { DialogHost } from '@/components/DialogHost';
+import { MultiTabNotice } from '@/components/MultiTabNotice';
 import { Colors } from '@/constants/theme';
-import { runMigrations } from '@/db';
+import { isMultiTabError, runMigrations } from '@/db';
 import { useCharacters } from '@/stores/characters';
 
 SplashScreen.preventAutoHideAsync().catch(() => {});
@@ -36,6 +37,7 @@ const lightNavTheme = {
 
 export default function RootLayout() {
   const [ready, setReady] = useState(false);
+  const [multiTab, setMultiTab] = useState(false);
   const refreshActive = useCharacters((s) => s.refresh);
   const [fontsLoaded] = useFonts({
     AncientMedium: require('@/assets/fonts/Ancient Medium.ttf'),
@@ -46,6 +48,8 @@ export default function RootLayout() {
       try {
         await runMigrations();
         await refreshActive();
+      } catch (err) {
+        if (isMultiTabError(err)) setMultiTab(true);
       } finally {
         setReady(true);
       }
@@ -59,6 +63,14 @@ export default function RootLayout() {
   }, [ready, fontsLoaded]);
 
   if (!ready || !fontsLoaded) return null;
+
+  if (multiTab) {
+    return (
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <MultiTabNotice />
+      </GestureHandlerRootView>
+    );
+  }
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

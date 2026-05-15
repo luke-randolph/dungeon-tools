@@ -15,12 +15,30 @@ export interface SpellQuery {
   charClass?: CharacterClass | null;
 }
 
+// Lower score = closer match: exact name, then verbatim substring, then loose.
+function spellRank(name: string, query: string): number {
+  if (name === query) return 0;
+  if (name.includes(query)) return 1;
+  return 2;
+}
+
 export function searchSpells(opts: SpellQuery = {}): Spell[] {
   const q = opts.query?.toLowerCase().trim();
-  return ALL_SPELLS.filter((s) => {
-    if (q && !s.name.toLowerCase().includes(q)) return false;
+  // Match each query word independently, so word order and gaps don't matter.
+  const terms = q ? q.split(/\s+/) : [];
+
+  const matches = ALL_SPELLS.filter((s) => {
+    const name = s.name.toLowerCase();
+    if (terms.length && !terms.every((t) => name.includes(t))) return false;
     if (opts.level != null && s.level !== opts.level) return false;
     if (opts.charClass && !s.classes.includes(opts.charClass)) return false;
     return true;
   });
+
+  if (!q) return matches;
+  return matches.sort(
+    (a, b) =>
+      spellRank(a.name.toLowerCase(), q) - spellRank(b.name.toLowerCase(), q) ||
+      a.name.length - b.name.length,
+  );
 }

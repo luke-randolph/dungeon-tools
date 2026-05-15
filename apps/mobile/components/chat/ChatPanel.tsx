@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -13,6 +13,7 @@ import { ChatMessageList } from './ChatMessageList';
 import { GoblinAvatar } from './GoblinAvatar';
 
 const GREETING_MS = 1500;
+const SPEAK_HOLD_MS = 1000;
 const AVATAR_SIZE = 128;
 
 export function ChatPanel() {
@@ -55,10 +56,35 @@ export function ChatPanel() {
     lastMessage?.role === 'assistant' &&
     lastMessage.content.length > 0;
 
-  const avatarMode = isStreamingContent
-    ? 'streaming'
-    : streaming
-      ? 'thinking'
+  const isThinking = streaming && !isStreamingContent;
+
+  // Let the talking pose land — hold it a beat after the stream finishes
+  // instead of cutting to idle on the last token. Keyed only on `streaming`
+  // so a post-stream message update can't cancel the hold timer mid-flight.
+  const wasStreaming = useRef(false);
+  const lastMessageRef = useRef(lastMessage);
+  lastMessageRef.current = lastMessage;
+  const [speakHold, setSpeakHold] = useState(false);
+  useEffect(() => {
+    if (streaming) {
+      wasStreaming.current = true;
+      setSpeakHold(false);
+      return;
+    }
+    if (!wasStreaming.current) return;
+    wasStreaming.current = false;
+    const last = lastMessageRef.current;
+    const answered = last?.role === 'assistant' && last.content.length > 0;
+    if (!answered) return;
+    setSpeakHold(true);
+    const id = setTimeout(() => setSpeakHold(false), SPEAK_HOLD_MS);
+    return () => clearTimeout(id);
+  }, [streaming]);
+
+  const avatarMode = isThinking
+    ? 'thinking'
+    : isStreamingContent || speakHold
+      ? 'streaming'
       : showingGreeting
         ? 'greeting'
         : 'idle';
