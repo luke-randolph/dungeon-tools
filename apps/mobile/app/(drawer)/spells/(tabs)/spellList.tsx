@@ -1,13 +1,13 @@
 import { spellListLabel } from '@dungeon-tools/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { FlatList, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
+import { EmptyState } from '@/components/EmptyState';
+import { SearchField } from '@/components/SearchField';
 import { SpellRow } from '@/components/SpellRow';
-import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
-import { Colors } from '@/constants/theme';
 import { ALL_SPELLS } from '@/data/spells';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
 import { useCharacters } from '@/stores/characters';
@@ -40,13 +40,10 @@ export default function SpellListScreen() {
   if (!character) {
     return (
       <ThemedView style={styles.container}>
-        <View style={styles.empty}>
-          <ThemedText>No character yet.</ThemedText>
-          <ThemedText style={styles.hint}>
-            Create a character from the chip in the header to start a spell
-            list.
-          </ThemedText>
-        </View>
+        <EmptyState
+          title="No character yet."
+          message="Create a character from the chip in the header to start a spell list."
+        />
       </ThemedView>
     );
   }
@@ -55,32 +52,22 @@ export default function SpellListScreen() {
     const label = spellListLabel(character.class).toLowerCase();
     return (
       <ThemedView style={styles.container}>
-        <View style={styles.empty}>
-          <ThemedText>{`${character.name}'s ${label} is empty.`}</ThemedText>
-          <ThemedText style={styles.hint}>
-            Tap a star on the All Spells tab to add a spell.
-          </ThemedText>
-        </View>
+        <EmptyState
+          title={`${character.name}'s ${label} is empty.`}
+          message="Tap a star on the All Spells tab to add a spell."
+        />
       </ThemedView>
     );
   }
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.toolbar}>
-        <TextInput
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Search spells…"
-          placeholderTextColor={Colors.mutedText}
-          accessibilityLabel="Search spells"
-          style={[styles.search, { color: '#000', borderColor: Colors.border }]}
-          autoCorrect={false}
-          autoCapitalize="none"
-          returnKeyType="search"
-          clearButtonMode="while-editing"
-        />
-      </View>
+      <SearchField
+        value={search}
+        onChangeText={setSearch}
+        placeholder="Search spells…"
+        accessibilityLabel="Search spells"
+      />
 
       <FlatList
         data={spells}
@@ -95,11 +82,7 @@ export default function SpellListScreen() {
         )}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
-        ListEmptyComponent={
-          <View style={styles.empty}>
-            <ThemedText>No spells match.</ThemedText>
-          </View>
-        }
+        ListEmptyComponent={<EmptyState title="No spells match." />}
       />
     </ThemedView>
   );
@@ -107,31 +90,7 @@ export default function SpellListScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  toolbar: {
-    paddingHorizontal: 12,
-    paddingTop: 8,
-    paddingBottom: 4,
-    gap: 8,
-  },
-  search: {
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    paddingBottom: 8,
-    fontSize: 15,
-    backgroundColor: '#fff',
-  },
   listContent: {
     paddingBottom: GOBLIN_FAB_CLEARANCE,
-  },
-  empty: {
-    padding: 32,
-    alignItems: 'center',
-    gap: 8,
-  },
-  hint: {
-    opacity: 0.7,
-    textAlign: 'center',
   },
 });

@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { StarIcon } from '@/components/StarIcon';
 import { ThemedText } from '@/components/ThemedText';
+import { Colors } from '@/constants/theme';
 import { levelLabel } from '@/utils/levelLabel';
 
 export interface SpellRowProps {
@@ -58,7 +59,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#eee',
+    borderBottomColor: Colors.rowBorder,
   },
   body: {
     flex: 1,
