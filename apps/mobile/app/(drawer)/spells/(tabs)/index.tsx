@@ -8,7 +8,6 @@ import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { searchSpells } from '@/data/spells';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
 import { useCharacters } from '@/stores/characters';
 import { useSpellList } from '@/stores/spellList';
@@ -31,9 +30,6 @@ export default function AllSpellsScreen() {
   const [search, setSearch] = useState('');
   const [levelFilter, setLevelFilter] = useState<number | null>(null);
 
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-
   useEffect(() => {
     if (character) loadFor(character.id);
   }, [character?.id, loadFor, character]);
@@ -50,14 +46,9 @@ export default function AllSpellsScreen() {
           value={search}
           onChangeText={setSearch}
           placeholder="Search spells…"
-          placeholderTextColor={Colors.light.placeholder}
-          style={[
-            styles.search,
-            {
-              color: isDark ? '#fff' : '#000',
-              borderColor: Colors.light.border,
-            },
-          ]}
+          placeholderTextColor={Colors.mutedText}
+          accessibilityLabel="Search spells"
+          style={[styles.search, { color: '#000', borderColor: Colors.border }]}
           autoCorrect={false}
           autoCapitalize="none"
           returnKeyType="search"
@@ -74,15 +65,21 @@ export default function AllSpellsScreen() {
             return (
               <Pressable
                 onPress={() => setLevelFilter(item)}
+                hitSlop={8}
+                accessibilityRole="button"
+                accessibilityState={{ selected: active }}
+                accessibilityLabel={
+                  item == null
+                    ? 'Show all spell levels'
+                    : item === 0
+                      ? 'Filter to cantrips'
+                      : `Filter to level ${item} spells`
+                }
                 style={[
                   styles.levelPill,
                   {
-                    borderColor: active
-                      ? Colors.light.primary
-                      : Colors.light.border,
-                    backgroundColor: active
-                      ? Colors.light.primary
-                      : 'transparent',
+                    borderColor: active ? Colors.primary : Colors.border,
+                    backgroundColor: active ? Colors.primary : 'transparent',
                   },
                 ]}
               >

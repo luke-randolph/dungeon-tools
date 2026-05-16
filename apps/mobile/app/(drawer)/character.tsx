@@ -17,12 +17,12 @@ import {
   View,
 } from 'react-native';
 
+import { Pills } from '@/components/Pills';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { getClassDetail } from '@/data/classes';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
 import { showAlert, showConfirm } from '@/utils/dialogs';
 
@@ -43,8 +43,6 @@ export default function CharacterScreen() {
   const character = useCharacters((s) => s.character);
   const updateCharacter = useCharacters((s) => s.updateCharacter);
   const removeCharacter = useCharacters((s) => s.removeCharacter);
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
 
   const [editing, setEditing] = useState(false);
   const [name, setName] = useState('');
@@ -85,14 +83,16 @@ export default function CharacterScreen() {
   }
 
   function startEdit() {
-    setName(character!.name);
-    setRace(character!.race);
-    setCharacterClass(character!.class);
-    setLevel(character!.level);
+    if (!character) return;
+    setName(character.name);
+    setRace(character.race);
+    setCharacterClass(character.class);
+    setLevel(character.level);
     setEditing(true);
   }
 
   async function saveEdit() {
+    if (!character) return;
     const trimmed = name.trim();
     if (!trimmed) {
       showAlert('Name required');
@@ -104,7 +104,7 @@ export default function CharacterScreen() {
     }
     setSaving(true);
     try {
-      await updateCharacter(character!.id, {
+      await updateCharacter(character.id, {
         name: trimmed,
         race,
         class: characterClass,
@@ -122,14 +122,15 @@ export default function CharacterScreen() {
   }
 
   function confirmDelete() {
+    if (!character) return;
     showConfirm(
-      `Delete ${character!.name}?`,
+      `Delete ${character.name}?`,
       'Their spell list will be deleted too. This cannot be undone.',
       {
         confirmLabel: 'Delete',
         destructive: true,
         onConfirm: async () => {
-          await removeCharacter(character!.id);
+          await removeCharacter(character.id);
         },
       },
     );
@@ -148,11 +149,12 @@ export default function CharacterScreen() {
           <TextInput
             value={name}
             onChangeText={setName}
+            accessibilityLabel="Character name"
             style={[
               styles.input,
               {
-                color: Colors.light.text,
-                borderColor: Colors.light.border,
+                color: Colors.text,
+                borderColor: Colors.border,
               },
             ]}
             autoCapitalize="words"
@@ -166,7 +168,6 @@ export default function CharacterScreen() {
             labels={RACE_LABELS}
             selected={race}
             onSelect={setRace}
-            isDark={isDark}
           />
 
           <ThemedText type="subtitle" style={styles.editLabel}>
@@ -177,7 +178,6 @@ export default function CharacterScreen() {
             labels={CLASS_LABELS}
             selected={characterClass}
             onSelect={setCharacterClass}
-            isDark={isDark}
           />
 
           <ThemedText type="subtitle" style={styles.editLabel}>
@@ -186,14 +186,18 @@ export default function CharacterScreen() {
           <View style={styles.stepper}>
             <Pressable
               onPress={() => setLevel((l) => Math.max(MIN_LEVEL, l - 1))}
-              style={[styles.stepButton, { borderColor: Colors.light.border }]}
+              accessibilityRole="button"
+              accessibilityLabel="Decrease level"
+              style={[styles.stepButton, { borderColor: Colors.border }]}
             >
               <ThemedText style={styles.stepLabel}>−</ThemedText>
             </Pressable>
             <ThemedText style={styles.levelValue}>{level}</ThemedText>
             <Pressable
               onPress={() => setLevel((l) => Math.min(MAX_LEVEL, l + 1))}
-              style={[styles.stepButton, { borderColor: Colors.light.border }]}
+              accessibilityRole="button"
+              accessibilityLabel="Increase level"
+              style={[styles.stepButton, { borderColor: Colors.border }]}
             >
               <ThemedText style={styles.stepLabel}>+</ThemedText>
             </Pressable>
@@ -202,6 +206,7 @@ export default function CharacterScreen() {
           <View style={styles.actions}>
             <Pressable
               onPress={() => setEditing(false)}
+              accessibilityRole="button"
               style={[styles.button, styles.secondaryButton]}
             >
               <ThemedText style={styles.onDarkLabel}>Cancel</ThemedText>
@@ -209,6 +214,7 @@ export default function CharacterScreen() {
             <Pressable
               onPress={saveEdit}
               disabled={saving}
+              accessibilityRole="button"
               style={[
                 styles.button,
                 styles.primaryButton,
@@ -301,54 +307,10 @@ function LinkRow({
       accessibilityRole="button"
       accessibilityLabel={label}
     >
-      <Ionicons name={icon} size={20} color={Colors.light.text} />
+      <Ionicons name={icon} size={20} color={Colors.text} />
       <ThemedText style={styles.linkLabel}>{label}</ThemedText>
-      <Ionicons
-        name="chevron-forward"
-        size={18}
-        color={Colors.light.placeholder}
-      />
+      <Ionicons name="chevron-forward" size={18} color={Colors.mutedText} />
     </Pressable>
-  );
-}
-
-function Pills<T extends string>({
-  options,
-  labels,
-  selected,
-  onSelect,
-  isDark,
-}: {
-  options: readonly T[];
-  labels: Record<T, string>;
-  selected: T | null;
-  onSelect: (val: T) => void;
-  isDark: boolean;
-}) {
-  const inactiveBorder = Colors.light.border;
-  return (
-    <View style={styles.pills}>
-      {options.map((opt) => {
-        const active = selected === opt;
-        return (
-          <Pressable
-            key={opt}
-            onPress={() => onSelect(opt)}
-            style={[
-              styles.pill,
-              { borderColor: active ? Colors.light.primary : inactiveBorder },
-              active && styles.pillActive,
-            ]}
-          >
-            <ThemedText
-              style={[styles.pillLabel, active && styles.pillLabelActive]}
-            >
-              {labels[opt]}
-            </ThemedText>
-          </Pressable>
-        );
-      })}
-    </View>
   );
 }
 
@@ -369,7 +331,7 @@ const styles = StyleSheet.create({
   links: {
     marginTop: 16,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderTopColor: Colors.light.border,
+    borderTopColor: Colors.border,
   },
   linkRow: {
     flexDirection: 'row',
@@ -377,7 +339,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     gap: 12,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: Colors.light.border,
+    borderBottomColor: Colors.border,
   },
   linkRowPressed: {
     opacity: 0.5,
@@ -394,16 +356,6 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     fontSize: 16,
   },
-  pills: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 },
-  pill: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  pillActive: { backgroundColor: Colors.light.primary },
-  pillLabel: { fontSize: 14 },
-  pillLabelActive: { color: '#fff', fontWeight: '600' },
   stepper: { flexDirection: 'row', alignItems: 'center', gap: 16 },
   stepButton: {
     width: 44,
@@ -427,15 +379,15 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  secondaryButton: { flex: 1, backgroundColor: Colors.light.secondary },
-  primaryButton: { flex: 1, backgroundColor: Colors.light.primary },
+  secondaryButton: { flex: 1, backgroundColor: Colors.secondary },
+  primaryButton: { flex: 1, backgroundColor: Colors.primary },
   onDarkLabel: { color: '#fff', fontWeight: '600' },
   standaloneButton: {
     marginTop: 8,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    backgroundColor: Colors.light.primary,
+    backgroundColor: Colors.primary,
     alignSelf: 'flex-start',
   },
   emptyState: {
@@ -455,7 +407,7 @@ const styles = StyleSheet.create({
     left: 16,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: Colors.light.destructive,
+    backgroundColor: Colors.destructive,
     borderRadius: 8,
   },
 });

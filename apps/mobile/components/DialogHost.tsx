@@ -2,7 +2,6 @@ import { Modal, Pressable, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useDialogStore } from '@/utils/dialogs';
 
 export function DialogHost() {
@@ -16,12 +15,7 @@ export function DialogHost() {
   const confirm = useDialogStore((s) => s.confirm);
   const cancel = useDialogStore((s) => s.cancel);
 
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const palette = isDark ? Colors.dark : Colors.light;
-
-  const cardBg = isDark ? '#1c1c1e' : palette.background;
-  const confirmBg = destructive ? palette.destructive : palette.primary;
+  const confirmBg = destructive ? Colors.destructive : Colors.primary;
 
   return (
     <Modal
@@ -35,7 +29,7 @@ export function DialogHost() {
         <View
           style={[
             styles.card,
-            { backgroundColor: cardBg, borderColor: palette.border },
+            { backgroundColor: Colors.background, borderColor: Colors.border },
           ]}
           onStartShouldSetResponder={() => true}
           accessibilityRole="alert"
@@ -54,7 +48,7 @@ export function DialogHost() {
                 style={[
                   styles.button,
                   styles.cancelButton,
-                  { borderColor: palette.border },
+                  { borderColor: Colors.border },
                 ]}
                 accessibilityRole="button"
               >

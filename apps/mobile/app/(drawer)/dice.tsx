@@ -10,11 +10,11 @@ import {
 import { Image } from 'expo-image';
 import { Asset } from 'expo-asset';
 
-const AnimatedImage = Animated.createAnimatedComponent(Image);
-
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { useThemeColor } from '@/hooks/use-theme-color';
+import { Colors } from '@/constants/theme';
+
+const AnimatedImage = Animated.createAnimatedComponent(Image);
 
 const DICE = {
   d4: {
@@ -91,9 +91,6 @@ export default function DiceScreen() {
     d20: 20,
   });
 
-  const primary = useThemeColor({}, 'primary');
-  const border = useThemeColor({}, 'border');
-
   useEffect(() => {
     const modules = DICE_ORDER.flatMap((die) => Object.values(DICE[die]));
     Asset.loadAsync(modules);
@@ -114,14 +111,7 @@ export default function DiceScreen() {
         </ThemedText>
         <View style={styles.grid}>
           {DICE_ORDER.map((die) => (
-            <DieTile
-              key={die}
-              die={die}
-              value={values[die]}
-              onRoll={roll}
-              primary={primary}
-              border={border}
-            />
+            <DieTile key={die} die={die} value={values[die]} onRoll={roll} />
           ))}
         </View>
       </ScrollView>
@@ -133,11 +123,9 @@ type DieTileProps = {
   die: DieKey;
   value: number;
   onRoll: (die: DieKey) => void;
-  primary: string;
-  border: string;
 };
 
-function DieTile({ die, value, onRoll, primary, border }: DieTileProps) {
+function DieTile({ die, value, onRoll }: DieTileProps) {
   const rotation = useRef(new Animated.Value(0)).current;
   const rotationValue = useRef(0);
   const source = DICE[die][value as keyof (typeof DICE)[typeof die]];
@@ -160,17 +148,22 @@ function DieTile({ die, value, onRoll, primary, border }: DieTileProps) {
   });
 
   return (
-    <View style={[styles.tile, { borderColor: border }]}>
+    <View style={[styles.tile, { borderColor: Colors.border }]}>
       <AnimatedImage
         source={source}
         style={[styles.image, { transform: [{ rotate: rotateInterpolation }] }]}
         contentFit="contain"
+        accessibilityLiveRegion="polite"
+        accessibilityLabel={`D${SIDES[die]} showing ${value}`}
       />
       <Pressable
         onPress={handlePress}
+        hitSlop={8}
+        accessibilityRole="button"
+        accessibilityLabel={`Roll D${SIDES[die]}`}
         style={({ pressed }) => [
           styles.button,
-          { backgroundColor: primary, opacity: pressed ? 0.75 : 1 },
+          { backgroundColor: Colors.primary, opacity: pressed ? 0.75 : 1 },
         ]}
       >
         <ThemedText type="defaultSemiBold" style={styles.buttonText}>

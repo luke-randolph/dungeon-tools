@@ -86,34 +86,6 @@ export async function handleChat(
         stack: error instanceof Error ? error.stack : undefined,
       });
     },
-    onFinish({
-      usage,
-      finishReason,
-      text,
-      toolCalls,
-      warnings,
-      providerMetadata,
-    }) {
-      console.log(
-        'chat finish',
-        JSON.stringify(
-          {
-            finishReason,
-            textLength: text?.length ?? 0,
-            textPreview: text?.slice(0, 120) ?? '',
-            toolCallCount: toolCalls?.length ?? 0,
-            toolCallNames: toolCalls?.map((tc) => tc.toolName) ?? [],
-            warnings: warnings ?? [],
-            providerMetadata: providerMetadata ?? null,
-            inputTokens: usage.inputTokens,
-            outputTokens: usage.outputTokens,
-            totalTokens: usage.totalTokens,
-          },
-          null,
-          2,
-        ),
-      );
-    },
   });
 
   return result.toUIMessageStreamResponse();

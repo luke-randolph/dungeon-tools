@@ -22,16 +22,16 @@ export const unstable_settings = {
   anchor: '(drawer)',
 };
 
-const lightNavTheme = {
+const navTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    background: Colors.light.surface,
-    card: Colors.light.background,
-    text: Colors.light.text,
-    primary: Colors.light.primary,
+    background: Colors.surface,
+    card: Colors.background,
+    text: Colors.text,
+    primary: Colors.primary,
     border: '#d4c4a0',
-    notification: Colors.light.destructive,
+    notification: Colors.destructive,
   },
 };
 
@@ -75,7 +75,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <ThemeProvider value={lightNavTheme}>
+        <ThemeProvider value={navTheme}>
           <Stack>
             <Stack.Screen name="(drawer)" options={{ headerShown: false }} />
             <Stack.Screen

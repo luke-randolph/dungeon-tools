@@ -72,7 +72,12 @@ export default function SettingsScreen() {
         </ThemedText>
 
         {__DEV__ ? (
-          <Pressable style={styles.dangerButton} onPress={confirmReset}>
+          <Pressable
+            style={styles.dangerButton}
+            onPress={confirmReset}
+            accessibilityRole="button"
+            accessibilityLabel="Reset database"
+          >
             <ThemedText style={styles.dangerLabel}>
               Reset database (dev)
             </ThemedText>
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
     marginTop: 32,
     paddingVertical: 12,
     paddingHorizontal: 16,
-    backgroundColor: Colors.light.destructive,
+    backgroundColor: Colors.destructive,
     borderRadius: 8,
     alignSelf: 'flex-start',
   },
