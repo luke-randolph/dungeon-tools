@@ -5,6 +5,7 @@ import { type ImageStyle, type StyleProp } from 'react-native';
 
 const FRAMES = {
   default: require('@/assets/goblin/portrait/goblin-default.png'),
+  blink: require('@/assets/goblin/portrait/blink.png'),
   speakClosed: require('@/assets/goblin/portrait/goblin-speak-closed.png'),
   speakOpen1: require('@/assets/goblin/portrait/goblin-speak-open-1.png'),
   speakOpen2: require('@/assets/goblin/portrait/goblin-speak-open-2.png'),
@@ -38,6 +39,10 @@ const THINKING_FRAME_MS = 500;
 const READING_FRAME_MS = 700;
 const READING_PROBABILITY = 0.33;
 
+const BLINK_DURATION_MS = 300;
+const BLINK_MIN_GAP_MS = 3000;
+const BLINK_MAX_GAP_MS = 6000;
+
 type Mode = 'idle' | 'streaming' | 'greeting' | 'thinking';
 
 interface GoblinAvatarProps {
@@ -53,10 +58,41 @@ interface GoblinAvatarProps {
 export function GoblinAvatar({ mode, size = 96, style }: GoblinAvatarProps) {
   const [speakFrame, setSpeakFrame] = useState(0);
   const [thinkingFrame, setThinkingFrame] = useState<number>(FRAMES.thinking1);
+  const [blinking, setBlinking] = useState(false);
 
   useEffect(() => {
     Asset.loadAsync(Object.values(FRAMES));
   }, []);
+
+  // While idle, blink at random intervals: shut the eyes briefly, then reopen.
+  useEffect(() => {
+    if (mode !== 'idle') {
+      setBlinking(false);
+      return;
+    }
+
+    let openId: ReturnType<typeof setTimeout>;
+    let scheduleId: ReturnType<typeof setTimeout>;
+
+    const scheduleBlink = () => {
+      const gap =
+        BLINK_MIN_GAP_MS +
+        Math.random() * (BLINK_MAX_GAP_MS - BLINK_MIN_GAP_MS);
+      scheduleId = setTimeout(() => {
+        setBlinking(true);
+        openId = setTimeout(() => {
+          setBlinking(false);
+          scheduleBlink();
+        }, BLINK_DURATION_MS);
+      }, gap);
+    };
+
+    scheduleBlink();
+    return () => {
+      clearTimeout(scheduleId);
+      clearTimeout(openId);
+    };
+  }, [mode]);
 
   useEffect(() => {
     if (mode !== 'streaming') return;
@@ -109,7 +145,9 @@ export function GoblinAvatar({ mode, size = 96, style }: GoblinAvatarProps) {
         ? FRAMES.winkWave
         : mode === 'thinking'
           ? thinkingFrame
-          : FRAMES.default;
+          : blinking
+            ? FRAMES.blink
+            : FRAMES.default;
 
   return (
     <Image
