@@ -19,9 +19,11 @@ export function ChatInput() {
   const [text, setText] = useState('');
   const streaming = useChat((s) => s.streaming);
   const send = useChat((s) => s.send);
+  const abort = useChat((s) => s.abort);
 
   const trimmed = text.trim();
   const canSend = !streaming && trimmed.length > 0;
+  const buttonEnabled = streaming || canSend;
 
   const onSend = () => {
     if (!canSend) return;
@@ -72,19 +74,21 @@ export function ChatInput() {
         ]}
       />
       <Pressable
-        onPress={onSend}
-        disabled={!canSend}
+        onPress={streaming ? abort : onSend}
+        disabled={!buttonEnabled}
         accessibilityRole="button"
-        accessibilityLabel="Send message"
+        accessibilityLabel={streaming ? 'Stop generating' : 'Send message'}
         style={({ pressed }) => [
           styles.button,
           {
-            backgroundColor: Colors.goblinGreen,
-            opacity: pressed && canSend ? 0.85 : !canSend ? 0.5 : 1,
+            backgroundColor: streaming ? Colors.destructive : Colors.goblinGreen,
+            opacity: !buttonEnabled ? 0.5 : pressed ? 0.85 : 1,
           },
         ]}
       >
-        <ThemedText style={styles.buttonText}>Send</ThemedText>
+        <ThemedText style={styles.buttonText}>
+          {streaming ? 'Stop' : 'Send'}
+        </ThemedText>
       </Pressable>
     </View>
   );

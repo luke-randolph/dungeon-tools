@@ -82,14 +82,16 @@ export default function CharacterScreen() {
   }
 
   function startEdit() {
-    setName(character!.name);
-    setRace(character!.race);
-    setCharacterClass(character!.class);
-    setLevel(character!.level);
+    if (!character) return;
+    setName(character.name);
+    setRace(character.race);
+    setCharacterClass(character.class);
+    setLevel(character.level);
     setEditing(true);
   }
 
   async function saveEdit() {
+    if (!character) return;
     const trimmed = name.trim();
     if (!trimmed) {
       showAlert('Name required');
@@ -101,7 +103,7 @@ export default function CharacterScreen() {
     }
     setSaving(true);
     try {
-      await updateCharacter(character!.id, {
+      await updateCharacter(character.id, {
         name: trimmed,
         race,
         class: characterClass,
@@ -119,14 +121,15 @@ export default function CharacterScreen() {
   }
 
   function confirmDelete() {
+    if (!character) return;
     showConfirm(
-      `Delete ${character!.name}?`,
+      `Delete ${character.name}?`,
       'Their spell list will be deleted too. This cannot be undone.',
       {
         confirmLabel: 'Delete',
         destructive: true,
         onConfirm: async () => {
-          await removeCharacter(character!.id);
+          await removeCharacter(character.id);
         },
       },
     );
