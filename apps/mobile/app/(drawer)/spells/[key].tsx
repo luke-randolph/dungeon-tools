@@ -5,6 +5,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { getSpell } from '@/data/spells';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
@@ -148,8 +149,7 @@ const styles = StyleSheet.create({
   },
   content: {
     paddingHorizontal: 16,
-    // Bottom padding clears the goblin FAB.
-    paddingBottom: 120,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
     gap: 8,
   },
   subtitle: {

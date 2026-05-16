@@ -19,10 +19,10 @@ export function GoblinFab() {
 
   return (
     <View
+      pointerEvents="box-none"
       style={[
         styles.layer,
         {
-          pointerEvents: 'box-none',
           paddingBottom: 24 + insets.bottom,
           paddingRight: 16 + insets.right,
         },

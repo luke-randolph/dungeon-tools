@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { traitsForRace } from '@/data/racialTraits';
@@ -72,9 +73,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     fontSize: 13,
   },
-  // Clears the goblin FAB at the bottom-right.
   listContent: {
-    paddingBottom: 120,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
   },
   row: {
     paddingHorizontal: 16,

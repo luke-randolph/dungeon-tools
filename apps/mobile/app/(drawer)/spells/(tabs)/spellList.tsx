@@ -6,6 +6,7 @@ import { FlatList, StyleSheet, TextInput, View } from 'react-native';
 import { SpellRow } from '@/components/SpellRow';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { ALL_SPELLS } from '@/data/spells';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -130,9 +131,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     backgroundColor: '#fff',
   },
-  // Clears the goblin FAB at the bottom-right.
   listContent: {
-    paddingBottom: 120,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
   },
   empty: {
     padding: 32,

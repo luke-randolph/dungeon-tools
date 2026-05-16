@@ -19,6 +19,7 @@ import {
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { getClassDetail } from '@/data/classes';
 import { useColorScheme } from '@/hooks/use-color-scheme';
@@ -353,7 +354,7 @@ function Pills<T extends string>({
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { padding: 16, gap: 12, paddingBottom: 40 },
+  content: { padding: 16, gap: 12, paddingBottom: GOBLIN_FAB_CLEARANCE },
   fields: { gap: 10, marginTop: 8 },
   field: { flexDirection: 'row', alignItems: 'baseline', gap: 12 },
   fieldLabel: { width: 64, opacity: 0.6 },
