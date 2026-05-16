@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { StarIcon } from '@/components/StarIcon';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
@@ -10,13 +11,7 @@ import { getClassFeature } from '@/data/classFeatures';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
-
-function levelLabel(level: number): string {
-  if (level === 1) return '1st-level';
-  if (level === 2) return '2nd-level';
-  if (level === 3) return '3rd-level';
-  return `${level}th-level`;
-}
+import { levelLabel } from '@/utils/levelLabel';
 
 export default function ClassFeatureDetailScreen() {
   const { key } = useLocalSearchParams<{ key: string }>();
@@ -33,7 +28,12 @@ export default function ClassFeatureDetailScreen() {
       <ThemedView style={styles.container}>
         <View style={styles.notFound}>
           <ThemedText type="title">Feature not found</ThemedText>
-          <Pressable onPress={() => router.back()} style={styles.backInline}>
+          <Pressable
+            onPress={() => router.back()}
+            style={styles.backInline}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
+          >
             <Ionicons name="chevron-back" size={20} />
             <ThemedText>Back</ThemedText>
           </Pressable>
@@ -43,11 +43,7 @@ export default function ClassFeatureDetailScreen() {
   }
 
   const unlocked = !character || character.level >= feature.level;
-  const starColor = inList
-    ? '#fbbf24'
-    : unlocked
-      ? Colors.light.placeholder
-      : '#bbb';
+  const unfilledStarColor = unlocked ? Colors.mutedText : '#bbb';
 
   return (
     <ThemedView style={styles.container}>
@@ -71,10 +67,10 @@ export default function ClassFeatureDetailScreen() {
             inList ? `Remove ${feature.name}` : `Add ${feature.name}`
           }
         >
-          <Ionicons
-            name={inList ? 'star' : 'star-outline'}
+          <StarIcon
+            filled={inList}
             size={26}
-            color={starColor}
+            unfilledColor={unfilledStarColor}
           />
         </Pressable>
       </View>
@@ -82,7 +78,8 @@ export default function ClassFeatureDetailScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <ThemedText type="title">{feature.name}</ThemedText>
         <ThemedText style={styles.subtitle}>
-          {CLASS_LABELS[feature.class]} · {levelLabel(feature.level)}
+          {CLASS_LABELS[feature.class]} ·{' '}
+          {levelLabel(feature.level, { hyphenated: true })}
         </ThemedText>
         <ThemedText style={styles.body}>{feature.body}</ThemedText>
       </ScrollView>

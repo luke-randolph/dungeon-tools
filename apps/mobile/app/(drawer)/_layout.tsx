@@ -13,12 +13,9 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CharacterChip } from '@/components/CharacterChip';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useUI } from '@/stores/ui';
 
 function DrawerContent(props: DrawerContentComponentProps) {
-  const scheme = useColorScheme();
-  const palette = Colors[scheme === 'dark' ? 'dark' : 'light'];
   const insets = useSafeAreaInsets();
   const status = useDrawerStatus();
   const setDrawerOpen = useUI((s) => s.setDrawerOpen);
@@ -38,7 +35,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
       contentContainerStyle={styles.drawerContent}
     >
       <View style={[styles.drawerHeader, { paddingTop: 16 + insets.top }]}>
-        <ThemedText type="defaultSemiBold" style={{ color: palette.accent }}>
+        <ThemedText type="defaultSemiBold" style={{ color: Colors.accent }}>
           Dungeon Tools 5e
         </ThemedText>
         <Pressable
@@ -48,7 +45,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
           accessibilityRole="button"
           accessibilityLabel="Close menu"
         >
-          <Ionicons name="close" size={22} color={palette.surfaceText} />
+          <Ionicons name="close" size={22} color={Colors.surfaceText} />
         </Pressable>
       </View>
       <DrawerItemList {...props} />
@@ -57,9 +54,6 @@ function DrawerContent(props: DrawerContentComponentProps) {
 }
 
 export default function DrawerLayout() {
-  const scheme = useColorScheme();
-  const palette = Colors[scheme === 'dark' ? 'dark' : 'light'];
-
   return (
     <Drawer
       drawerContent={(props) => <DrawerContent {...props} />}
@@ -68,16 +62,16 @@ export default function DrawerLayout() {
         headerLeft: () => <CharacterChip />,
         headerTitle: () => null,
         headerStyle: {
-          backgroundColor: palette.surface,
+          backgroundColor: Colors.surface,
           borderBottomWidth: 2,
           borderBottomColor: '#000',
         },
-        headerTintColor: palette.surfaceText,
+        headerTintColor: Colors.surfaceText,
         headerLeftContainerStyle: { paddingTop: 8 },
         headerRightContainerStyle: { paddingTop: 8, paddingRight: 4 },
-        drawerStyle: { backgroundColor: palette.surface },
-        drawerActiveTintColor: palette.surfaceText,
-        drawerInactiveTintColor: palette.surfaceText,
+        drawerStyle: { backgroundColor: Colors.surface },
+        drawerActiveTintColor: Colors.surfaceText,
+        drawerInactiveTintColor: Colors.surfaceText,
         drawerActiveBackgroundColor: 'rgba(255,255,255,0.08)',
         drawerLabelStyle: { fontSize: 16, fontWeight: '500' },
         drawerItemStyle: { paddingVertical: 6, marginVertical: 2 },

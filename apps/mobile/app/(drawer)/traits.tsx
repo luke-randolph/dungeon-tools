@@ -5,18 +5,15 @@ import { FlatList, StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { traitsForRace } from '@/data/racialTraits';
 import { useCharacters } from '@/stores/characters';
 
 export default function TraitsScreen() {
   const character = useCharacters((s) => s.character);
-  const scheme = useColorScheme();
-  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
 
   const traits = useMemo(
     () => (character ? traitsForRace(character.race) : []),
-    [character?.race, character],
+    [character],
   );
 
   if (!character) {
@@ -44,7 +41,7 @@ export default function TraitsScreen() {
         data={traits}
         keyExtractor={(t) => t.key}
         renderItem={({ item }) => (
-          <View style={[styles.row, { borderBottomColor: palette.border }]}>
+          <View style={[styles.row, { borderBottomColor: Colors.border }]}>
             <ThemedText style={styles.name}>{item.name}</ThemedText>
             <ThemedText style={styles.body}>{item.body}</ThemedText>
           </View>

@@ -2,7 +2,6 @@ import { StyleSheet, View } from 'react-native';
 import Markdown from 'react-native-markdown-display';
 
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import type { ChatMessage } from '@/stores/chat';
 
 import { LoadingDots } from './LoadingDots';
@@ -17,14 +16,12 @@ export function ChatMessageBubble({
   message,
   isLast = false,
 }: ChatMessageBubbleProps) {
-  const scheme = useColorScheme();
-  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
-
   const isUser = message.role === 'user';
-  const bubbleBg = isUser ? palette.primary : '#fff';
-  const bubbleBorder = isUser ? palette.primary : palette.border;
+  const bubbleBg = isUser ? Colors.primary : '#fff';
+  const bubbleBorder = isUser ? Colors.primary : Colors.border;
   const textColor = isUser ? '#fff' : '#000';
   const showTail = !isUser && isLast;
+  const isThinking = !isUser && message.content.length === 0;
 
   return (
     <View style={[styles.row, isUser ? styles.rowUser : styles.rowAssistant]}>
@@ -34,9 +31,12 @@ export function ChatMessageBubble({
           { backgroundColor: bubbleBg, borderColor: bubbleBorder },
           isUser ? styles.bubbleUser : styles.bubbleAssistant,
         ]}
+        // The latest goblin reply is announced as it streams in.
+        accessibilityLiveRegion={!isUser && isLast ? 'polite' : 'none'}
+        accessibilityLabel={isThinking ? 'Goblin is thinking' : undefined}
       >
         {message.content.length > 0 ? (
-          <Markdown style={markdownStyles(textColor, palette.border)}>
+          <Markdown style={markdownStyles(textColor, Colors.border)}>
             {message.content}
           </Markdown>
         ) : (

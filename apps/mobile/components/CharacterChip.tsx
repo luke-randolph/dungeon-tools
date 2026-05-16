@@ -6,7 +6,6 @@ import { Dimensions, Modal, Pressable, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
 
 const MENU_MIN_WIDTH = 220;
@@ -23,9 +22,6 @@ export function CharacterChip() {
     left: number;
   } | null>(null);
   const triggerRef = useRef<View>(null);
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
-  const palette = Colors[isDark ? 'dark' : 'light'];
 
   function close() {
     setOpen(false);
@@ -79,18 +75,18 @@ export function CharacterChip() {
         }
       >
         {!character && (
-          <Ionicons name="person-add" size={16} color={palette.surfaceText} />
+          <Ionicons name="person-add" size={16} color={Colors.surfaceText} />
         )}
         <View style={styles.text}>
           <ThemedText
-            style={[styles.label, { color: palette.surfaceText }]}
+            style={[styles.label, { color: Colors.surfaceText }]}
             numberOfLines={1}
           >
             {triggerLabel}
           </ThemedText>
           {triggerSub ? (
             <ThemedText
-              style={[styles.sub, { color: palette.surfaceText }]}
+              style={[styles.sub, { color: Colors.surfaceText }]}
               numberOfLines={1}
             >
               {triggerSub}
@@ -100,7 +96,7 @@ export function CharacterChip() {
         <Ionicons
           name={open ? 'chevron-up' : 'chevron-down'}
           size={14}
-          color={palette.surfaceText}
+          color={Colors.surfaceText}
         />
       </Pressable>
 
@@ -110,12 +106,16 @@ export function CharacterChip() {
         animationType="fade"
         onRequestClose={close}
       >
-        <Pressable style={styles.backdrop} onPress={close}>
+        <Pressable
+          style={styles.backdrop}
+          onPress={close}
+          accessibilityLabel="Dismiss menu"
+        >
           <View
             style={[
               styles.menu,
               {
-                backgroundColor: palette.surface,
+                backgroundColor: Colors.surface,
                 top: position?.top ?? 60,
                 left: position?.left ?? 12,
               },
@@ -129,6 +129,9 @@ export function CharacterChip() {
                   <Pressable
                     key={c.id}
                     onPress={() => pick(c.id)}
+                    accessibilityRole="button"
+                    accessibilityState={{ selected: active }}
+                    accessibilityLabel={`${c.name}, ${CLASS_LABELS[c.class]} ${c.level}`}
                     style={({ pressed }) => [
                       styles.menuItem,
                       pressed && styles.menuItemPressed,
@@ -138,7 +141,7 @@ export function CharacterChip() {
                       <ThemedText
                         style={[
                           styles.menuItemTitle,
-                          { color: palette.surfaceText },
+                          { color: Colors.surfaceText },
                         ]}
                       >
                         {c.name}
@@ -146,7 +149,7 @@ export function CharacterChip() {
                       <ThemedText
                         style={[
                           styles.menuItemSub,
-                          { color: palette.surfaceText },
+                          { color: Colors.surfaceText },
                         ]}
                       >
                         {CLASS_LABELS[c.class]} {c.level}
@@ -156,7 +159,7 @@ export function CharacterChip() {
                       <Ionicons
                         name="checkmark"
                         size={18}
-                        color={palette.accent}
+                        color={Colors.accent}
                       />
                     ) : null}
                   </Pressable>
@@ -165,7 +168,7 @@ export function CharacterChip() {
             ) : (
               <View style={styles.emptyHint}>
                 <ThemedText
-                  style={[styles.menuItemSub, { color: palette.surfaceText }]}
+                  style={[styles.menuItemSub, { color: Colors.surfaceText }]}
                 >
                   No characters yet.
                 </ThemedText>
@@ -176,15 +179,17 @@ export function CharacterChip() {
 
             <Pressable
               onPress={addNew}
+              accessibilityRole="button"
+              accessibilityLabel="New character"
               style={({ pressed }) => [
                 styles.menuItem,
                 styles.newCharacterButton,
                 pressed && styles.menuItemPressed,
               ]}
             >
-              <Ionicons name="add" size={18} color={palette.accent} />
+              <Ionicons name="add" size={18} color={Colors.accent} />
               <ThemedText
-                style={[styles.newCharacterTitle, { color: palette.accent }]}
+                style={[styles.newCharacterTitle, { color: Colors.accent }]}
               >
                 New character
               </ThemedText>

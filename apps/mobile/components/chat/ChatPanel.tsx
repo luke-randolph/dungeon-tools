@@ -4,7 +4,6 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
 import { useChat } from '@/stores/chat';
 
@@ -29,14 +28,23 @@ export function ChatPanel() {
 
   const character = useCharacters((s) => s.character);
   const insets = useSafeAreaInsets();
-  const scheme = useColorScheme();
-  const palette = scheme === 'dark' ? Colors.dark : Colors.light;
 
   // Initialize the conversation the first time the panel opens.
   useEffect(() => {
     if (!open) return;
     void init(character?.id ?? null);
   }, [open, character?.id, init]);
+
+  // On web the panel is a plain overlay (see below), so it has no built-in
+  // dismiss affordance — wire Escape to close, matching native's system back.
+  useEffect(() => {
+    if (Platform.OS !== 'web' || !open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [open, setOpen]);
 
   // Greeting plays once per open, then settles. Doesn't replay after streaming.
   const [showingGreeting, setShowingGreeting] = useState(false);
@@ -94,17 +102,18 @@ export function ChatPanel() {
       style={[
         styles.mobilePanel,
         {
-          backgroundColor: palette.background,
+          backgroundColor: Colors.background,
           paddingTop: insets.top + 12,
           paddingBottom: insets.bottom + 12,
         },
       ]}
     >
-      <View style={[styles.header, { borderBottomColor: palette.border }]}>
+      <View style={[styles.header, { borderBottomColor: Colors.border }]}>
         <View style={styles.headerActions}>
           {messageCount > 0 ? (
             <Pressable
               onPress={() => void clear()}
+              hitSlop={12}
               accessibilityRole="button"
               accessibilityLabel="Clear chat history"
               style={({ pressed }) => [
@@ -113,10 +122,7 @@ export function ChatPanel() {
               ]}
             >
               <ThemedText
-                style={[
-                  styles.headerButtonText,
-                  { color: palette.destructive },
-                ]}
+                style={[styles.headerButtonText, { color: Colors.destructive }]}
               >
                 Clear
               </ThemedText>
@@ -124,6 +130,7 @@ export function ChatPanel() {
           ) : null}
           <Pressable
             onPress={() => setOpen(false)}
+            hitSlop={12}
             accessibilityRole="button"
             accessibilityLabel="Close chat"
             style={({ pressed }) => [
@@ -132,7 +139,7 @@ export function ChatPanel() {
             ]}
           >
             <ThemedText
-              style={[styles.headerButtonText, { color: palette.text }]}
+              style={[styles.headerButtonText, { color: Colors.text }]}
             >
               Close
             </ThemedText>
@@ -143,7 +150,10 @@ export function ChatPanel() {
       {error ? (
         <Pressable
           onPress={() => setError(null)}
-          style={[styles.errorBanner, { backgroundColor: palette.destructive }]}
+          accessibilityRole="button"
+          accessibilityLabel={`Error: ${error}. Tap to dismiss.`}
+          accessibilityLiveRegion="assertive"
+          style={[styles.errorBanner, { backgroundColor: Colors.destructive }]}
         >
           <ThemedText style={styles.errorText}>
             {error} · tap to dismiss
@@ -171,7 +181,10 @@ export function ChatPanel() {
     if (!open) return null;
     return (
       <View
-        style={[styles.webOverlay, { backgroundColor: palette.background }]}
+        style={[styles.webOverlay, { backgroundColor: Colors.background }]}
+        accessibilityViewIsModal
+        role="dialog"
+        aria-label="Goblin chat"
       >
         {panel}
       </View>
@@ -185,9 +198,7 @@ export function ChatPanel() {
       transparent={false}
       onRequestClose={() => setOpen(false)}
     >
-      <View
-        style={[styles.fullScreen, { backgroundColor: palette.background }]}
-      >
+      <View style={[styles.fullScreen, { backgroundColor: Colors.background }]}>
         {panel}
       </View>
     </Modal>

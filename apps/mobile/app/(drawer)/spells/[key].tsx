@@ -3,20 +3,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { StarIcon } from '@/components/StarIcon';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { Colors } from '@/constants/theme';
 import { getSpell } from '@/data/spells';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
 import { useSpellList } from '@/stores/spellList';
-
-function levelLabel(level: number): string {
-  if (level === 0) return 'Cantrip';
-  if (level === 1) return '1st-level';
-  if (level === 2) return '2nd-level';
-  if (level === 3) return '3rd-level';
-  return `${level}th-level`;
-}
+import { levelLabel } from '@/utils/levelLabel';
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
@@ -47,7 +40,12 @@ export default function SpellDetailScreen() {
       <ThemedView style={styles.container}>
         <View style={styles.notFound}>
           <ThemedText type="title">Spell not found</ThemedText>
-          <Pressable onPress={() => router.back()} style={styles.backInline}>
+          <Pressable
+            onPress={() => router.back()}
+            style={styles.backInline}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
+          >
             <Ionicons name="chevron-back" size={20} />
             <ThemedText>Back</ThemedText>
           </Pressable>
@@ -78,18 +76,15 @@ export default function SpellDetailScreen() {
             inList ? 'Remove from spell list' : 'Add to spell list'
           }
         >
-          <Ionicons
-            name={inList ? 'star' : 'star-outline'}
-            size={26}
-            color={inList ? '#fbbf24' : Colors.light.placeholder}
-          />
+          <StarIcon filled={inList} size={26} />
         </Pressable>
       </View>
 
       <ScrollView contentContainerStyle={styles.content}>
         <ThemedText type="title">{spell.name}</ThemedText>
         <ThemedText style={styles.subtitle}>
-          {levelLabel(spell.level)} {spell.school.toLowerCase()}
+          {levelLabel(spell.level, { cantrip: true, hyphenated: true })}{' '}
+          {spell.school.toLowerCase()}
         </ThemedText>
 
         <View style={styles.tags}>

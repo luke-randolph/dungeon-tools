@@ -116,6 +116,10 @@ export function GoblinAvatar({ mode, size = 96, style }: GoblinAvatarProps) {
       source={source}
       style={[{ width: size, height: size }, style]}
       contentFit="contain"
+      // Decorative — the goblin's pose is flavour; the chat bubbles and their
+      // live regions carry the actual content for screen readers.
+      accessibilityElementsHidden
+      importantForAccessibility="no-hide-descendants"
     />
   );
 }

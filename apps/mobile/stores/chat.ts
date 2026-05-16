@@ -221,6 +221,11 @@ async function runChatStep(signal: AbortSignal): Promise<boolean> {
           break;
       }
     }
+  } catch (err) {
+    if (textBuffer.length === 0 && toolCalls.length === 0) {
+      removeChatMessage(assistantId);
+    }
+    throw err;
   } finally {
     if (pendingFlush) flush();
   }
@@ -285,6 +290,12 @@ function appendChatMessage(message: ChatMessage): void {
 function patchChatMessage(id: string, patch: Partial<ChatMessage>): void {
   useChat.setState((s) => ({
     messages: s.messages.map((m) => (m.id === id ? { ...m, ...patch } : m)),
+  }));
+}
+
+function removeChatMessage(id: string): void {
+  useChat.setState((s) => ({
+    messages: s.messages.filter((m) => m.id !== id),
   }));
 }
 

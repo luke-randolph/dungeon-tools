@@ -21,22 +21,38 @@ export default function Root({ children }: PropsWithChildren) {
 }
 
 const previewStyles = `
-  body {
-    background-color: #4b4b4b;
-    background-image: url('/castle-wall-darker-blended.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+  /* The app is a fixed surface that fills the viewport; screens scroll
+     internally, the page itself never does. On phones that's the whole
+     story — the app simply fills the screen. */
+  html,
+  body,
+  #root {
+    height: 100%;
   }
 
+  #root {
+    overflow: hidden;
+  }
+
+  /* Parchment underlay so nothing flashes before the app paints. */
+  body {
+    background-color: #e8d8b0;
+  }
+
+  /* Desktop only: float the app in a phone-shaped frame on a stone backdrop. */
   @media (min-width: 768px) {
-    html, body {
-      height: 100vh;
+    html,
+    body {
       overflow: hidden;
     }
 
     body {
+      background-color: #4b4b4b;
+      background-image: url('/castle-wall-darker-blended.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -48,9 +64,7 @@ const previewStyles = `
       max-width: 420px;
       width: 100%;
       max-height: 900px;
-      height: 100%;
       border-radius: 36px;
-      overflow: hidden;
       box-shadow:
         0 0 0 8px #1a1a1a,
         0 0 0 10px #3a3a3a,

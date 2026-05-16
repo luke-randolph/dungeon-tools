@@ -16,10 +16,10 @@ import {
   View,
 } from 'react-native';
 
+import { Pills } from '@/components/Pills';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useCharacters } from '@/stores/characters';
 import { showAlert } from '@/utils/dialogs';
 
@@ -29,8 +29,6 @@ const MAX_LEVEL = 20;
 export default function NewCharacterScreen() {
   const router = useRouter();
   const addCharacter = useCharacters((s) => s.addCharacter);
-  const scheme = useColorScheme();
-  const isDark = scheme === 'dark';
 
   const [name, setName] = useState('');
   const [race, setRace] = useState<CharacterRace | null>(null);
@@ -87,10 +85,11 @@ export default function NewCharacterScreen() {
           value={name}
           onChangeText={setName}
           placeholder="Character name"
-          placeholderTextColor={Colors.light.placeholder}
+          placeholderTextColor={Colors.mutedText}
+          accessibilityLabel="Character name"
           style={[
             styles.input,
-            { color: Colors.light.text, borderColor: Colors.light.border },
+            { color: Colors.text, borderColor: Colors.border },
           ]}
           autoCapitalize="words"
           returnKeyType="done"
@@ -104,7 +103,6 @@ export default function NewCharacterScreen() {
           labels={RACE_LABELS}
           selected={race}
           onSelect={setRace}
-          isDark={isDark}
         />
 
         <ThemedText type="subtitle" style={styles.fieldLabel}>
@@ -115,7 +113,6 @@ export default function NewCharacterScreen() {
           labels={CLASS_LABELS}
           selected={characterClass}
           onSelect={setCharacterClass}
-          isDark={isDark}
         />
 
         <ThemedText type="subtitle" style={styles.fieldLabel}>
@@ -124,7 +121,7 @@ export default function NewCharacterScreen() {
         <View style={styles.stepper}>
           <Pressable
             onPress={() => setLevel((l) => Math.max(MIN_LEVEL, l - 1))}
-            style={[styles.stepButton, { borderColor: Colors.light.border }]}
+            style={[styles.stepButton, { borderColor: Colors.border }]}
             accessibilityRole="button"
             accessibilityLabel="Decrease level"
           >
@@ -133,7 +130,7 @@ export default function NewCharacterScreen() {
           <ThemedText style={styles.levelValue}>{level}</ThemedText>
           <Pressable
             onPress={() => setLevel((l) => Math.min(MAX_LEVEL, l + 1))}
-            style={[styles.stepButton, { borderColor: Colors.light.border }]}
+            style={[styles.stepButton, { borderColor: Colors.border }]}
             accessibilityRole="button"
             accessibilityLabel="Increase level"
           >
@@ -144,6 +141,7 @@ export default function NewCharacterScreen() {
         <View style={styles.actions}>
           <Pressable
             onPress={() => router.back()}
+            accessibilityRole="button"
             style={[styles.button, styles.cancelButton]}
           >
             <ThemedText style={styles.onDarkLabel}>Cancel</ThemedText>
@@ -151,6 +149,7 @@ export default function NewCharacterScreen() {
           <Pressable
             onPress={save}
             disabled={saving}
+            accessibilityRole="button"
             style={[
               styles.button,
               styles.saveButton,
@@ -164,48 +163,6 @@ export default function NewCharacterScreen() {
         </View>
       </ScrollView>
     </ThemedView>
-  );
-}
-
-function Pills<T extends string>({
-  options,
-  labels,
-  selected,
-  onSelect,
-  isDark,
-}: {
-  options: readonly T[];
-  labels: Record<T, string>;
-  selected: T | null;
-  onSelect: (val: T) => void;
-  isDark: boolean;
-}) {
-  const inactiveBorder = Colors.light.border;
-  return (
-    <View style={styles.pills}>
-      {options.map((opt) => {
-        const active = selected === opt;
-        return (
-          <Pressable
-            key={opt}
-            onPress={() => onSelect(opt)}
-            style={[
-              styles.pill,
-              { borderColor: active ? Colors.light.primary : inactiveBorder },
-              active && styles.pillActive,
-            ]}
-            accessibilityRole="button"
-            accessibilityState={{ selected: active }}
-          >
-            <ThemedText
-              style={[styles.pillLabel, active && styles.pillLabelActive]}
-            >
-              {labels[opt]}
-            </ThemedText>
-          </Pressable>
-        );
-      })}
-    </View>
   );
 }
 
@@ -225,27 +182,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
     fontSize: 16,
-  },
-  pills: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  pill: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  pillActive: {
-    backgroundColor: Colors.light.primary,
-  },
-  pillLabel: {
-    fontSize: 14,
-  },
-  pillLabelActive: {
-    color: '#fff',
-    fontWeight: '600',
   },
   stepper: {
     flexDirection: 'row',
@@ -283,10 +219,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cancelButton: {
-    backgroundColor: Colors.light.secondary,
+    backgroundColor: Colors.secondary,
   },
   saveButton: {
-    backgroundColor: Colors.light.primary,
+    backgroundColor: Colors.primary,
   },
   saveButtonDisabled: {
     opacity: 0.6,
