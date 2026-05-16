@@ -2,8 +2,10 @@ import { RACE_LABELS } from '@dungeon-tools/shared';
 import { useMemo } from 'react';
 import { FlatList, StyleSheet, View } from 'react-native';
 
+import { EmptyState } from '@/components/EmptyState';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { traitsForRace } from '@/data/racialTraits';
 import { useCharacters } from '@/stores/characters';
@@ -19,12 +21,10 @@ export default function TraitsScreen() {
   if (!character) {
     return (
       <ThemedView style={styles.container}>
-        <View style={styles.empty}>
-          <ThemedText>No character yet.</ThemedText>
-          <ThemedText style={styles.hint}>
-            Create a character from the chip in the header to see racial traits.
-          </ThemedText>
-        </View>
+        <EmptyState
+          title="No character yet."
+          message="Create a character from the chip in the header to see racial traits."
+        />
       </ThemedView>
     );
   }
@@ -48,9 +48,7 @@ export default function TraitsScreen() {
         )}
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={
-          <View style={styles.empty}>
-            <ThemedText>No SRD traits available for this race.</ThemedText>
-          </View>
+          <EmptyState title="No SRD traits available for this race." />
         }
       />
     </ThemedView>
@@ -69,9 +67,8 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     fontSize: 13,
   },
-  // Clears the goblin FAB at the bottom-right.
   listContent: {
-    paddingBottom: 120,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
   },
   row: {
     paddingHorizontal: 16,
@@ -85,14 +82,5 @@ const styles = StyleSheet.create({
   },
   body: {
     lineHeight: 20,
-  },
-  empty: {
-    padding: 32,
-    alignItems: 'center',
-    gap: 8,
-  },
-  hint: {
-    opacity: 0.7,
-    textAlign: 'center',
   },
 });

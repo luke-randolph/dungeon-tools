@@ -1,0 +1,1 @@
+export const GOBLIN_FAB_CLEARANCE = 120;

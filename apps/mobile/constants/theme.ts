@@ -13,4 +13,10 @@ export const Colors = {
   border: '#b8a778',
   mutedText: '#6b5d3e',
   goblinGreen: '#23b04d',
+  onPrimary: '#fff',
+  inputBackground: '#fff',
+  rowBorder: '#eee',
+  lockedIcon: '#bbb',
+  concentration: '#a855f7',
+  ritual: '#0ea5e9',
 };

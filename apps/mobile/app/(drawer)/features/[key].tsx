@@ -1,11 +1,12 @@
 import { CLASS_LABELS } from '@dungeon-tools/shared';
-import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import { StarIcon } from '@/components/StarIcon';
+import { DetailHeader } from '@/components/DetailHeader';
+import { NotFound } from '@/components/NotFound';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { getClassFeature } from '@/data/classFeatures';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
@@ -24,56 +25,23 @@ export default function ClassFeatureDetailScreen() {
   const toggle = useToggleClassFeature();
 
   if (!feature) {
-    return (
-      <ThemedView style={styles.container}>
-        <View style={styles.notFound}>
-          <ThemedText type="title">Feature not found</ThemedText>
-          <Pressable
-            onPress={() => router.back()}
-            style={styles.backInline}
-            accessibilityRole="button"
-            accessibilityLabel="Go back"
-          >
-            <Ionicons name="chevron-back" size={20} />
-            <ThemedText>Back</ThemedText>
-          </Pressable>
-        </View>
-      </ThemedView>
-    );
+    return <NotFound title="Feature not found" onBack={() => router.back()} />;
   }
 
   const unlocked = !character || character.level >= feature.level;
-  const unfilledStarColor = unlocked ? Colors.mutedText : '#bbb';
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.topBar}>
-        <Pressable
-          onPress={() => router.back()}
-          hitSlop={12}
-          style={styles.backButton}
-          accessibilityRole="button"
-          accessibilityLabel="Back to features"
-        >
-          <Ionicons name="chevron-back" size={20} />
-          <ThemedText>Back</ThemedText>
-        </Pressable>
-        <Pressable
-          onPress={() => toggle(feature)}
-          hitSlop={12}
-          style={styles.starButton}
-          accessibilityRole="button"
-          accessibilityLabel={
-            inList ? `Remove ${feature.name}` : `Add ${feature.name}`
-          }
-        >
-          <StarIcon
-            filled={inList}
-            size={26}
-            unfilledColor={unfilledStarColor}
-          />
-        </Pressable>
-      </View>
+      <DetailHeader
+        onBack={() => router.back()}
+        backAccessibilityLabel="Back to features"
+        starFilled={inList}
+        onToggleStar={() => toggle(feature)}
+        starAccessibilityLabel={
+          inList ? `Remove ${feature.name}` : `Add ${feature.name}`
+        }
+        unfilledStarColor={unlocked ? Colors.mutedText : Colors.lockedIcon}
+      />
 
       <ScrollView contentContainerStyle={styles.content}>
         <ThemedText type="title">{feature.name}</ThemedText>
@@ -89,26 +57,9 @@ export default function ClassFeatureDetailScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  topBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
-  backButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-    paddingVertical: 4,
-  },
-  starButton: {
-    paddingHorizontal: 4,
-  },
   content: {
     paddingHorizontal: 16,
-    // Bottom padding clears the goblin FAB.
-    paddingBottom: 120,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
     gap: 8,
   },
   subtitle: {
@@ -118,15 +69,5 @@ const styles = StyleSheet.create({
   },
   body: {
     lineHeight: 22,
-  },
-  notFound: {
-    padding: 32,
-    alignItems: 'center',
-    gap: 16,
-  },
-  backInline: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
   },
 });

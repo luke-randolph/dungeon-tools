@@ -1,10 +1,13 @@
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
-import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet } from 'react-native';
 
+import { EmptyState } from '@/components/EmptyState';
+import { SearchField } from '@/components/SearchField';
 import { SpellRow } from '@/components/SpellRow';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { searchSpells } from '@/data/spells';
 import { useToggleSpell } from '@/hooks/useToggleSpell';
@@ -40,19 +43,12 @@ export default function AllSpellsScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <View style={styles.toolbar}>
-        <TextInput
-          value={search}
-          onChangeText={setSearch}
-          placeholder="Search spells…"
-          placeholderTextColor={Colors.mutedText}
-          accessibilityLabel="Search spells"
-          style={[styles.search, { color: '#000', borderColor: Colors.border }]}
-          autoCorrect={false}
-          autoCapitalize="none"
-          returnKeyType="search"
-          clearButtonMode="while-editing"
-        />
+      <SearchField
+        value={search}
+        onChangeText={setSearch}
+        placeholder="Search spells…"
+        accessibilityLabel="Search spells"
+      >
         <FlatList
           data={LEVELS}
           horizontal
@@ -94,7 +90,7 @@ export default function AllSpellsScreen() {
             );
           }}
         />
-      </View>
+      </SearchField>
 
       <FlatList
         data={spells}
@@ -109,11 +105,7 @@ export default function AllSpellsScreen() {
         )}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
-        ListEmptyComponent={
-          <View style={styles.empty}>
-            <ThemedText>No spells match.</ThemedText>
-          </View>
-        }
+        ListEmptyComponent={<EmptyState title="No spells match." />}
       />
     </ThemedView>
   );
@@ -121,21 +113,6 @@ export default function AllSpellsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  toolbar: {
-    paddingHorizontal: 12,
-    paddingTop: 8,
-    paddingBottom: 4,
-    gap: 8,
-  },
-  search: {
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    paddingBottom: 8,
-    fontSize: 15,
-    backgroundColor: '#fff',
-  },
   levelRow: {
     gap: 6,
     paddingVertical: 4,
@@ -152,15 +129,10 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   levelLabelActive: {
-    color: '#fff',
+    color: Colors.onPrimary,
     fontWeight: '600',
   },
-  // Clears the goblin FAB at the bottom-right.
   listContent: {
-    paddingBottom: 120,
-  },
-  empty: {
-    padding: 32,
-    alignItems: 'center',
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
   },
 });

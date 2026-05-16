@@ -23,7 +23,7 @@ export function ClassFeatureRow({
   onToggleStar,
 }: ClassFeatureRowProps) {
   const level = levelLabel(feature.level);
-  const unfilledStarColor = unlocked ? Colors.mutedText : '#d4d4d4';
+  const unfilledStarColor = unlocked ? Colors.mutedText : Colors.lockedIcon;
 
   return (
     <View style={styles.row}>
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#eee',
+    borderBottomColor: Colors.rowBorder,
   },
   body: {
     flex: 1,

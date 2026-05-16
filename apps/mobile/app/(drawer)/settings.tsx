@@ -3,6 +3,7 @@ import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { ExternalLink } from '@/components/ExternalLink';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { resetDatabase } from '@/db';
 import { useCharacters } from '@/stores/characters';
@@ -94,6 +95,7 @@ const styles = StyleSheet.create({
   content: {
     padding: 16,
     gap: 12,
+    paddingBottom: GOBLIN_FAB_CLEARANCE,
   },
   heading: {
     marginTop: 16,

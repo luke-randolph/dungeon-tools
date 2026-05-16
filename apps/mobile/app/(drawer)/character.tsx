@@ -1,41 +1,18 @@
-import {
-  CLASSES,
-  CLASS_LABELS,
-  RACES,
-  RACE_LABELS,
-  type CharacterClass,
-  type CharacterRace,
-} from '@dungeon-tools/shared';
+import { CLASS_LABELS, RACE_LABELS } from '@dungeon-tools/shared';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
-import {
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-} from 'react-native';
+import { useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
-import { Pills } from '@/components/Pills';
+import { CharacterForm } from '@/components/CharacterForm';
+import { Field } from '@/components/Field';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
 import { Colors } from '@/constants/theme';
 import { getClassDetail } from '@/data/classes';
 import { useCharacters } from '@/stores/characters';
-import { showAlert, showConfirm } from '@/utils/dialogs';
-
-const MIN_LEVEL = 1;
-const MAX_LEVEL = 20;
-
-function Field({ label, value }: { label: string; value: string }) {
-  return (
-    <View style={styles.field}>
-      <ThemedText style={styles.fieldLabel}>{label}</ThemedText>
-      <ThemedText style={styles.fieldValue}>{value}</ThemedText>
-    </View>
-  );
-}
+import { showConfirm } from '@/utils/dialogs';
 
 export default function CharacterScreen() {
   const router = useRouter();
@@ -44,22 +21,6 @@ export default function CharacterScreen() {
   const removeCharacter = useCharacters((s) => s.removeCharacter);
 
   const [editing, setEditing] = useState(false);
-  const [name, setName] = useState('');
-  const [race, setRace] = useState<CharacterRace | null>(null);
-  const [characterClass, setCharacterClass] = useState<CharacterClass | null>(
-    null,
-  );
-  const [level, setLevel] = useState(1);
-  const [saving, setSaving] = useState(false);
-
-  useEffect(() => {
-    if (character && editing) {
-      setName(character.name);
-      setRace(character.race);
-      setCharacterClass(character.class);
-      setLevel(character.level);
-    }
-  }, [character, editing]);
 
   if (!character) {
     return (
@@ -81,45 +42,6 @@ export default function CharacterScreen() {
     );
   }
 
-  function startEdit() {
-    if (!character) return;
-    setName(character.name);
-    setRace(character.race);
-    setCharacterClass(character.class);
-    setLevel(character.level);
-    setEditing(true);
-  }
-
-  async function saveEdit() {
-    if (!character) return;
-    const trimmed = name.trim();
-    if (!trimmed) {
-      showAlert('Name required');
-      return;
-    }
-    if (!race || !characterClass) {
-      showAlert('Pick a race and class');
-      return;
-    }
-    setSaving(true);
-    try {
-      await updateCharacter(character.id, {
-        name: trimmed,
-        race,
-        class: characterClass,
-        level,
-      });
-      setEditing(false);
-    } catch (err) {
-      showAlert(
-        'Failed to save',
-        err instanceof Error ? err.message : String(err),
-      );
-    } finally {
-      setSaving(false);
-    }
-  }
-
   function confirmDelete() {
     if (!character) return;
     showConfirm(
@@ -138,94 +60,20 @@ export default function CharacterScreen() {
   if (editing) {
     return (
       <ThemedView style={styles.container}>
-        <ScrollView
-          contentContainerStyle={styles.content}
-          keyboardShouldPersistTaps="handled"
-        >
-          <ThemedText type="subtitle" style={styles.editLabel}>
-            Name
-          </ThemedText>
-          <TextInput
-            value={name}
-            onChangeText={setName}
-            accessibilityLabel="Character name"
-            style={[
-              styles.input,
-              {
-                color: Colors.text,
-                borderColor: Colors.border,
-              },
-            ]}
-            autoCapitalize="words"
-          />
-
-          <ThemedText type="subtitle" style={styles.editLabel}>
-            Race
-          </ThemedText>
-          <Pills
-            options={RACES}
-            labels={RACE_LABELS}
-            selected={race}
-            onSelect={setRace}
-          />
-
-          <ThemedText type="subtitle" style={styles.editLabel}>
-            Class
-          </ThemedText>
-          <Pills
-            options={CLASSES}
-            labels={CLASS_LABELS}
-            selected={characterClass}
-            onSelect={setCharacterClass}
-          />
-
-          <ThemedText type="subtitle" style={styles.editLabel}>
-            Level
-          </ThemedText>
-          <View style={styles.stepper}>
-            <Pressable
-              onPress={() => setLevel((l) => Math.max(MIN_LEVEL, l - 1))}
-              accessibilityRole="button"
-              accessibilityLabel="Decrease level"
-              style={[styles.stepButton, { borderColor: Colors.border }]}
-            >
-              <ThemedText style={styles.stepLabel}>−</ThemedText>
-            </Pressable>
-            <ThemedText style={styles.levelValue}>{level}</ThemedText>
-            <Pressable
-              onPress={() => setLevel((l) => Math.min(MAX_LEVEL, l + 1))}
-              accessibilityRole="button"
-              accessibilityLabel="Increase level"
-              style={[styles.stepButton, { borderColor: Colors.border }]}
-            >
-              <ThemedText style={styles.stepLabel}>+</ThemedText>
-            </Pressable>
-          </View>
-
-          <View style={styles.actions}>
-            <Pressable
-              onPress={() => setEditing(false)}
-              accessibilityRole="button"
-              style={[styles.button, styles.secondaryButton]}
-            >
-              <ThemedText style={styles.onDarkLabel}>Cancel</ThemedText>
-            </Pressable>
-            <Pressable
-              onPress={saveEdit}
-              disabled={saving}
-              accessibilityRole="button"
-              style={[
-                styles.button,
-                styles.primaryButton,
-                saving && styles.disabled,
-              ]}
-            >
-              <ThemedText style={styles.onDarkLabel}>
-                {saving ? 'Saving…' : 'Save'}
-              </ThemedText>
-            </Pressable>
-          </View>
-        </ScrollView>
+        <CharacterForm
+          initialValues={{
+            name: character.name,
+            race: character.race,
+            class: character.class,
+            level: character.level,
+          }}
+          submitLabel="Save"
+          onSubmit={async (values) => {
+            await updateCharacter(character.id, values);
+            setEditing(false);
+          }}
+          onCancel={() => setEditing(false)}
+        />
       </ThemedView>
     );
   }
@@ -267,7 +115,7 @@ export default function CharacterScreen() {
 
         <View style={styles.actions}>
           <Pressable
-            onPress={startEdit}
+            onPress={() => setEditing(true)}
             style={[styles.button, styles.primaryButton]}
             accessibilityRole="button"
           >
@@ -315,11 +163,8 @@ function LinkRow({
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  content: { padding: 16, gap: 12, paddingBottom: 40 },
+  content: { padding: 16, gap: 12, paddingBottom: GOBLIN_FAB_CLEARANCE },
   fields: { gap: 10, marginTop: 8 },
-  field: { flexDirection: 'row', alignItems: 'baseline', gap: 12 },
-  fieldLabel: { width: 64, opacity: 0.6 },
-  fieldValue: { flex: 1, fontWeight: '600' },
   classBody: {
     marginTop: 16,
   },
@@ -347,30 +192,6 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
   },
-  editLabel: { marginTop: 16 },
-  input: {
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16,
-  },
-  stepper: { flexDirection: 'row', alignItems: 'center', gap: 16 },
-  stepButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
-    borderWidth: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  stepLabel: { fontSize: 20, fontWeight: '600' },
-  levelValue: {
-    fontSize: 20,
-    fontWeight: '600',
-    minWidth: 28,
-    textAlign: 'center',
-  },
   actions: { flexDirection: 'row', gap: 12, marginTop: 24 },
   button: {
     paddingVertical: 12,
@@ -378,9 +199,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  secondaryButton: { flex: 1, backgroundColor: Colors.secondary },
   primaryButton: { flex: 1, backgroundColor: Colors.primary },
-  onDarkLabel: { color: '#fff', fontWeight: '600' },
+  onDarkLabel: { color: Colors.onPrimary, fontWeight: '600' },
   standaloneButton: {
     marginTop: 8,
     paddingVertical: 12,
@@ -399,7 +219,6 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     lineHeight: 20,
   },
-  disabled: { opacity: 0.6 },
   deleteButton: {
     position: 'absolute',
     bottom: 32,
