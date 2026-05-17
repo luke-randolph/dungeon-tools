@@ -230,6 +230,13 @@ async function runChatStep(signal: AbortSignal): Promise<boolean> {
     if (pendingFlush) flush();
   }
 
+  // Provider returned an empty turn — drop the dead bubble and surface an error.
+  if (textBuffer.length === 0 && toolCalls.length === 0) {
+    removeChatMessage(assistantId);
+    if (signal.aborted) return false;
+    throw new Error('i lost me train of thought — ask again, friend');
+  }
+
   if (toolCalls.length > 0) {
     patchChatMessage(assistantId, { toolCalls });
   }
