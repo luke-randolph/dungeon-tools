@@ -34,7 +34,7 @@ const READING_SEQUENCE = [
   FRAMES.reading3,
 ] as const;
 
-const SPEAK_FRAME_MS = 200;
+const SPEAK_FRAME_MS = 120;
 const THINKING_FRAME_MS = 500;
 const READING_FRAME_MS = 700;
 const READING_PROBABILITY = 0.33;
