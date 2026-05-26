@@ -77,7 +77,9 @@ export function GroupAccordion<T extends GroupItem>({
                   accessibilityRole="button"
                   accessibilityLabel={optionName}
                 >
-                  <ThemedText style={styles.optionName}>{optionName}</ThemedText>
+                  <ThemedText style={styles.optionName}>
+                    {optionName}
+                  </ThemedText>
                 </Pressable>
                 <Pressable
                   style={styles.starButton}
@@ -102,13 +104,9 @@ export function GroupAccordion<T extends GroupItem>({
 
 const styles = StyleSheet.create({
   container: {
-    borderWidth: 1,
-    borderColor: Colors.border,
-    borderRadius: 8,
-    marginHorizontal: 12,
-    marginVertical: 8,
-    overflow: 'hidden',
     backgroundColor: Colors.groupHeaderBackground,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: Colors.rowBorder,
   },
   header: {
     flexDirection: 'row',
@@ -135,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     borderTopWidth: StyleSheet.hairlineWidth,
     borderTopColor: Colors.border,
-    paddingHorizontal: 16,
+    paddingHorizontal: 24,
     paddingTop: 12,
     paddingBottom: 8,
   },
@@ -158,7 +156,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   starButton: {
-    paddingHorizontal: 12,
     paddingVertical: 10,
   },
 });

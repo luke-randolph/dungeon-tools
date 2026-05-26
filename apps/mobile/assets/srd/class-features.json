@@ -2307,7 +2307,72 @@
     "name": "Arcane Tradition",
     "body": "When you reach 2nd level, you choose an arcane tradition, shaping your practice of magic through one of eight schools, such as Evocation.\n\nYour choice grants you features at 2nd level and again at 6th, 10th, and 14th level.",
     "class": "wizard",
-    "level": 2
+    "level": 2,
+    "maxPicks": 1
+  },
+  {
+    "key": "arcane-tradition-abjuration",
+    "name": "Arcane Tradition: Abjuration",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-conjuration",
+    "name": "Arcane Tradition: Conjuration",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-divination",
+    "name": "Arcane Tradition: Divination",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-enchantment",
+    "name": "Arcane Tradition: Enchantment",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-evocation",
+    "name": "Arcane Tradition: Evocation",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-illusion",
+    "name": "Arcane Tradition: Illusion",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-necromancy",
+    "name": "Arcane Tradition: Necromancy",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-transmutation",
+    "name": "Arcane Tradition: Transmutation",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
   },
   {
     "key": "wizard-ability-score-improvement-1",

@@ -37,6 +37,17 @@ const fightingStyle = (
   children: variants.map((v) => `${childPrefix}-${v}`),
 });
 
+const ARCANE_TRADITION_SCHOOLS = [
+  'Abjuration',
+  'Conjuration',
+  'Divination',
+  'Enchantment',
+  'Evocation',
+  'Illusion',
+  'Necromancy',
+  'Transmutation',
+];
+
 const SINGLE_SELECT_GROUPS: Group[] = [
   fightingStyle('fighter-fighting-style', 'fighter-fighting-style', [
     'archery',
@@ -62,6 +73,13 @@ const SINGLE_SELECT_GROUPS: Group[] = [
     parent: 'pact-boon',
     maxPicks: 1,
     children: ['pact-of-the-blade', 'pact-of-the-chain', 'pact-of-the-tome'],
+  },
+  {
+    parent: 'arcane-tradition',
+    maxPicks: 1,
+    children: ARCANE_TRADITION_SCHOOLS.map(
+      (s) => `arcane-tradition-${s.toLowerCase()}`,
+    ),
   },
 ];
 
@@ -186,6 +204,35 @@ const INVOCATION_TIERS: SynthesizedInvocationTier[] = [
   { key: 'eldritch-invocations-8', level: 18, maxPicks: 8 },
 ];
 
+// ─── Synthesized entries: Arcane Tradition schools ─────────────────────────
+//
+// The SRD ships only Evocation as a wizard subclass. We synthesize the
+// other 7 schools as selectable children so the parent renders as an
+// 8-option accordion. Bodies are empty — mechanics aren't in the SRD.
+
+function synthesizeArcaneTraditions(features: ClassFeature[]): number {
+  const anchorKey = 'arcane-tradition';
+  const anchor = features.find((f) => f.key === anchorKey);
+  if (!anchor) throw new Error(`missing feature: ${anchorKey}`);
+
+  let inserted = 0;
+  let insertAt = features.indexOf(anchor) + 1;
+  for (const school of ARCANE_TRADITION_SCHOOLS) {
+    const key = `${anchorKey}-${school.toLowerCase()}`;
+    if (features.some((f) => f.key === key)) continue;
+    features.splice(insertAt, 0, {
+      key,
+      name: `Arcane Tradition: ${school}`,
+      body: '',
+      class: anchor.class,
+      level: anchor.level,
+    });
+    insertAt++;
+    inserted++;
+  }
+  return inserted;
+}
+
 // ─── Racial traits ─────────────────────────────────────────────────────────
 
 const DRACONIC_ANCESTRY: Group = {
@@ -290,6 +337,7 @@ async function main(): Promise<void> {
 
   // Synthesize invocation tiers BEFORE indexing so they're applier-visible.
   const synthesized = synthesizeInvocationTiers(features);
+  const synthesizedSchools = synthesizeArcaneTraditions(features);
 
   // Populate the dynamic invocations children list.
   const invocations = MULTI_SELECT_GROUPS.find(
@@ -319,6 +367,7 @@ async function main(): Promise<void> {
   await writeFile(traitsPath, JSON.stringify(traits, null, 2));
 
   console.log(`Synthesized ${synthesized} eldritch invocation tier(s).`);
+  console.log(`Synthesized ${synthesizedSchools} arcane tradition school(s).`);
   console.log(
     `Tagged ${SINGLE_SELECT_GROUPS.length} single-select group(s), ` +
       `${MULTI_SELECT_GROUPS.length} multi-select group(s), ` +
