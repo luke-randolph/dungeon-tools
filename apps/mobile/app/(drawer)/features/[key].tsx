@@ -1,4 +1,4 @@
-import { CLASS_LABELS } from '@dungeon-tools/shared';
+import { CLASS_LABELS, isParent } from '@dungeon-tools/shared';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { ScrollView, StyleSheet } from 'react-native';
 
@@ -12,15 +12,23 @@ import { getClassFeature } from '@/data/classFeatures';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
-import { levelLabel } from '@/utils/levelLabel';
+import {
+  featureLevelLabel,
+  isFeatureInList,
+  resolveDisplayFeature,
+} from '@/utils/featureDisplay';
 
 export default function ClassFeatureDetailScreen() {
   const { key } = useLocalSearchParams<{ key: string }>();
   const router = useRouter();
   const character = useCharacters((s) => s.character);
-  const feature = key ? getClassFeature(key) : undefined;
+  const rawFeature = key ? getClassFeature(key) : undefined;
+  const feature =
+    rawFeature && character
+      ? resolveDisplayFeature(rawFeature, character.level)
+      : rawFeature;
   const inList = useClassFeatureList((s) =>
-    feature ? s.keys.has(feature.key) : false,
+    feature ? isFeatureInList(feature, s.keys) : false,
   );
   const toggle = useToggleClassFeature();
 
@@ -29,12 +37,14 @@ export default function ClassFeatureDetailScreen() {
   }
 
   const unlocked = !character || character.level >= feature.level;
+  const showStar = !isParent(feature);
 
   return (
     <ThemedView style={styles.container}>
       <DetailHeader
         onBack={() => router.back()}
         backAccessibilityLabel="Back to features"
+        showStar={showStar}
         starFilled={inList}
         onToggleStar={() => toggle(feature)}
         starAccessibilityLabel={
@@ -46,8 +56,7 @@ export default function ClassFeatureDetailScreen() {
       <ScrollView contentContainerStyle={styles.content}>
         <ThemedText type="title">{feature.name}</ThemedText>
         <ThemedText style={styles.subtitle}>
-          {CLASS_LABELS[feature.class]} ·{' '}
-          {levelLabel(feature.level, { hyphenated: true })}
+          {CLASS_LABELS[feature.class]} · {featureLevelLabel(feature)}
         </ThemedText>
         <ThemedText style={styles.body}>{feature.body}</ThemedText>
       </ScrollView>

@@ -13,7 +13,11 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "fetch-spells": "tsx scripts/fetchSpells.ts",
-    "fetch-srd": "tsx scripts/fetchSRD.ts"
+    "fetch-srd": "tsx scripts/fetchSRD.ts",
+    "build-feature-data": "node scripts/build-feature-data.mjs",
+    "tag-feature-groups": "tsx scripts/tagFeatureGroups.ts",
+    "build-features": "npm run build-feature-data && npm run tag-feature-groups",
+    "refresh-srd-data": "npm run fetch-spells && npm run fetch-srd && npm run build-features"
   },
   "dependencies": {
     "@dungeon-tools/shared": "workspace:*",
@@ -28,6 +32,7 @@
     "expo-font": "~14.0.11",
     "expo-haptics": "~15.0.8",
     "expo-image": "~3.0.11",
+    "expo-linear-gradient": "~15.0.8",
     "expo-linking": "~8.0.12",
     "expo-router": "~6.0.23",
     "expo-splash-screen": "~31.0.13",

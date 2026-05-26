@@ -6,6 +6,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CharacterForm } from '@/components/CharacterForm';
 import { Field } from '@/components/Field';
+import { OverflowMenu } from '@/components/OverflowMenu';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
@@ -81,7 +82,22 @@ export default function CharacterScreen() {
   return (
     <ThemedView style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        <ThemedText type="title">{character.name}</ThemedText>
+        <View style={styles.titleRow}>
+          <ThemedText type="title" style={styles.titleText}>
+            {character.name}
+          </ThemedText>
+          <OverflowMenu
+            accessibilityLabel="Character actions"
+            items={[
+              {
+                label: 'Delete character',
+                icon: 'trash-outline',
+                destructive: true,
+                onPress: confirmDelete,
+              },
+            ]}
+          />
+        </View>
         <View style={styles.fields}>
           <Field label="Race" value={RACE_LABELS[character.race]} />
           <Field label="Class" value={CLASS_LABELS[character.class]} />
@@ -91,11 +107,22 @@ export default function CharacterScreen() {
         {(() => {
           const detail = getClassDetail(character.class);
           if (!detail) return null;
+          const rows: { label: string; value: string }[] = [
+            { label: 'Hit Die', value: detail.hitDie },
+            {
+              label: 'Saving Throw Proficiencies',
+              value: detail.savingThrows.join(', '),
+            },
+            { label: 'Proficiencies', value: detail.proficiencies.join(', ') },
+          ].filter((r) => r.value.length > 0);
           return (
             <View style={styles.classBody}>
-              <ThemedText style={styles.classBodyText}>
-                {detail.body}
-              </ThemedText>
+              {rows.map((row) => (
+                <View key={row.label} style={styles.classRow}>
+                  <ThemedText style={styles.classLabel}>{row.label}:</ThemedText>
+                  <ThemedText type="defaultSemiBold">{row.value}</ThemedText>
+                </View>
+              ))}
             </View>
           );
         })()}
@@ -104,7 +131,7 @@ export default function CharacterScreen() {
           <LinkRow
             icon="ribbon-outline"
             label="Class Features"
-            onPress={() => router.push('/features')}
+            onPress={() => router.push('/features/featureList')}
           />
           <LinkRow
             icon="leaf-outline"
@@ -123,14 +150,6 @@ export default function CharacterScreen() {
           </Pressable>
         </View>
       </ScrollView>
-
-      <Pressable
-        onPress={confirmDelete}
-        style={styles.deleteButton}
-        accessibilityRole="button"
-      >
-        <ThemedText style={styles.onDarkLabel}>Delete character</ThemedText>
-      </Pressable>
     </ThemedView>
   );
 }
@@ -164,13 +183,24 @@ function LinkRow({
 const styles = StyleSheet.create({
   container: { flex: 1 },
   content: { padding: 16, gap: 12, paddingBottom: GOBLIN_FAB_CLEARANCE },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  titleText: { flex: 1 },
   fields: { gap: 10, marginTop: 8 },
   classBody: {
     marginTop: 16,
+    gap: 10,
   },
-  classBodyText: {
-    lineHeight: 20,
-    opacity: 0.85,
+  classRow: {
+    gap: 2,
+  },
+  classLabel: {
+    opacity: 0.6,
+    fontSize: 13,
   },
   links: {
     marginTop: 16,
@@ -218,14 +248,5 @@ const styles = StyleSheet.create({
   emptyHint: {
     opacity: 0.7,
     lineHeight: 20,
-  },
-  deleteButton: {
-    position: 'absolute',
-    bottom: 32,
-    left: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    backgroundColor: Colors.destructive,
-    borderRadius: 8,
   },
 });

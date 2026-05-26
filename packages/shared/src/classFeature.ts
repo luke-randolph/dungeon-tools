@@ -6,4 +6,7 @@ export interface ClassFeature {
   body: string;
   class: CharacterClass;
   level: number;
+  parentKey?: string;
+  maxPicks?: number;
+  scalingKey?: string;
 }

@@ -1,4 +1,4 @@
-const primaryColor = '#1e5e5e';
+const primaryColor = '#3a2a66';
 const destructiveColor = '#8b1a1a';
 
 export const Colors = {
@@ -6,7 +6,8 @@ export const Colors = {
   background: '#e8d8b0',
   surface: '#392c22',
   surfaceText: '#f0e4c8',
-  accent: '#fbbf24',
+  goldAccent: '#fbbf24',
+  goldDeep: '#e1ab20',
   primary: primaryColor,
   destructive: destructiveColor,
   secondary: '#4a4a4a',
@@ -16,6 +17,7 @@ export const Colors = {
   onPrimary: '#fff',
   inputBackground: '#fff',
   rowBorder: '#eee',
+  groupHeaderBackground: '#dcc99a',
   lockedIcon: '#bbb',
   concentration: '#a855f7',
   ritual: '#0ea5e9',

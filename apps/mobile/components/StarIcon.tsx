@@ -19,7 +19,7 @@ export function StarIcon({
   }
   return (
     <View>
-      <Ionicons name="star" size={size} color={Colors.accent} />
+      <Ionicons name="star" size={size} color={Colors.goldAccent} />
       <Ionicons
         name="star-outline"
         size={size}

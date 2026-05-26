@@ -1,33 +1,17 @@
 import type { CharacterClass } from '@dungeon-tools/shared';
-import raw from '@/assets/srd/srd-5.1.json';
+import raw from '@/assets/srd/classes.json';
 
-interface SrdEntry {
-  category: string;
-  index: string;
-  name: string;
-  body: string;
-  tags: string[];
-}
-
-interface ClassDetail {
+export interface ClassDetail {
   key: CharacterClass;
   name: string;
-  body: string;
+  hitDie: string;
+  savingThrows: string[];
+  proficiencies: string[];
 }
 
-function stripDuplicateSavingThrows(body: string): string {
-  return body.replace(/(, Saving Throw: \w+)+\s*$/, '');
-}
-
-const BY_KEY = new Map<string, ClassDetail>();
-for (const e of raw as SrdEntry[]) {
-  if (e.category !== 'class') continue;
-  BY_KEY.set(e.index, {
-    key: e.index as CharacterClass,
-    name: e.name,
-    body: stripDuplicateSavingThrows(e.body),
-  });
-}
+const BY_KEY = new Map<string, ClassDetail>(
+  (raw as ClassDetail[]).map((c) => [c.key, c]),
+);
 
 export function getClassDetail(
   charClass: CharacterClass,

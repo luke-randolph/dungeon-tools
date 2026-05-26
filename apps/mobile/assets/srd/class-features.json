@@ -81,7 +81,8 @@
     "name": "Brutal Critical (1 die)",
     "body": "Beginning at 9th level, you can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack. This increases to two additional dice at 13th level and three additional dice at 17th level.",
     "class": "barbarian",
-    "level": 9
+    "level": 9,
+    "scalingKey": "brutal-critical"
   },
   {
     "key": "primal-path-improvement-2",
@@ -109,7 +110,8 @@
     "name": "Brutal Critical (2 dice)",
     "body": "Beginning at 9th level, you can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack. This increases to two additional dice at 13th level and three additional dice at 17th level.",
     "class": "barbarian",
-    "level": 13
+    "level": 13,
+    "scalingKey": "brutal-critical"
   },
   {
     "key": "primal-path-improvement-3",
@@ -137,7 +139,8 @@
     "name": "Brutal Critical (3 dice)",
     "body": "Beginning at 9th level, you can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack. This increases to two additional dice at 13th level and three additional dice at 17th level.",
     "class": "barbarian",
-    "level": 17
+    "level": 17,
+    "scalingKey": "brutal-critical"
   },
   {
     "key": "indomitable-might",
@@ -165,7 +168,8 @@
     "name": "Bardic Inspiration (d6)",
     "body": "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.\n\nYou can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. \n\nYour Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.",
     "class": "bard",
-    "level": 1
+    "level": 1,
+    "scalingKey": "bardic-inspiration"
   },
   {
     "key": "spellcasting-bard",
@@ -214,7 +218,8 @@
     "name": "Bardic Inspiration (d8)",
     "body": "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.\n\nYou can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. \n\nYour Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.",
     "class": "bard",
-    "level": 5
+    "level": 5,
+    "scalingKey": "bardic-inspiration"
   },
   {
     "key": "font-of-inspiration",
@@ -256,7 +261,8 @@
     "name": "Bardic Inspiration (d10)",
     "body": "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.\n\nYou can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. \n\nYour Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.",
     "class": "bard",
-    "level": 10
+    "level": 10,
+    "scalingKey": "bardic-inspiration"
   },
   {
     "key": "bard-expertise-2",
@@ -305,7 +311,8 @@
     "name": "Bardic Inspiration (d12)",
     "body": "You can inspire others through stirring words or music. To do so, you use a bonus action on your turn to choose one creature other than yourself within 60 feet of you who can hear you. That creature gains one Bardic Inspiration die, a d6. Once within the next 10 minutes, the creature can roll the die and add the number rolled to one ability check, attack roll, or saving throw it makes. The creature can wait until after it rolls the d20 before deciding to use the Bardic Inspiration die, but must decide before the GM says whether the roll succeeds or fails. Once the Bardic Inspiration die is rolled, it is lost. A creature can have only one Bardic Inspiration die at a time.\n\nYou can use this feature a number of times equal to your Charisma modifier (a minimum of once). You regain any expended uses when you finish a long rest. \n\nYour Bardic Inspiration die changes when you reach certain levels in this class. The die becomes a d8 at 5th level, a d10 at 10th level, and a d12 at 15th level.",
     "class": "bard",
-    "level": 15
+    "level": 15,
+    "scalingKey": "bardic-inspiration"
   },
   {
     "key": "bard-ability-score-improvement-4",
@@ -368,7 +375,8 @@
     "name": "Channel Divinity (1/rest)",
     "body": "At 2nd level, you gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects. You start with two such effects: Turn Undead and an effect determined by your domain. Some domains grant you additional effects as you advance in levels, as noted in the domain description.\n\nWhen you use your Channel Divinity, you choose which effect to create. You must then finish a short or long rest to use your Channel Divinity again.\n\nSome Channel Divinity effects require saving throws. When you use such an effect from this class, the DC equals your cleric spell save DC.\n\nBeginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.",
     "class": "cleric",
-    "level": 2
+    "level": 2,
+    "scalingKey": "channel-divinity-uses"
   },
   {
     "key": "channel-divinity-turn-undead",
@@ -417,7 +425,8 @@
     "name": "Channel Divinity (2/rest)",
     "body": "Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.",
     "class": "cleric",
-    "level": 6
+    "level": 6,
+    "scalingKey": "channel-divinity-uses"
   },
   {
     "key": "divine-domain-improvement-2",
@@ -522,7 +531,8 @@
     "name": "Channel Divinity (3/rest)",
     "body": "Beginning at 6th level, you can use your Channel Divinity twice between rests, and beginning at 18th level, you can use it three times between rests. When you finish a short or long rest, you regain your expended uses.",
     "class": "cleric",
-    "level": 18
+    "level": 18,
+    "scalingKey": "channel-divinity-uses"
   },
   {
     "key": "cleric-ability-score-improvement-5",
@@ -662,49 +672,56 @@
     "name": "Fighting Style",
     "body": "You adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take a Fighting Style option more than once, even if you later get to choose again.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "maxPicks": 1
   },
   {
     "key": "fighter-fighting-style-archery",
     "name": "Fighting Style: Archery",
     "body": "You gain a +2 bonus to attack rolls you make with ranged weapons.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "fighter-fighting-style-defense",
     "name": "Fighting Style: Defense",
     "body": "While you are wearing armor, you gain a +1 bonus to AC.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "fighter-fighting-style-dueling",
     "name": "Fighting Style: Dueling",
     "body": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "fighter-fighting-style-great-weapon-fighting",
     "name": "Fighting Style: Great Weapon Fighting",
     "body": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll, even if the new roll is a 1 or a 2. The weapon must have the two-handed or versatile property for you to gain this benefit.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "fighter-fighting-style-protection",
     "name": "Fighting Style: Protection",
     "body": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "fighter-fighting-style-two-weapon-fighting",
     "name": "Fighting Style: Two-Weapon Fighting",
     "body": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
     "class": "fighter",
-    "level": 1
+    "level": 1,
+    "parentKey": "fighter-fighting-style"
   },
   {
     "key": "second-wind",
@@ -718,7 +735,8 @@
     "name": "Action Surge (1 use)",
     "body": "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
     "class": "fighter",
-    "level": 2
+    "level": 2,
+    "scalingKey": "action-surge"
   },
   {
     "key": "martial-archetype",
@@ -739,7 +757,8 @@
     "name": "Extra Attack",
     "body": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn. The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
     "class": "fighter",
-    "level": 5
+    "level": 5,
+    "scalingKey": "fighter-extra-attack"
   },
   {
     "key": "fighter-ability-score-improvement-2",
@@ -767,7 +786,8 @@
     "name": "Indomitable (1 use)",
     "body": "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest. You can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
     "class": "fighter",
-    "level": 9
+    "level": 9,
+    "scalingKey": "indomitable"
   },
   {
     "key": "martial-archetype-improvement-2",
@@ -781,7 +801,8 @@
     "name": "Extra Attack (2)",
     "body": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn. The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
     "class": "fighter",
-    "level": 11
+    "level": 11,
+    "scalingKey": "fighter-extra-attack"
   },
   {
     "key": "fighter-ability-score-improvement-4",
@@ -795,7 +816,8 @@
     "name": "Indomitable (2 uses)",
     "body": "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest. You can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
     "class": "fighter",
-    "level": 13
+    "level": 13,
+    "scalingKey": "indomitable"
   },
   {
     "key": "fighter-ability-score-improvement-5",
@@ -823,14 +845,16 @@
     "name": "Action Surge (2 uses)",
     "body": "Starting at 2nd level, you can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action on top of your regular action and a possible bonus action.\n\nOnce you use this feature, you must finish a short or long rest before you can use it again. Starting at 17th level, you can use it twice before a rest, but only once on the same turn.",
     "class": "fighter",
-    "level": 17
+    "level": 17,
+    "scalingKey": "action-surge"
   },
   {
     "key": "indomitable-3-uses",
     "name": "Indomitable (3 uses)",
     "body": "Beginning at 9th level, you can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest. You can use this feature twice between long rests starting at 13th level and three times between long rests starting at 17th level.",
     "class": "fighter",
-    "level": 17
+    "level": 17,
+    "scalingKey": "indomitable"
   },
   {
     "key": "martial-archetype-improvement-4",
@@ -851,7 +875,8 @@
     "name": "Extra Attack (3)",
     "body": "Beginning at 5th level, you can attack twice, instead of once, whenever you take the Attack action on your turn. The number of attacks increases to three when you reach 11th level in this class and to four when you reach 20th level in this class.",
     "class": "fighter",
-    "level": 20
+    "level": 20,
+    "scalingKey": "fighter-extra-attack"
   },
   {
     "key": "martial-arts",
@@ -1089,35 +1114,40 @@
     "name": "Fighting Style",
     "body": "At 2nd level, you adopt a style of fighting as your specialty. Choose one of the following options. You can't take a Fighting Style option more than once, even if you later get to choose again.",
     "class": "paladin",
-    "level": 2
+    "level": 2,
+    "maxPicks": 1
   },
   {
     "key": "fighting-style-defense",
     "name": "Fighting Style: Defense",
     "body": "While you are wearing armor, you gain a +1 bonus to AC.",
     "class": "paladin",
-    "level": 2
+    "level": 2,
+    "parentKey": "paladin-fighting-style"
   },
   {
     "key": "fighting-style-dueling",
     "name": "Fighting Style: Dueling",
     "body": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
     "class": "paladin",
-    "level": 2
+    "level": 2,
+    "parentKey": "paladin-fighting-style"
   },
   {
     "key": "fighting-style-great-weapon-fighting",
     "name": "Fighting Style: Great Weapon Fighting",
     "body": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll. The weapon must have the two-handed or versatile property for you to gain this benefit.",
     "class": "paladin",
-    "level": 2
+    "level": 2,
+    "parentKey": "paladin-fighting-style"
   },
   {
     "key": "fighting-style-protection",
     "name": "Fighting Style: Protection",
     "body": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield.",
     "class": "paladin",
-    "level": 2
+    "level": 2,
+    "parentKey": "paladin-fighting-style"
   },
   {
     "key": "spellcasting-paladin",
@@ -1257,49 +1287,56 @@
     "name": "Favored Enemy (1 type)",
     "body": "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.\n\nChoose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.\n\nYou have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.\n\nWhen you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.\n\nYou choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.",
     "class": "ranger",
-    "level": 1
+    "level": 1,
+    "scalingKey": "favored-enemy"
   },
   {
     "key": "natural-explorer-1-terrain-type",
     "name": "Natural Explorer (1 terrain type)",
     "body": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, or swamp. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you're proficient in.\n\nWhile traveling for an hour or more in your favored terrain, you gain the following benefits:\n\n- Difficult terrain doesn't slow your group's travel.\n\n- Your group can't become lost except by magical means.\n\n- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.\n\n- If you are traveling alone, you can move stealthily at a normal pace.\n\n- When you forage, you find twice as much food as you normally would.\n\n- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.\n\nYou choose additional favored terrain types at 6th and 10th level.",
     "class": "ranger",
-    "level": 1
+    "level": 1,
+    "scalingKey": "natural-explorer"
   },
   {
     "key": "ranger-fighting-style",
     "name": "Fighting Style",
     "body": "At 2nd level, you adopt a particular style of fighting as your specialty. Choose one of the following options. You can't take a Fighting Style option more than once, even if you later get to choose again.",
     "class": "ranger",
-    "level": 2
+    "level": 2,
+    "maxPicks": 1
   },
   {
     "key": "ranger-fighting-style-archery",
     "name": "Fighting Style: Archery",
     "body": "You gain a +2 bonus to attack rolls you make with ranged weapons.",
     "class": "ranger",
-    "level": 2
+    "level": 2,
+    "parentKey": "ranger-fighting-style"
   },
   {
     "key": "ranger-fighting-style-defense",
     "name": "Fighting Style: Defense",
     "body": "While you are wearing armor, you gain a +1 bonus to AC.",
     "class": "ranger",
-    "level": 2
+    "level": 2,
+    "parentKey": "ranger-fighting-style"
   },
   {
     "key": "ranger-fighting-style-dueling",
     "name": "Fighting Style: Dueling",
     "body": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon.",
     "class": "ranger",
-    "level": 2
+    "level": 2,
+    "parentKey": "ranger-fighting-style"
   },
   {
     "key": "ranger-fighting-style-two-weapon-fighting",
     "name": "Fighting Style: Two-Weapon Fighting",
     "body": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack.",
     "class": "ranger",
-    "level": 2
+    "level": 2,
+    "parentKey": "ranger-fighting-style"
   },
   {
     "key": "spellcasting-ranger",
@@ -1341,14 +1378,16 @@
     "name": "Favored Enemy (2 types)",
     "body": "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.\n\nChoose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.\n\nYou have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.\n\nWhen you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.\n\nYou choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.",
     "class": "ranger",
-    "level": 6
+    "level": 6,
+    "scalingKey": "favored-enemy"
   },
   {
     "key": "natural-explorer-2-terrain-types",
     "name": "Natural Explorer (2 terrain types)",
     "body": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, or swamp. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you're proficient in.\n\nWhile traveling for an hour or more in your favored terrain, you gain the following benefits:\n\n- Difficult terrain doesn't slow your group's travel.\n\n- Your group can't become lost except by magical means.\n\n- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.\n\n- If you are traveling alone, you can move stealthily at a normal pace.\n\n- When you forage, you find twice as much food as you normally would.\n\n- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.\n\nYou choose additional favored terrain types at 6th and 10th level.",
     "class": "ranger",
-    "level": 6
+    "level": 6,
+    "scalingKey": "natural-explorer"
   },
   {
     "key": "ranger-archetype-improvement-1",
@@ -1383,7 +1422,8 @@
     "name": "Natural Explorer (3 terrain types)",
     "body": "You are particularly familiar with one type of natural environment and are adept at traveling and surviving in such regions. Choose one type of favored terrain: arctic, coast, desert, forest, grassland, mountain, or swamp. When you make an Intelligence or Wisdom check related to your favored terrain, your proficiency bonus is doubled if you are using a skill that you're proficient in.\n\nWhile traveling for an hour or more in your favored terrain, you gain the following benefits:\n\n- Difficult terrain doesn't slow your group's travel.\n\n- Your group can't become lost except by magical means.\n\n- Even when you are engaged in another activity while traveling (such as foraging, navigating, or tracking), you remain alert to danger.\n\n- If you are traveling alone, you can move stealthily at a normal pace.\n\n- When you forage, you find twice as much food as you normally would.\n\n- While tracking other creatures, you also learn their exact number, their sizes, and how long ago they passed through the area.\n\nYou choose additional favored terrain types at 6th and 10th level.",
     "class": "ranger",
-    "level": 10
+    "level": 10,
+    "scalingKey": "natural-explorer"
   },
   {
     "key": "ranger-archetype-improvement-2",
@@ -1404,7 +1444,8 @@
     "name": "Favored Enemy (3 enemies)",
     "body": "Beginning at 1st level, you have significant experience studying, tracking, hunting, and even talking to a certain type of enemy.\n\nChoose a type of favored enemy: aberrations, beasts, celestials, constructs, dragons, elementals, fey, fiends, giants, monstrosities, oozes, plants, or undead. Alternatively, you can select two races of humanoid (such as gnolls and orcs) as favored enemies.\n\nYou have advantage on Wisdom (Survival) checks to track your favored enemies, as well as on Intelligence checks to recall information about them.\n\nWhen you gain this feature, you also learn one language of your choice that is spoken by your favored enemies, if they speak one at all.\n\nYou choose one additional favored enemy, as well as an associated language, at 6th and 14th level. As you gain levels, your choices should reflect the types of monsters you have encountered on your adventures.",
     "class": "ranger",
-    "level": 14
+    "level": 14,
+    "scalingKey": "favored-enemy"
   },
   {
     "key": "vanish",
@@ -1642,63 +1683,73 @@
     "name": "Metamagic",
     "body": "At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.\n\nYou can use only one Metamagic option on a spell when you cast it, unless otherwise noted.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "maxPicks": 2,
+    "scalingKey": "metamagic"
   },
   {
     "key": "metamagic-careful-spell",
     "name": "Metamagic: Careful Spell",
     "body": "When you cast a spell that forces other creatures to make a saving throw, you can protect some of those creatures from the spell's full force. To do so, you spend 1 sorcery point and choose a number of those creatures up to your Charisma modifier (minimum of one creature). A chosen creature automatically succeeds on its saving throw against the spell.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-distant-spell",
     "name": "Metamagic: Distant Spell",
     "body": "When you cast a spell that has a range of 5 feet or greater, you can spend 1 sorcery point to double the range of the spell.\n\nWhen you cast a spell that has a range of touch, you can spend 1 sorcery point to make the range of the spell 30 feet.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-empowered-spell",
     "name": "Metamagic: Empowered Spell",
     "body": "When you roll damage for a spell, you can spend 1 sorcery point to reroll a number of the damage dice up to your Charisma modifier (minimum of one). You must use the new rolls.\n\nYou can use Empowered Spell even if you have already used a different Metamagic option during the casting of the spell.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-extended-spell",
     "name": "Metamagic: Extended Spell",
     "body": "When you cast a spell that has a duration of 1 minute or longer, you can spend 1 sorcery point to double its duration, to a maximum duration of 24 hours.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-heightened-spell",
     "name": "Metamagic: Heightened Spell",
     "body": "When you cast a spell that forces a creature to make a saving throw to resist its effects, you can spend 3 sorcery points to give one target of the spell disadvantage on its first saving throw made against the spell.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-quickened-spell",
     "name": "Metamagic: Quickened Spell",
     "body": "When you cast a spell that has a casting time of 1 action, you can spend 2 sorcery points to change the casting time to 1 bonus action for this casting.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-subtle-spell",
     "name": "Metamagic: Subtle Spell",
     "body": "When you cast a spell, you can spend 1 sorcery point to cast it without any somatic or verbal components.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "metamagic-twinned-spell",
     "name": "Metamagic: Twinned Spell",
     "body": "When you cast a spell that targets only one creature and doesn't have a range of self, you can spend a number of sorcery points equal to the spell's level to target a second creature in range with the same spell (1 sorcery point if the spell is a cantrip).\n\nTo be eligible, a spell must be incapable of targeting more than one creature at the spell's current level. For example, magic missile and scorching ray aren't eligible, but ray of frost is.",
     "class": "sorcerer",
-    "level": 3
+    "level": 3,
+    "parentKey": "metamagic-1"
   },
   {
     "key": "sorcerer-ability-score-improvement-1",
@@ -1726,7 +1777,9 @@
     "name": "Metamagic",
     "body": "At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.\n\nYou can use only one Metamagic option on a spell when you cast it, unless otherwise noted.",
     "class": "sorcerer",
-    "level": 10
+    "level": 10,
+    "scalingKey": "metamagic",
+    "maxPicks": 3
   },
   {
     "key": "sorcerer-ability-score-improvement-3",
@@ -1754,7 +1807,9 @@
     "name": "Metamagic",
     "body": "At 3rd level, you gain the ability to twist your spells to suit your needs. You gain two of the following Metamagic options of your choice. You gain another one at 10th and 17th level.\n\nYou can use only one Metamagic option on a spell when you cast it, unless otherwise noted.",
     "class": "sorcerer",
-    "level": 17
+    "level": 17,
+    "scalingKey": "metamagic",
+    "maxPicks": 4
   },
   {
     "key": "sorcerous-origin-improvement-3",
@@ -1796,147 +1851,223 @@
     "name": "Eldritch Invocation: Agonizing Blast",
     "body": "When you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-armor-of-shadows",
     "name": "Eldritch Invocation: Armor of Shadows",
     "body": "You can cast mage armor on yourself at will, without expending a spell slot or material components.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-beast-speech",
     "name": "Eldritch Invocation: Beast Speech",
     "body": "You can cast speak with animals at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-beguiling-influence",
     "name": "Eldritch Invocation: Beguiling Influence",
     "body": "You gain proficiency in the Deception and Persuasion skills.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-book-of-ancient-secrets",
     "name": "Eldritch Invocation: Book of Ancient Secrets",
     "body": "You can now inscribe magical rituals in your Book of Shadows. Choose two 1st-level spells that have the ritual tag from any class's spell list (the two needn't be from the same list). The spells appear in the book and don't count against the number of spells you know. With your Book of Shadows in hand, you can cast the chosen spells as rituals. You can't cast the spells except as rituals, unless you've learned them by some other means. You can also cast a warlock spell you know as a ritual if it has the ritual tag.\n\nOn your adventures, you can add other ritual spells to your Book of Shadows. When you find such a spell, you can add it to the book if the spell's level is equal to or less than half your warlock level (rounded up) and if you can spare the time to transcribe the spell. For each level of the spell, the transcription process takes 2 hours and costs 50 gp for the rare inks needed to inscribe it.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-devils-sight",
     "name": "Eldritch Invocation: Devil's Sight",
     "body": "You can see normally in darkness, both magical and nonmagical, to a distance of 120 feet.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-eldritch-sight",
     "name": "Eldritch Invocation: Eldritch Sight",
     "body": "You can cast detect magic at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-eldritch-spear",
     "name": "Eldritch Invocation: Eldritch Spear",
     "body": "When you cast eldritch blast, its range is 300 feet.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-eyes-of-the-rune-keeper",
     "name": "Eldritch Invocation: Eyes of the Rune Keeper",
     "body": "You can read all writing.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-fiendish-vigor",
     "name": "Eldritch Invocation: Fiendish Vigor",
     "body": "You can cast false life on yourself at will as a 1st-level spell, without expending a spell slot or material components.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-gaze-of-two-minds",
     "name": "Eldritch Invocation: Gaze of Two Minds",
     "body": "You can use your action to touch a willing humanoid and perceive through its senses until the end of your next turn. As long as the creature is on the same plane of existence as you, you can use your action on subsequent turns to maintain this connection, extending the duration until the end of your next turn. While perceiving through the other creature's senses, you benefit from any special senses possessed by that creature, and you are blinded and deafened to your own surroundings.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-mask-of-many-faces",
     "name": "Eldritch Invocation: Mask of Many Faces",
     "body": "You can cast disguise self at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-misty-visions",
     "name": "Eldritch Invocation: Misty Visions",
     "body": "You can cast silent image at will, without expending a spell slot or material components.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-repelling-blast",
     "name": "Eldritch Invocation: Repelling Blast",
     "body": "When you hit a creature with eldritch blast, you can push the creature up to 10 feet away from you in a straight line.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-thief-of-five-fates",
     "name": "Eldritch Invocation: Thief of Five Fates",
     "body": "You can cast bane once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-voice-of-the-chain-master",
     "name": "Eldritch Invocation: Voice of the Chain Master",
     "body": "You can communicate telepathically with your familiar and perceive through your familiar's senses as long as you are on the same plane of existence.\n\nAdditionally, while perceiving through your familiar's senses, you can also speak through your familiar in your own voice, even if your familiar is normally incapable of speech.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocations",
     "name": "Eldritch Invocations",
     "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
     "class": "warlock",
-    "level": 2
+    "level": 2,
+    "scalingKey": "eldritch-invocations",
+    "maxPicks": 2
+  },
+  {
+    "key": "eldritch-invocations-3",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 5,
+    "maxPicks": 3,
+    "scalingKey": "eldritch-invocations"
+  },
+  {
+    "key": "eldritch-invocations-4",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 7,
+    "maxPicks": 4,
+    "scalingKey": "eldritch-invocations"
+  },
+  {
+    "key": "eldritch-invocations-5",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 9,
+    "maxPicks": 5,
+    "scalingKey": "eldritch-invocations"
+  },
+  {
+    "key": "eldritch-invocations-6",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 12,
+    "maxPicks": 6,
+    "scalingKey": "eldritch-invocations"
+  },
+  {
+    "key": "eldritch-invocations-7",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 15,
+    "maxPicks": 7,
+    "scalingKey": "eldritch-invocations"
+  },
+  {
+    "key": "eldritch-invocations-8",
+    "name": "Eldritch Invocations",
+    "body": "In your study of occult lore, you have unearthed eldritch invocations, fragments of forbidden knowledge that imbue you with an abiding magical ability.\n\nAt 2nd level, you gain two eldritch invocations of your choice. Your invocation options are detailed at the end of the class description. When you gain certain warlock levels, you gain additional invocations of your choice, as shown in the Invocations Known column of the Warlock table.\n\nAdditionally, when you gain a level in this class, you can choose one of the invocations you know and replace it with another invocation that you could learn at that level.",
+    "class": "warlock",
+    "level": 18,
+    "maxPicks": 8,
+    "scalingKey": "eldritch-invocations"
   },
   {
     "key": "pact-boon",
     "name": "Pact Boon",
     "body": "At 3rd level, your otherworldly patron bestows a gift upon you for your loyal service. You gain one of the following features of your choice.",
     "class": "warlock",
-    "level": 3
+    "level": 3,
+    "maxPicks": 1
   },
   {
     "key": "pact-of-the-blade",
     "name": "Pact of the Blade",
     "body": "You can use your action to create a pact weapon in your empty hand. You can choose the form that this melee weapon takes each time you create it. You are proficient with it while you wield it. This weapon counts as magical for the purpose of overcoming resistance and immunity to nonmagical attacks and damage.\n\nYour pact weapon disappears if it is more than 5 feet away from you for 1 minute or more. It also disappears if you use this feature again, if you dismiss the weapon (no action required), or if you die.\n\nYou can transform one magic weapon into your pact weapon by performing a special ritual while you hold the weapon. You perform the ritual over the course of 1 hour, which can be done during a short rest. You can then dismiss the weapon, shunting it into an extradimensional space, and it appears whenever you create your pact weapon thereafter. You can't affect an artifact or a sentient weapon in this way. The weapon ceases being your pact weapon if you die, if you perform the 1-hour ritual on a different weapon, or if you use a 1-hour ritual to break your bond to it. The weapon appears at your feet if it is in the extradimensional space when the bond breaks.\n\nIf you serve the Fiend, your weapon could be an axe made of black metal and adorned with decorative flames.",
     "class": "warlock",
-    "level": 3
+    "level": 3,
+    "parentKey": "pact-boon"
   },
   {
     "key": "pact-of-the-chain",
     "name": "Pact of the Chain",
     "body": "You learn the find familiar spell and can cast it as a ritual. The spell doesn't count against your number of spells known.\n\nWhen you cast the spell, you can choose one of the normal forms for your familiar or one of the following special forms: imp, pseudodragon, quasit, or sprite.\n\nAdditionally, when you take the Attack action, you can forgo one of your own attacks to allow your familiar to make one attack of its own with its reaction.\n\nYour familiar is more cunning than a typical familiar. Its default form can be a reflection of your patron, with imps and quasits tied to the Fiend.",
     "class": "warlock",
-    "level": 3
+    "level": 3,
+    "parentKey": "pact-boon"
   },
   {
     "key": "pact-of-the-tome",
     "name": "Pact of the Tome",
     "body": "Your patron gives you a grimoire called a Book of Shadows. When you gain this feature, choose three cantrips from any class's spell list (the three needn't be from the same list). While the book is on your person, you can cast those cantrips at will. They don't count against your number of cantrips known. If they don't appear on the warlock spell list, they are nonetheless warlock spells for you.\n\nIf you lose your Book of Shadows, you can perform a 1-hour ceremony to receive a replacement from your patron. This ceremony can be performed during a short or long rest, and it destroys the previous book. The book turns to ash when you die.\n\nYour Book of Shadows could be a weighty tome bound in demon hide studded with iron, holding spells of conjuration and a wealth of forbidden lore about the sinister regions of the cosmos, a gift of the Fiend.",
     "class": "warlock",
-    "level": 3
+    "level": 3,
+    "parentKey": "pact-boon"
   },
   {
     "key": "warlock-ability-score-improvement-1",
@@ -1950,28 +2081,32 @@
     "name": "Eldritch Invocation: Mire the Mind",
     "body": "You can cast slow once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 5
+    "level": 5,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-one-with-shadows",
     "name": "Eldritch Invocation: One with Shadows",
     "body": "When you are in an area of dim light or darkness, you can use your action to become invisible until you move or take an action or a reaction.",
     "class": "warlock",
-    "level": 5
+    "level": 5,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-sign-of-ill-omen",
     "name": "Eldritch Invocation: Sign of Ill Omen",
     "body": "You can cast bestow curse once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 5
+    "level": 5,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-thirsting-blade",
     "name": "Eldritch Invocation: Thirsting Blade",
     "body": "You can attack with your pact weapon twice, instead of once, whenever you take the Attack action on your turn.",
     "class": "warlock",
-    "level": 5
+    "level": 5,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "otherworldly-patron-improvement-1",
@@ -1985,21 +2120,24 @@
     "name": "Eldritch Invocation: Bewitching Whispers",
     "body": "You can cast compulsion once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 7
+    "level": 7,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-dreadful-word",
     "name": "Eldritch Invocation: Dreadful Word",
     "body": "You can cast confusion once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 7
+    "level": 7,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-sculptor-of-flesh",
     "name": "Eldritch Invocation: Sculptor of Flesh",
     "body": "You can cast polymorph once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 7
+    "level": 7,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "warlock-ability-score-improvement-2",
@@ -2013,28 +2151,32 @@
     "name": "Eldritch Invocation: Ascendant Step",
     "body": "You can cast levitate on yourself at will, without expending a spell slot or material components.",
     "class": "warlock",
-    "level": 9
+    "level": 9,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-minions-of-chaos",
     "name": "Eldritch Invocation: Minions of Chaos",
     "body": "You can cast conjure elemental once using a warlock spell slot. You can't do so again until you finish a long rest.",
     "class": "warlock",
-    "level": 9
+    "level": 9,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-otherworldly-leap",
     "name": "Eldritch Invocation: Otherworldly Leap",
     "body": "You can cast jump on yourself at will, without expending a spell slot or material components.",
     "class": "warlock",
-    "level": 9
+    "level": 9,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-whispers-of-the-grave",
     "name": "Eldritch Invocation: Whispers of the Grave",
     "body": "You can cast speak with dead at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 9
+    "level": 9,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "otherworldly-patron-improvement-2",
@@ -2062,7 +2204,8 @@
     "name": "Eldritch Invocation: Lifedrinker",
     "body": "When you hit a creature with your pact weapon, the creature takes extra necrotic damage equal to your Charisma modifier (minimum 1).",
     "class": "warlock",
-    "level": 12
+    "level": 12,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "mystic-arcanum-7th-level",
@@ -2083,28 +2226,32 @@
     "name": "Eldritch Invocation: Chains of Carceri",
     "body": "You can cast hold monster at will--targeting a celestial, fiend, or elemental--without expending a spell slot or material components. You must finish a long rest before you can use this invocation on the same creature again.",
     "class": "warlock",
-    "level": 15
+    "level": 15,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-master-of-myriad-forms",
     "name": "Eldritch Invocation: Master of Myriad Forms",
     "body": "You can cast alter self at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 15
+    "level": 15,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-visions-of-distant-realms",
     "name": "Eldritch Invocation: Visions of Distant Realms",
     "body": "You can cast arcane eye at will, without expending a spell slot.",
     "class": "warlock",
-    "level": 15
+    "level": 15,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "eldritch-invocation-witch-sight",
     "name": "Eldritch Invocation: Witch Sight",
     "body": "You can see the true form of any shapechanger or creature concealed by illusion or transmutation magic while the creature is within 30 feet of you and within line of sight.",
     "class": "warlock",
-    "level": 15
+    "level": 15,
+    "parentKey": "eldritch-invocations"
   },
   {
     "key": "mystic-arcanum-8th-level",
@@ -2160,7 +2307,72 @@
     "name": "Arcane Tradition",
     "body": "When you reach 2nd level, you choose an arcane tradition, shaping your practice of magic through one of eight schools, such as Evocation.\n\nYour choice grants you features at 2nd level and again at 6th, 10th, and 14th level.",
     "class": "wizard",
-    "level": 2
+    "level": 2,
+    "maxPicks": 1
+  },
+  {
+    "key": "arcane-tradition-abjuration",
+    "name": "Arcane Tradition: Abjuration",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-conjuration",
+    "name": "Arcane Tradition: Conjuration",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-divination",
+    "name": "Arcane Tradition: Divination",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-enchantment",
+    "name": "Arcane Tradition: Enchantment",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-evocation",
+    "name": "Arcane Tradition: Evocation",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-illusion",
+    "name": "Arcane Tradition: Illusion",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-necromancy",
+    "name": "Arcane Tradition: Necromancy",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
+  },
+  {
+    "key": "arcane-tradition-transmutation",
+    "name": "Arcane Tradition: Transmutation",
+    "body": "",
+    "class": "wizard",
+    "level": 2,
+    "parentKey": "arcane-tradition"
   },
   {
     "key": "wizard-ability-score-improvement-1",

@@ -19,3 +19,12 @@ export function levelLabel(
   if (level === 0 && opts.cantrip) return 'Cantrip';
   return `${ordinal(level)}${opts.hyphenated ? '-' : ' '}level`;
 }
+
+export function levelListLabel(levels: number[]): string {
+  const sorted = [...new Set(levels)].sort((a, b) => a - b);
+  const ords = sorted.map(ordinal);
+  if (ords.length === 0) return '';
+  if (ords.length === 1) return `${ords[0]} level`;
+  if (ords.length === 2) return `${ords[0]} and ${ords[1]} level`;
+  return `${ords.slice(0, -1).join(', ')}, and ${ords[ords.length - 1]} level`;
+}

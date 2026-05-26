@@ -1,9 +1,11 @@
+import { resolveMaxPicks } from '@dungeon-tools/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { ClassFeatureRow } from '@/components/ClassFeatureRow';
 import { EmptyState } from '@/components/EmptyState';
+import { GroupAccordion } from '@/components/GroupAccordion';
 import { SearchField } from '@/components/SearchField';
 import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
@@ -11,6 +13,11 @@ import { ALL_CLASS_FEATURES } from '@/data/classFeatures';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
+import {
+  buildFeatureItems,
+  collapseScalingChains,
+  featureLevelLabel,
+} from '@/utils/featureDisplay';
 
 export default function FeatureListScreen() {
   const router = useRouter();
@@ -25,15 +32,26 @@ export default function FeatureListScreen() {
     if (character) loadFor(character.id);
   }, [character?.id, loadFor, character]);
 
-  const listed = useMemo(
-    () => ALL_CLASS_FEATURES.filter((f) => keys.has(f.key)),
-    [keys],
-  );
+  const listed = useMemo(() => {
+    if (!character) return [];
+    const starred = ALL_CLASS_FEATURES.filter((f) => keys.has(f.key));
+    const parentKeys = new Set(
+      starred
+        .map((f) => f.parentKey)
+        .filter((k): k is string => Boolean(k)),
+    );
+    const visible = ALL_CLASS_FEATURES.filter(
+      (f) => keys.has(f.key) || parentKeys.has(f.key),
+    );
+    return collapseScalingChains(visible, character.level);
+  }, [keys, character]);
 
-  const features = useMemo(() => {
+  const items = useMemo(() => {
     const q = search.toLowerCase().trim();
-    if (!q) return listed;
-    return listed.filter((f) => f.name.toLowerCase().includes(q));
+    const filtered = q
+      ? listed.filter((f) => f.name.toLowerCase().includes(q))
+      : listed;
+    return buildFeatureItems(filtered);
   }, [listed, search]);
 
   if (!character) {
@@ -65,17 +83,44 @@ export default function FeatureListScreen() {
       />
 
       <FlatList
-        data={features}
-        keyExtractor={(f) => f.key}
-        renderItem={({ item }) => (
-          <ClassFeatureRow
-            feature={item}
-            inList
-            unlocked
-            onPressRow={() => router.push(`/features/${item.key}`)}
-            onToggleStar={() => toggle(item)}
-          />
-        )}
+        data={items}
+        keyExtractor={(item) =>
+          item.kind === 'group' ? `group:${item.parent.key}` : item.feature.key
+        }
+        renderItem={({ item }) => {
+          if (item.kind === 'group') {
+            const maxPicks = resolveMaxPicks(
+              item.parent,
+              character.level,
+              ALL_CLASS_FEATURES,
+            );
+            const q = search.toLowerCase().trim();
+            const matchesChild =
+              q.length > 0 &&
+              item.children.some((c) => c.name.toLowerCase().includes(q));
+            return (
+              <GroupAccordion
+                parent={item.parent}
+                options={item.children}
+                selectedKeys={keys}
+                meta={`${featureLevelLabel(item.parent)} · Pick ${maxPicks}`}
+                unlocked
+                defaultOpen={matchesChild}
+                onPressOption={(c) => router.push(`/features/${c.key}`)}
+                onToggleOption={(c) => toggle(c)}
+              />
+            );
+          }
+          return (
+            <ClassFeatureRow
+              feature={item.feature}
+              inList
+              unlocked
+              onPressRow={() => router.push(`/features/${item.feature.key}`)}
+              onToggleStar={() => toggle(item.feature)}
+            />
+          );
+        }}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={<EmptyState title="No features match." />}

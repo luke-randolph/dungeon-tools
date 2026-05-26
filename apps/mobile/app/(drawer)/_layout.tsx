@@ -35,7 +35,7 @@ function DrawerContent(props: DrawerContentComponentProps) {
       contentContainerStyle={styles.drawerContent}
     >
       <View style={[styles.drawerHeader, { paddingTop: 16 + insets.top }]}>
-        <ThemedText type="defaultSemiBold" style={{ color: Colors.accent }}>
+        <ThemedText type="defaultSemiBold" style={{ color: Colors.goldAccent }}>
           Dungeon Tools 5e
         </ThemedText>
         <Pressable
@@ -74,7 +74,7 @@ export default function DrawerLayout() {
         drawerInactiveTintColor: Colors.surfaceText,
         drawerActiveBackgroundColor: 'rgba(255,255,255,0.08)',
         drawerLabelStyle: { fontSize: 16, fontWeight: '500' },
-        drawerItemStyle: { paddingVertical: 6, marginVertical: 2 },
+        drawerItemStyle: { marginVertical: 4 },
       }}
     >
       <Drawer.Screen

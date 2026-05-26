@@ -1,0 +1,72 @@
+[
+  {
+    "key": "draconic-ancestry-black",
+    "color": "Black",
+    "damageType": "Acid",
+    "breathShape": "5 by 30 ft. line",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-blue",
+    "color": "Blue",
+    "damageType": "Lightning",
+    "breathShape": "5 by 30 ft. line",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-brass",
+    "color": "Brass",
+    "damageType": "Fire",
+    "breathShape": "5 by 30 ft. line",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-bronze",
+    "color": "Bronze",
+    "damageType": "Lightning",
+    "breathShape": "5 by 30 ft. line",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-copper",
+    "color": "Copper",
+    "damageType": "Acid",
+    "breathShape": "5 by 30 ft. line",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-gold",
+    "color": "Gold",
+    "damageType": "Fire",
+    "breathShape": "15 ft. cone",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-green",
+    "color": "Green",
+    "damageType": "Poison",
+    "breathShape": "15 ft. cone",
+    "saveType": "CON"
+  },
+  {
+    "key": "draconic-ancestry-red",
+    "color": "Red",
+    "damageType": "Fire",
+    "breathShape": "15 ft. cone",
+    "saveType": "DEX"
+  },
+  {
+    "key": "draconic-ancestry-silver",
+    "color": "Silver",
+    "damageType": "Cold",
+    "breathShape": "15 ft. cone",
+    "saveType": "CON"
+  },
+  {
+    "key": "draconic-ancestry-white",
+    "color": "White",
+    "damageType": "Cold",
+    "breathShape": "15 ft. cone",
+    "saveType": "CON"
+  }
+]

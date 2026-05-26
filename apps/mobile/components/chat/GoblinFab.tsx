@@ -1,13 +1,12 @@
 import { Image } from 'expo-image';
-import { Platform, Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { Colors } from '@/constants/theme';
 import { useChat } from '@/stores/chat';
 import { useUI } from '@/stores/ui';
 
 const HEAD_IMAGE = require('@/assets/goblin/goblin-head-only.png');
-
-const FAB_SIZE = 80;
 
 export function GoblinFab() {
   const insets = useSafeAreaInsets();
@@ -35,7 +34,7 @@ export function GoblinFab() {
         style={({ pressed }) => [
           styles.fab,
           {
-            opacity: pressed ? 0.85 : 1,
+            opacity: pressed ? 0.9 : 1,
             transform: [{ scale: pressed ? 0.96 : 1 }],
           },
         ]}
@@ -53,29 +52,34 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   fab: {
-    width: FAB_SIZE,
-    height: FAB_SIZE,
+    width: 86,
+    height: 86,
+    borderRadius: '100%',
+    backgroundColor: Colors.goldDeep,
+    borderWidth: 4,
+    borderColor: Colors.goldAccent,
+    boxShadow: [
+      {
+        inset: true,
+        offsetX: 0,
+        offsetY: 0,
+        blurRadius: 16,
+        color: 'rgba(0, 0, 0, 0.15)',
+      },
+      {
+        offsetX: 0,
+        offsetY: 4,
+        blurRadius: 8,
+        color: 'rgba(0, 0, 0, 0.35)',
+      },
+    ],
     alignItems: 'center',
     justifyContent: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.35,
-        shadowRadius: 8,
-      },
-      android: {
-        elevation: 8,
-      },
-      web: {
-        // drop-shadow follows the image's alpha — clean head-shaped shadow.
-        filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.35))',
-      },
-      default: {},
-    }),
   },
   image: {
-    width: FAB_SIZE,
-    height: FAB_SIZE,
+    width: 60,
+    height: 60,
+    // makes image look more vertically centered
+    marginTop: 4,
   },
 });

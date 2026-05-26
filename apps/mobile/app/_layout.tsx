@@ -9,6 +9,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 
 import { ChatPanel } from '@/components/chat/ChatPanel';
+import { GoblinChatNudge } from '@/components/chat/GoblinChatNudge';
 import { GoblinFab } from '@/components/chat/GoblinFab';
 import { DialogHost } from '@/components/DialogHost';
 import { MultiTabNotice } from '@/components/MultiTabNotice';
@@ -86,6 +87,7 @@ export default function RootLayout() {
           <DialogHost />
           <ChatPanel />
           <GoblinFab />
+          <GoblinChatNudge />
           <StatusBar style="auto" />
         </ThemeProvider>
       </SafeAreaProvider>

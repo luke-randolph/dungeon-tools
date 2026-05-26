@@ -33,17 +33,6 @@ export default function SettingsScreen() {
         <ThemedText type="title">Settings</ThemedText>
 
         <ThemedText type="subtitle" style={styles.heading}>
-          Theme
-        </ThemedText>
-        <ThemedText style={styles.body}>
-          The app is currently parchment-only. A &ldquo;candlelit&rdquo; dark
-          mode is planned &mdash; warm dark stone background, parchment-cream
-          text, gold accents &mdash; the feel of reading a tome by torchlight.
-          Not implemented yet; the app stays in parchment mode regardless of
-          system theme.
-        </ThemedText>
-
-        <ThemedText type="subtitle" style={styles.heading}>
           Attribution
         </ThemedText>
         <ThemedText style={styles.body}>

@@ -4,7 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { StarIcon } from '@/components/StarIcon';
 import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/theme';
-import { levelLabel } from '@/utils/levelLabel';
+import { featureLevelLabel } from '@/utils/featureDisplay';
 
 export interface ClassFeatureRowProps {
   feature: ClassFeature;
@@ -22,7 +22,7 @@ export function ClassFeatureRow({
   onPressRow,
   onToggleStar,
 }: ClassFeatureRowProps) {
-  const level = levelLabel(feature.level);
+  const level = featureLevelLabel(feature);
   const unfilledStarColor = unlocked ? Colors.mutedText : Colors.lockedIcon;
 
   return (
