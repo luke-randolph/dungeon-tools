@@ -1,0 +1,197 @@
+[
+  {
+    "key": "barbarian",
+    "name": "Barbarian",
+    "hitDie": "d12",
+    "savingThrows": [
+      "STR",
+      "CON"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields",
+      "Simple Weapons",
+      "Martial Weapons"
+    ]
+  },
+  {
+    "key": "bard",
+    "name": "Bard",
+    "hitDie": "d8",
+    "savingThrows": [
+      "DEX",
+      "CHA"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Simple Weapons",
+      "Longswords",
+      "Rapiers",
+      "Shortswords",
+      "Hand crossbows"
+    ]
+  },
+  {
+    "key": "cleric",
+    "name": "Cleric",
+    "hitDie": "d8",
+    "savingThrows": [
+      "WIS",
+      "CHA"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields",
+      "Simple Weapons"
+    ]
+  },
+  {
+    "key": "druid",
+    "name": "Druid",
+    "hitDie": "d8",
+    "savingThrows": [
+      "INT",
+      "WIS"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields",
+      "Clubs",
+      "Daggers",
+      "Javelins",
+      "Maces",
+      "Quarterstaffs",
+      "Sickles",
+      "Spears",
+      "Darts",
+      "Slings",
+      "Scimitars",
+      "Herbalism Kit"
+    ]
+  },
+  {
+    "key": "fighter",
+    "name": "Fighter",
+    "hitDie": "d10",
+    "savingThrows": [
+      "STR",
+      "CON"
+    ],
+    "proficiencies": [
+      "All armor",
+      "Shields",
+      "Simple Weapons",
+      "Martial Weapons"
+    ]
+  },
+  {
+    "key": "monk",
+    "name": "Monk",
+    "hitDie": "d8",
+    "savingThrows": [
+      "STR",
+      "DEX"
+    ],
+    "proficiencies": [
+      "Simple Weapons",
+      "Shortswords"
+    ]
+  },
+  {
+    "key": "paladin",
+    "name": "Paladin",
+    "hitDie": "d10",
+    "savingThrows": [
+      "WIS",
+      "CHA"
+    ],
+    "proficiencies": [
+      "All armor",
+      "Shields",
+      "Simple Weapons",
+      "Martial Weapons"
+    ]
+  },
+  {
+    "key": "ranger",
+    "name": "Ranger",
+    "hitDie": "d10",
+    "savingThrows": [
+      "STR",
+      "DEX"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Medium Armor",
+      "Shields",
+      "Simple Weapons",
+      "Martial Weapons"
+    ]
+  },
+  {
+    "key": "rogue",
+    "name": "Rogue",
+    "hitDie": "d8",
+    "savingThrows": [
+      "DEX",
+      "INT"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Simple Weapons",
+      "Longswords",
+      "Rapiers",
+      "Shortswords",
+      "Hand crossbows",
+      "Thieves' Tools"
+    ]
+  },
+  {
+    "key": "sorcerer",
+    "name": "Sorcerer",
+    "hitDie": "d6",
+    "savingThrows": [
+      "CON",
+      "CHA"
+    ],
+    "proficiencies": [
+      "Daggers",
+      "Darts",
+      "Slings",
+      "Quarterstaffs",
+      "Crossbows, light"
+    ]
+  },
+  {
+    "key": "warlock",
+    "name": "Warlock",
+    "hitDie": "d8",
+    "savingThrows": [
+      "WIS",
+      "CHA"
+    ],
+    "proficiencies": [
+      "Light Armor",
+      "Simple Weapons"
+    ]
+  },
+  {
+    "key": "wizard",
+    "name": "Wizard",
+    "hitDie": "d6",
+    "savingThrows": [
+      "INT",
+      "WIS"
+    ],
+    "proficiencies": [
+      "Daggers",
+      "Darts",
+      "Slings",
+      "Quarterstaffs",
+      "Crossbows, light"
+    ]
+  }
+]

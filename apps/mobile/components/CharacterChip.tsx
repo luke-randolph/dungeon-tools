@@ -141,7 +141,11 @@ export function CharacterChip() {
                       <ThemedText
                         style={[
                           styles.menuItemTitle,
-                          { color: Colors.surfaceText },
+                          {
+                            color: active
+                              ? Colors.goldAccent
+                              : Colors.surfaceText,
+                          },
                         ]}
                       >
                         {c.name}
@@ -159,7 +163,7 @@ export function CharacterChip() {
                       <Ionicons
                         name="checkmark"
                         size={18}
-                        color={Colors.accent}
+                        color={Colors.goldAccent}
                       />
                     ) : null}
                   </Pressable>
@@ -187,9 +191,9 @@ export function CharacterChip() {
                 pressed && styles.menuItemPressed,
               ]}
             >
-              <Ionicons name="add" size={18} color={Colors.accent} />
+              <Ionicons name="add" size={18} color={Colors.goblinGreen} />
               <ThemedText
-                style={[styles.newCharacterTitle, { color: Colors.accent }]}
+                style={[styles.newCharacterTitle, { color: Colors.goblinGreen }]}
               >
                 New character
               </ThemedText>

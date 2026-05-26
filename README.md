@@ -58,13 +58,33 @@ pnpm lint
 
 Spell, class-feature, and racial-trait data is pre-generated from
 [5e-bits/5e-database](https://github.com/5e-bits/5e-database) and checked
-into `apps/mobile/assets`. To refresh:
+into `apps/mobile/assets`.
+
+Pipeline:
+
+```
+upstream 5e-database
+   │
+   ├─► fetch-spells ────────────► spells/srd-5.1-spells.json
+   │
+   └─► fetch-srd ──► srd/srd-5.1.json
+                          │
+                          └─► build-features (build-feature-data → tag-feature-groups)
+                                     │
+                                     └─► srd/class-features.json
+                                         srd/racial-traits.json
+```
+
+Refresh everything from upstream:
 
 ```bash
-pnpm --filter @dungeon-tools/mobile fetch-spells
-pnpm --filter @dungeon-tools/mobile fetch-srd
-node apps/mobile/scripts/build-feature-data.mjs
+pnpm --filter @dungeon-tools/mobile refresh-srd-data
 ```
+
+Individual steps are also exposed (`fetch-spells`, `fetch-srd`,
+`build-features`) for partial rebuilds. `build-features` always runs
+`tag-feature-groups` after rebuilding, so parent/child group tags survive
+refreshes.
 
 ## Deploy
 

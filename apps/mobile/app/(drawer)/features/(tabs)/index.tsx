@@ -1,17 +1,24 @@
-import { CLASS_LABELS } from '@dungeon-tools/shared';
+import { CLASS_LABELS, resolveMaxPicks } from '@dungeon-tools/shared';
 import { useRouter } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
 
 import { ClassFeatureRow } from '@/components/ClassFeatureRow';
 import { EmptyState } from '@/components/EmptyState';
+import { GroupAccordion } from '@/components/GroupAccordion';
 import { SearchField } from '@/components/SearchField';
 import { ThemedView } from '@/components/ThemedView';
 import { GOBLIN_FAB_CLEARANCE } from '@/constants/layout';
-import { searchClassFeatures } from '@/data/classFeatures';
+import { ALL_CLASS_FEATURES, searchClassFeatures } from '@/data/classFeatures';
 import { useToggleClassFeature } from '@/hooks/useToggleClassFeature';
 import { useCharacters } from '@/stores/characters';
 import { useClassFeatureList } from '@/stores/classFeatureList';
+import {
+  buildFeatureItems,
+  collapseScalingChains,
+  featureLevelLabel,
+  isFeatureInList,
+} from '@/utils/featureDisplay';
 
 export default function AllFeaturesScreen() {
   const router = useRouter();
@@ -26,13 +33,15 @@ export default function AllFeaturesScreen() {
     if (character) loadFor(character.id);
   }, [character?.id, loadFor, character]);
 
-  const features = useMemo(
-    () =>
-      character
-        ? searchClassFeatures({ query: search, charClass: character.class })
-        : [],
-    [search, character],
-  );
+  const items = useMemo(() => {
+    if (!character) return [];
+    const matched = searchClassFeatures({
+      query: search,
+      charClass: character.class,
+    });
+    const collapsed = collapseScalingChains(matched, character.level);
+    return buildFeatureItems(collapsed);
+  }, [search, character]);
 
   if (!character) {
     return (
@@ -55,17 +64,45 @@ export default function AllFeaturesScreen() {
       />
 
       <FlatList
-        data={features}
-        keyExtractor={(f) => f.key}
-        renderItem={({ item }) => (
-          <ClassFeatureRow
-            feature={item}
-            inList={keys.has(item.key)}
-            unlocked={character.level >= item.level}
-            onPressRow={() => router.push(`/features/${item.key}`)}
-            onToggleStar={() => toggle(item)}
-          />
-        )}
+        data={items}
+        keyExtractor={(item) =>
+          item.kind === 'group' ? `group:${item.parent.key}` : item.feature.key
+        }
+        renderItem={({ item }) => {
+          if (item.kind === 'group') {
+            const maxPicks = resolveMaxPicks(
+              item.parent,
+              character.level,
+              ALL_CLASS_FEATURES,
+            );
+            const q = search.toLowerCase().trim();
+            const matchesChild =
+              q.length > 0 &&
+              item.children.some((c) => c.name.toLowerCase().includes(q));
+            return (
+              <GroupAccordion
+                parent={item.parent}
+                options={item.children}
+                selectedKeys={keys}
+                meta={`${featureLevelLabel(item.parent)} · Pick ${maxPicks}`}
+                unlocked={character.level >= item.parent.level}
+                defaultOpen={matchesChild}
+                onPressOption={(c) => router.push(`/features/${c.key}`)}
+                onToggleOption={(c) => toggle(c)}
+              />
+            );
+          }
+          const f = item.feature;
+          return (
+            <ClassFeatureRow
+              feature={f}
+              inList={isFeatureInList(f, keys)}
+              unlocked={character.level >= f.level}
+              onPressRow={() => router.push(`/features/${f.key}`)}
+              onToggleStar={() => toggle(f)}
+            />
+          );
+        }}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={styles.listContent}
         ListEmptyComponent={<EmptyState title="No features match." />}

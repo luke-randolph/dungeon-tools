@@ -15,67 +15,78 @@
     "key": "draconic-ancestry",
     "name": "Draconic Ancestry",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "maxPicks": 1
   },
   {
     "key": "draconic-ancestry-black",
     "name": "Draconic Ancestry (Black)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-blue",
     "name": "Draconic Ancestry (Blue)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-brass",
     "name": "Draconic Ancestry (Brass)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-bronze",
     "name": "Draconic Ancestry (Bronze)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-copper",
     "name": "Draconic Ancestry (Copper)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-gold",
     "name": "Draconic Ancestry (Gold)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-green",
     "name": "Draconic Ancestry (Green)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-red",
     "name": "Draconic Ancestry (Red)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-silver",
     "name": "Draconic Ancestry (Silver)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "draconic-ancestry-white",
     "name": "Draconic Ancestry (White)",
     "body": "You have draconic ancestry. Choose one type of dragon from the Draconic Ancestry table. Your breath weapon and damage resistance are determined by the dragon type, as shown in the table.",
-    "race": "dragonborn"
+    "race": "dragonborn",
+    "parentKey": "draconic-ancestry"
   },
   {
     "key": "darkvision",

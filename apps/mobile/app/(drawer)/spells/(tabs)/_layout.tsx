@@ -9,6 +9,7 @@ import type {
 } from '@react-navigation/native';
 import { spellListLabel } from '@dungeon-tools/shared';
 import { withLayoutContext } from 'expo-router';
+import { Platform } from 'react-native';
 
 import { useCharacters } from '@/stores/characters';
 
@@ -25,7 +26,7 @@ export default function SpellsTabsLayout() {
   const character = useCharacters((s) => s.character);
 
   return (
-    <MaterialTopTabs>
+    <MaterialTopTabs screenOptions={{ swipeEnabled: Platform.OS !== 'web' }}>
       <MaterialTopTabs.Screen name="index" options={{ title: 'All Spells' }} />
       <MaterialTopTabs.Screen
         name="spellList"

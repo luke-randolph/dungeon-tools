@@ -5,4 +5,6 @@ export interface RacialTrait {
   name: string;
   body: string;
   race: CharacterRace;
+  parentKey?: string;
+  maxPicks?: number;
 }

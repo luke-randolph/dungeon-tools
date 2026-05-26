@@ -27,6 +27,33 @@ interface RawFeature extends RawDescArray {
 interface RawTrait extends RawDescArray {
   races?: { index: string; name: string }[];
   subraces?: { index: string; name: string }[];
+  trait_specific?: {
+    damage_type?: { index: string; name: string };
+    breath_weapon?: {
+      area_of_effect?: { size: number; type: string };
+      dc?: { dc_type?: { index: string; name: string } };
+    };
+  };
+}
+
+interface DraconicAncestryRow {
+  key: string;
+  color: string;
+  damageType: string;
+  breathShape: string;
+  saveType: string;
+}
+
+function breathShape(area: { size: number; type: string } | undefined): string {
+  if (!area) return '';
+  if (area.type === 'line') return `5 by ${area.size} ft. line`;
+  if (area.type === 'cone') return `${area.size} ft. cone`;
+  return `${area.size} ft. ${area.type}`;
+}
+
+function colorFromName(name: string): string {
+  const match = name.match(/\(([^)]+)\)/);
+  return match ? match[1] : name;
 }
 interface RawClass extends RawNamed {
   hit_die: number;
@@ -91,9 +118,39 @@ function entry(
   return { category, index, name, body, tags: cleanedTags };
 }
 
+interface ClassSummary {
+  key: string;
+  name: string;
+  hitDie: string;
+  savingThrows: string[];
+  proficiencies: string[];
+}
+
+function classSummaryBody(s: ClassSummary): string {
+  return [
+    `Hit Die: ${s.hitDie}`,
+    s.savingThrows.length
+      ? `Saving Throw Proficiencies: ${s.savingThrows.join(', ')}`
+      : '',
+    s.proficiencies.length
+      ? `Proficiencies: ${s.proficiencies.join(', ')}`
+      : '',
+  ]
+    .filter(Boolean)
+    .join('\n\n');
+}
+
 async function main() {
   const here = dirname(fileURLToPath(import.meta.url));
   const outPath = resolve(here, '..', 'assets', 'srd', 'srd-5.1.json');
+  const classesOutPath = resolve(here, '..', 'assets', 'srd', 'classes.json');
+  const draconicOutPath = resolve(
+    here,
+    '..',
+    'assets',
+    'srd',
+    'draconic-ancestry.json',
+  );
 
   console.log('Fetching SRD content...');
   const [
@@ -178,15 +235,20 @@ async function main() {
     );
   }
 
-  // Class summaries.
-  for (const c of classes) {
-    const profs = (c.proficiencies ?? []).map((p) => p.name).join(', ');
-    const saves = (c.saving_throws ?? []).map((s) => s.name).join(', ');
-    const body =
-      `Hit Die: d${c.hit_die}\n\n` +
-      (saves ? `Saving Throw Proficiencies: ${saves}\n\n` : '') +
-      (profs ? `Proficiencies: ${profs}` : '');
-    out.push(entry('class', c.index, c.name, body, [c.name, 'class']));
+  // Class summaries — structured records are the source of truth; the
+  // assistant-grounding body string is derived from them.
+  const classSummaries: ClassSummary[] = classes.map((c) => ({
+    key: c.index,
+    name: c.name,
+    hitDie: `d${c.hit_die}`,
+    savingThrows: (c.saving_throws ?? []).map((s) => s.name),
+    // Upstream lists saving throws inside proficiencies too — drop those.
+    proficiencies: (c.proficiencies ?? [])
+      .map((p) => p.name)
+      .filter((name) => !name.startsWith('Saving Throw:')),
+  }));
+  for (const s of classSummaries) {
+    out.push(entry('class', s.key, s.name, classSummaryBody(s), [s.name, 'class']));
   }
 
   // Race summaries.
@@ -223,6 +285,36 @@ async function main() {
   await mkdir(dirname(outPath), { recursive: true });
   await writeFile(outPath, JSON.stringify(out) + '\n', 'utf8');
 
+  classSummaries.sort((a, b) => a.key.localeCompare(b.key));
+  await writeFile(
+    classesOutPath,
+    JSON.stringify(classSummaries, null, 2) + '\n',
+    'utf8',
+  );
+
+  // Draconic Ancestry table — color variants carry structured breath/damage/save
+  // info in `trait_specific`, which the generic racial-trait body throws away.
+  const draconicRows: DraconicAncestryRow[] = traits
+    .filter(
+      (t) =>
+        t.index.startsWith('draconic-ancestry-') &&
+        t.index !== 'draconic-ancestry',
+    )
+    .map((t) => ({
+      key: t.index,
+      color: colorFromName(t.name),
+      damageType: t.trait_specific?.damage_type?.name ?? '',
+      breathShape: breathShape(t.trait_specific?.breath_weapon?.area_of_effect),
+      saveType: t.trait_specific?.breath_weapon?.dc?.dc_type?.name ?? '',
+    }))
+    .sort((a, b) => a.color.localeCompare(b.color));
+
+  await writeFile(
+    draconicOutPath,
+    JSON.stringify(draconicRows, null, 2) + '\n',
+    'utf8',
+  );
+
   const bytes = JSON.stringify(out).length;
   const counts: Record<string, number> = {};
   for (const e of out) counts[e.category] = (counts[e.category] ?? 0) + 1;
@@ -230,6 +322,12 @@ async function main() {
     `Wrote ${out.length} entries (${(bytes / 1024).toFixed(1)} KB) to ${outPath}`,
   );
   console.log('Per-category:', counts);
+  console.log(
+    `Wrote ${classSummaries.length} class summaries to ${classesOutPath}`,
+  );
+  console.log(
+    `Wrote ${draconicRows.length} draconic ancestry rows to ${draconicOutPath}`,
+  );
 }
 
 main().catch((err) => {

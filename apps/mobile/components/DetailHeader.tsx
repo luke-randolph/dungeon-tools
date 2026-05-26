@@ -7,6 +7,7 @@ import { ThemedText } from '@/components/ThemedText';
 interface DetailHeaderProps {
   onBack: () => void;
   backAccessibilityLabel: string;
+  showStar?: boolean;
   starFilled: boolean;
   onToggleStar: () => void;
   starAccessibilityLabel: string;
@@ -16,6 +17,7 @@ interface DetailHeaderProps {
 export function DetailHeader({
   onBack,
   backAccessibilityLabel,
+  showStar = true,
   starFilled,
   onToggleStar,
   starAccessibilityLabel,
@@ -33,19 +35,21 @@ export function DetailHeader({
         <Ionicons name="chevron-back" size={20} />
         <ThemedText>Back</ThemedText>
       </Pressable>
-      <Pressable
-        onPress={onToggleStar}
-        hitSlop={12}
-        style={styles.starButton}
-        accessibilityRole="button"
-        accessibilityLabel={starAccessibilityLabel}
-      >
-        <StarIcon
-          filled={starFilled}
-          size={26}
-          unfilledColor={unfilledStarColor}
-        />
-      </Pressable>
+      {showStar && (
+        <Pressable
+          onPress={onToggleStar}
+          hitSlop={12}
+          style={styles.starButton}
+          accessibilityRole="button"
+          accessibilityLabel={starAccessibilityLabel}
+        >
+          <StarIcon
+            filled={starFilled}
+            size={26}
+            unfilledColor={unfilledStarColor}
+          />
+        </Pressable>
+      )}
     </View>
   );
 }
