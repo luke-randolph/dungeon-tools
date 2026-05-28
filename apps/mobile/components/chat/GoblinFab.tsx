@@ -23,7 +23,7 @@ export function GoblinFab() {
         styles.layer,
         {
           paddingBottom: 24 + insets.bottom,
-          paddingRight: 16 + insets.right,
+          paddingRight: 24 + insets.right,
         },
       ]}
     >
@@ -52,8 +52,8 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   fab: {
-    width: 86,
-    height: 86,
+    width: 75,
+    height: 75,
     borderRadius: '100%',
     backgroundColor: Colors.goldDeep,
     borderWidth: 4,
@@ -77,8 +77,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: 60,
-    height: 60,
+    width: 50,
+    height: 50,
     // makes image look more vertically centered
     marginTop: 4,
   },

@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'AncientMedium',
-    fontSize: 48,
+    fontSize: 42,
     lineHeight: 56,
   },
   subtitle: {
