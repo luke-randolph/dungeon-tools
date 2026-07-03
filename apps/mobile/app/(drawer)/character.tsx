@@ -119,7 +119,9 @@ export default function CharacterScreen() {
             <View style={styles.classBody}>
               {rows.map((row) => (
                 <View key={row.label} style={styles.classRow}>
-                  <ThemedText style={styles.classLabel}>{row.label}:</ThemedText>
+                  <ThemedText style={styles.classLabel}>
+                    {row.label}:
+                  </ThemedText>
                   <ThemedText type="defaultSemiBold">{row.value}</ThemedText>
                 </View>
               ))}

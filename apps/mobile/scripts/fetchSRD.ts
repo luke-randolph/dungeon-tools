@@ -248,7 +248,9 @@ async function main() {
       .filter((name) => !name.startsWith('Saving Throw:')),
   }));
   for (const s of classSummaries) {
-    out.push(entry('class', s.key, s.name, classSummaryBody(s), [s.name, 'class']));
+    out.push(
+      entry('class', s.key, s.name, classSummaryBody(s), [s.name, 'class']),
+    );
   }
 
   // Race summaries.

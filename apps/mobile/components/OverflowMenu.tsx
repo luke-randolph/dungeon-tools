@@ -45,10 +45,7 @@ export function OverflowMenu({
     }
     node.measureInWindow((x, y, w, h) => {
       const viewportWidth = Dimensions.get('window').width;
-      const right = Math.max(
-        VIEWPORT_MARGIN,
-        viewportWidth - (x + w),
-      );
+      const right = Math.max(VIEWPORT_MARGIN, viewportWidth - (x + w));
       setPosition({ top: y + h + 4, right });
       setOpen(true);
     });
@@ -94,9 +91,7 @@ export function OverflowMenu({
             onStartShouldSetResponder={() => true}
           >
             {items.map((item) => {
-              const color = item.destructive
-                ? Colors.destructive
-                : Colors.text;
+              const color = item.destructive ? Colors.destructive : Colors.text;
               return (
                 <Pressable
                   key={item.label}

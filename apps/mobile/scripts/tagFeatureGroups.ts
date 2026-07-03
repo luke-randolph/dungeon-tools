@@ -121,10 +121,17 @@ const tiers = (...features: string[]): ScalingTier[] =>
   features.map((feature) => ({ feature }));
 
 const SCALING_CHAINS: ScalingChain[] = [
-  { key: 'action-surge', tiers: tiers('action-surge-1-use', 'action-surge-2-uses') },
+  {
+    key: 'action-surge',
+    tiers: tiers('action-surge-1-use', 'action-surge-2-uses'),
+  },
   {
     key: 'indomitable',
-    tiers: tiers('indomitable-1-use', 'indomitable-2-uses', 'indomitable-3-uses'),
+    tiers: tiers(
+      'indomitable-1-use',
+      'indomitable-2-uses',
+      'indomitable-3-uses',
+    ),
   },
   {
     key: 'brutal-critical',
@@ -327,13 +334,21 @@ function fillInvocationChildren(features: ClassFeature[]): string[] {
 
 async function main(): Promise<void> {
   const here = dirname(fileURLToPath(import.meta.url));
-  const featuresPath = resolve(here, '..', 'assets', 'srd', 'class-features.json');
+  const featuresPath = resolve(
+    here,
+    '..',
+    'assets',
+    'srd',
+    'class-features.json',
+  );
   const traitsPath = resolve(here, '..', 'assets', 'srd', 'racial-traits.json');
 
   const features = JSON.parse(
     await readFile(featuresPath, 'utf8'),
   ) as ClassFeature[];
-  const traits = JSON.parse(await readFile(traitsPath, 'utf8')) as RacialTrait[];
+  const traits = JSON.parse(
+    await readFile(traitsPath, 'utf8'),
+  ) as RacialTrait[];
 
   // Synthesize invocation tiers BEFORE indexing so they're applier-visible.
   const synthesized = synthesizeInvocationTiers(features);
