@@ -81,7 +81,9 @@ export function ChatInput() {
         style={({ pressed }) => [
           styles.button,
           {
-            backgroundColor: streaming ? Colors.destructive : Colors.goblinGreen,
+            backgroundColor: streaming
+              ? Colors.destructive
+              : Colors.goblinGreen,
             opacity: !buttonEnabled ? 0.5 : pressed ? 0.85 : 1,
           },
         ]}

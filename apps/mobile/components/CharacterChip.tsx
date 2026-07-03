@@ -193,7 +193,10 @@ export function CharacterChip() {
             >
               <Ionicons name="add" size={18} color={Colors.goblinGreen} />
               <ThemedText
-                style={[styles.newCharacterTitle, { color: Colors.goblinGreen }]}
+                style={[
+                  styles.newCharacterTitle,
+                  { color: Colors.goblinGreen },
+                ]}
               >
                 New character
               </ThemedText>

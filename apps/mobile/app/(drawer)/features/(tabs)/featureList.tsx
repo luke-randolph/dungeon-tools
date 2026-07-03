@@ -36,9 +36,7 @@ export default function FeatureListScreen() {
     if (!character) return [];
     const starred = ALL_CLASS_FEATURES.filter((f) => keys.has(f.key));
     const parentKeys = new Set(
-      starred
-        .map((f) => f.parentKey)
-        .filter((k): k is string => Boolean(k)),
+      starred.map((f) => f.parentKey).filter((k): k is string => Boolean(k)),
     );
     const visible = ALL_CLASS_FEATURES.filter(
       (f) => keys.has(f.key) || parentKeys.has(f.key),

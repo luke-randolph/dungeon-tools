@@ -8,10 +8,10 @@ off user devices.
 
 CORS-restricted to the app's own origins; `Content-Type` is the only allowed request header.
 
-| Method & path | Description |
-| --- | --- |
-| `GET /` | Health check. Returns `dungeon-tools api ok`. |
-| `POST /chat` | Streams a Gemini completion (AI SDK UI message stream, not JSON). Body is `ChatRequestBody` from `@dungeon-tools/shared`: `{ messages, activeCharacterSummary? }`. `400` on a bad/empty body, `429` on rate limit, `500` if `GEMINI_API_KEY` is missing. |
+| Method & path | Description                                                                                                                                                                                                                                              |
+| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `GET /`       | Health check. Returns `dungeon-tools api ok`.                                                                                                                                                                                                            |
+| `POST /chat`  | Streams a Gemini completion (AI SDK UI message stream, not JSON). Body is `ChatRequestBody` from `@dungeon-tools/shared`: `{ messages, activeCharacterSummary? }`. `400` on a bad/empty body, `429` on rate limit, `500` if `GEMINI_API_KEY` is missing. |
 
 ## Develop
 
