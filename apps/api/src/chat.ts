@@ -1,8 +1,8 @@
+import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import type {
   ChatRequestBody,
   ChatRequestMessage,
 } from '@dungeon-tools/shared';
-import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import {
   stepCountIs,
   streamText,
@@ -71,13 +71,41 @@ export async function handleChat(
     ? tools
     : { searchSpells: tools.searchSpells, searchSRD: tools.searchSRD };
 
+  const system = buildSystemPrompt(summary);
+
   const result = streamText({
     model: google(MODEL_ID),
-    system: buildSystemPrompt(summary),
+    system,
     messages: modelMessages,
     tools: activeTools,
     stopWhen: stepCountIs(MAX_STEPS),
     maxOutputTokens: MAX_OUTPUT_TOKENS,
+    // Gemini's thinking path returns empty turns for our prompt + tool pairing.
+    providerOptions: { google: { thinkingConfig: { thinkingBudget: 0 } } },
+    onFinish({
+      finishReason,
+      usage,
+      text,
+      toolCalls,
+      providerMetadata,
+      warnings,
+    }) {
+      if (text.length > 0 || toolCalls.length > 0) return;
+      // An empty turn finishes cleanly, so it never reaches onError.
+      console.error('empty model turn', {
+        model: MODEL_ID,
+        // Response: providerMetadata carries any safety block or finishMessage.
+        finishReason,
+        usage,
+        providerMetadata,
+        warnings,
+        messageCount: modelMessages.length,
+        roles: modelMessages.map((m) => m.role).join(','),
+        hasCharacter,
+        toolNames: Object.keys(activeTools).join(','),
+        systemChars: system.length,
+      });
+    },
     onError({ error }) {
       console.error('streamText error', {
         message: error instanceof Error ? error.message : String(error),
