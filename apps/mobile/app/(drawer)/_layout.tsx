@@ -7,7 +7,7 @@ import {
 } from '@react-navigation/drawer';
 import { Drawer } from 'expo-router/drawer';
 import { useEffect } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { CharacterChip } from '@/components/CharacterChip';
@@ -54,6 +54,8 @@ function DrawerContent(props: DrawerContentComponentProps) {
 }
 
 export default function DrawerLayout() {
+  const insets = useSafeAreaInsets();
+
   return (
     <Drawer
       drawerContent={(props) => <DrawerContent {...props} />}
@@ -65,6 +67,8 @@ export default function DrawerLayout() {
           backgroundColor: Colors.surface,
           borderBottomWidth: 2,
           borderBottomColor: '#000',
+          // iOS defaults to 44pt; Android gets 64, which the two-line chip needs.
+          ...(Platform.OS === 'ios' ? { height: insets.top + 64 } : null),
         },
         headerTintColor: Colors.surfaceText,
         headerLeftContainerStyle: { paddingTop: 8 },

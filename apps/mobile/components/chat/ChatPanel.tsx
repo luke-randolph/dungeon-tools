@@ -1,5 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
-import { Modal, Platform, Pressable, StyleSheet, View } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Modal,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/ThemedText';
@@ -98,13 +105,14 @@ export function ChatPanel() {
         : 'idle';
 
   const panel = (
-    <View
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       style={[
         styles.mobilePanel,
         {
           backgroundColor: Colors.background,
-          paddingTop: insets.top + 12,
-          paddingBottom: insets.bottom + 12,
+          paddingTop: insets.top + 6,
+          paddingBottom: insets.bottom + 6,
         },
       ]}
     >
@@ -170,7 +178,7 @@ export function ChatPanel() {
       </View>
 
       <ChatInput />
-    </View>
+    </KeyboardAvoidingView>
   );
 
   // On web, RN's Modal portals to document.body, which escapes any preview-
@@ -196,6 +204,8 @@ export function ChatPanel() {
       visible={open}
       animationType="slide"
       transparent={false}
+      statusBarTranslucent
+      navigationBarTranslucent
       onRequestClose={() => setOpen(false)}
     >
       <View style={[styles.fullScreen, { backgroundColor: Colors.background }]}>
