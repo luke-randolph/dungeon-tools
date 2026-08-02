@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingTop: 12,
     paddingBottom: 8,
-    fontSize: 15,
+    fontSize: 16,
     backgroundColor: Colors.inputBackground,
   },
 });
